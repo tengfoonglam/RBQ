@@ -87,18 +87,20 @@ if [ ! -d "$ONNX_DIR" ]; then
     echo "[INFO] Building ONNX ..."
     ./build.sh \
         --config Release \
-	--parallel \
+        --parallel \
         --disable_ml_ops \
         --allow_running_as_root \
-	--cmake_extra_defines \
-	    onnxruntime_BUILD_SHARED_LIB=ON \
-	    onnxruntime_ENABLE_PYTHON=OFF \
-	    onnxruntime_BUILD_UNIT_TESTS=OFF \
-	    onnxruntime_ENABLE_LTO=ON \
-	    onnxruntime_ENABLE_OPENMP=ON \
-	    onnxruntime_ENABLE_EXCEPTIONS=ON \
-	    CMAKE_POSITION_INDEPENDENT_CODE=ON \
-	    CMAKE_INSTALL_PREFIX=$ONNX_DIR
+        --cmake_extra_defines \
+            onnxruntime_BUILD_SHARED_LIB=ON \
+            onnxruntime_ENABLE_PYTHON=OFF \
+            onnxruntime_BUILD_UNIT_TESTS=OFF \
+            onnxruntime_ENABLE_LTO=ON \
+            onnxruntime_ENABLE_OPENMP=ON \
+            onnxruntime_ENABLE_EXCEPTIONS=ON \
+            CMAKE_POSITION_INDEPENDENT_CODE=ON \
+            CMAKE_INSTALL_PREFIX=$ONNX_DIR \
+            onnxruntime_USE_PREINSTALLED_EIGEN=ON \
+            eigen_SOURCE_PATH=$EIGEN_DIR/include/eigen3
 
     echo "[INFO] Installing ONNX to $ONNX_DIR..."
     cd build/Linux/Release && cmake --install .
@@ -108,7 +110,7 @@ if [ ! -d "$ONNX_DIR" ]; then
 
     if [[ "${REMOVE_TMP,,}" == "true" ]]; then
         echo "[INFO] Cleaning up temporary files..."
-	cd $LIBS_DIR && rm -rf $TMP_DIR
+        cd $LIBS_DIR && rm -rf $TMP_DIR
     fi
 fi
 echo "✅ onnx version $ONNX_VERSION installed to $ONNX_DIR"

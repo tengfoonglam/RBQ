@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['docking_224',['DOCKING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa4bc339494ca187e35621c61284d0d8e4',1,'RBQ_API::Status']]],
+  ['docking_5fapproach_225',['DOCKING_APPROACH',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19af00cdbca36e198049a10c2bcb365525a',1,'RBQ_API::Status']]],
+  ['docking_5fapproach_5foffset_226',['DOCKING_APPROACH_OFFSET',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a0a6f5501c55fea38873fb5cdc701c6ae',1,'RBQ_API::Status']]],
+  ['docking_5fapproach_5fwide_227',['DOCKING_APPROACH_WIDE',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a9d0576b2780fe19477a566aedea199ef',1,'RBQ_API::Status']]],
+  ['docking_5ffailed_228',['DOCKING_FAILED',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19abc0b74f6b2793c68fd21734a371dbe7a',1,'RBQ_API::Status']]],
+  ['docking_5fmarker_5fnot_5ffound_229',['DOCKING_MARKER_NOT_FOUND',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a5ed55c4f91f2acabc0c8b2085c7cf854',1,'RBQ_API::Status']]],
+  ['docking_5fmarker_5fpos_5finvalid_5frotation_230',['DOCKING_MARKER_POS_INVALID_ROTATION',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19ae961c9bee831e247498c32eb4a5a7e4e',1,'RBQ_API::Status']]],
+  ['docking_5fmarker_5fpos_5finvalid_5ftoo_5ffar_231',['DOCKING_MARKER_POS_INVALID_TOO_FAR',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a98ddec6bc3d106208c50519042f3ab06',1,'RBQ_API::Status']]],
+  ['docking_5fmarker_5fpos_5finvalid_5fwrong_5fdir_232',['DOCKING_MARKER_POS_INVALID_WRONG_DIR',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19aa830c2fbb7e509809ccc37a7b87ddc72',1,'RBQ_API::Status']]],
+  ['docking_5fmax_5ffail_5fcnt_5freached_233',['DOCKING_MAX_FAIL_CNT_REACHED',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a63a7133562bafb8df3811a09fbe76a55',1,'RBQ_API::Status']]],
+  ['docking_5foperation_5fmode_234',['DOCKING_OPERATION_MODE',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a492abda34cb7193be962ceaa37a70ee9',1,'RBQ_API::Status']]],
+  ['docking_5fsit_5fdown_235',['DOCKING_SIT_DOWN',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a0abf642182e4b824313937b080934fbc',1,'RBQ_API::Status']]],
+  ['docking_5fsitting_236',['DOCKING_SITTING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa82b52ac76d99f5843234f06a872a2f01',1,'RBQ_API::Status']]],
+  ['docking_5fstate_237',['DOCKING_STATE',['../group__StatusAPI.html#gga55d067c30acca13567c9ee40857113f1a6dedebabfcb1d34b5528ef136e8763e2',1,'RBQ_API::Status']]],
+  ['docking_5fsuccess_238',['DOCKING_SUCCESS',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19af7e587591edcbe08ff5139086454ae34',1,'RBQ_API::Status']]],
+  ['docking_5fsuccess_5fcharging_239',['DOCKING_SUCCESS_CHARGING',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19aaa26901a96bf2ddf83a1bbb5c1212e69',1,'RBQ_API::Status']]],
+  ['docking_5fsuccess_5fno_5fcharging_240',['DOCKING_SUCCESS_NO_CHARGING',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a02f2478b1a0754fc0e9029838c04a7c4',1,'RBQ_API::Status']]],
+  ['door_5fopening_241',['DOOR_OPENING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa60661f048f17348cdcd8100458356e86',1,'RBQ_API::Status']]]
+];

@@ -77,4 +77,5 @@ mujoco
 MUJOCO_LOG.TXT
 cyclonedds.xml
 examples/bin
+assets
 

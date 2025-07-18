@@ -8,7 +8,7 @@ CURRENT_DIR="$PWD"
 EXAMPLES_DIR="examples"
 BUILD_DIR="build"
 BIN_DIR="bin"
-RBQL_DIR="$PWD/bin/rbq"
+RCL_DIR="$PWD/bin/rcl"
 
 # === Help Message ===
 print_help() {
@@ -31,11 +31,11 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ ! -d $RBQL_DIR ]; then
-    echo "[ERROR] $RBQL_DIR directory not exist!"
+if [ ! -d $RCL_DIR ]; then
+    echo "[ERROR] $RCL_DIR directory not exist!"
     exit 1
 fi
-echo $RBQL_DIR
+echo $RCL_DIR
 
 if [ ! -f scripts/configure.bash ]; then
     echo "[ERROR] scripts/configure.bash not exist!"
@@ -64,8 +64,8 @@ if ! $USE_CACHE || [ ! -f "$BUILD_DIR/CMakeCache.txt" ]; then
     CMAKE_OPTIONS+=("-DCMAKE_BUILD_TYPE=Release")
     CMAKE_OPTIONS+=("-DBUILD_SHARED_LIBS=OFF")
     CMAKE_OPTIONS+=("-DCMAKE_INSTALL_PREFIX=$PWD")
-    CMAKE_OPTIONS+=("-DCUSTOM_RBQ_PATH=$RBQL_DIR")
-    CMAKE_PREFIX_PATH_STRING="$RBQL_DIR/lib/cmake"
+    CMAKE_OPTIONS+=("-DCUSTOM_RCL_PATH=$RCL_DIR")
+    CMAKE_PREFIX_PATH_STRING="$RCL_DIR/lib/cmake"
     CMAKE_PREFIX_PATH_STRING+=";$EIGEN_DIR/share/eigen3/cmake"
     CMAKE_PREFIX_PATH_STRING+=";$DDS_DIR/lib/cmake"
     CMAKE_PREFIX_PATH_STRING+=";$DDS_CXX_DIR/lib/cmake"
