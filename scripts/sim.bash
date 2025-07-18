@@ -27,17 +27,20 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 gnome-terminal --tab --title="Motion"   -- bash -i -c "bash scripts/start_motion.bash --sim"
-gnome-terminal --tab --title="Network"  -- bash -i -c "bash scripts/start_network.bash --sim"
+#gnome-terminal --tab --title="Network"  -- bash -i -c "bash scripts/start_network.bash --sim"
+
 sleep 1
+
 if [ "$VISION_ENABLED" = "true" ]; then
-    gnome-terminal --tab --title="Vision"   -- bash -i -c "bash scripts/start_vision.bash --sim"
+    gnome-terminal --tab --title="Vision" -- bash -i -c "bash scripts/start_vision.bash --sim"
     gnome-terminal --tab --title="Mujoco" -- bash -i -c "bash scripts/start_mujoco.bash --vision"
 else
     gnome-terminal --tab --title="Mujoco" -- bash -i -c "bash scripts/start_mujoco.bash"
 fi
+
 if [ "$ROS_ENABLED" = "true" ]; then
-    gnome-terminal --tab --title="rbq_driver"     -- bash -i -c "bash scripts/start_ros_driver.bash --sim"
+    gnome-terminal --tab --title="rbq_driver"      -- bash -i -c "bash scripts/start_ros_driver.bash --sim"
     gnome-terminal --tab --title="rbq_description" -- bash -i -c "bash scripts/start_rviz.bash"
 fi
 
-gnome-terminal --tab --title="GUI"      -- bash -i -c "bash scripts/start_gui.bash --sim
+gnome-terminal --tab --title="GUI" -- bash -i -c "bash scripts/start_gui.bash --sim"
