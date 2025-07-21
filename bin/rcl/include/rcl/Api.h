@@ -147,8 +147,6 @@ public:
          */
         void docking();
 
-//        void jump();
-
         /**
          * @ingroup MotionAPI
          * @brief Immediately stops the robot by disabling control and applying high damping to all joints.
@@ -175,8 +173,6 @@ public:
         void parametersUpdate(const uint8_t &bodyHeight, const uint8_t &speed, const uint8_t &footHeight);
 
         void zmpCalibrate();
-
-//        void calibrateAccelerometer();
 
         void lockAllJoint();
 
@@ -1047,6 +1043,129 @@ public:
 #endif
     };
     Gamepad gamepad{this};
+
+    struct StateEstimation{
+        /**
+         * @defgroup StateEstimationAPI State Estimation API
+         * @brief API for estimating and retrieving the robot's dynamic state information.
+         *
+         * The StateEstimation class provides real-time estimation of the robot's dynamic states and exposes the results through various getter functions.
+         *
+         * Main features:
+         * - Start and stop state estimation
+         * - Set contact detection threshold
+         * - Query estimator run state
+         * - Retrieve body and foot position/velocity/force/Jacobian in various coordinate frames
+         *
+         * Returned information includes:
+         * - Position and velocity of the robot's body center
+         * - Position and velocity of each foot
+         * - Jacobian matrix for each foot
+         * - Force applied by each foot
+         * - External force detected at each foot
+         *
+         * All information is provided with respect to a specified coordinate frame:
+         * - **World**: Fixed to the environment. The origin is the projection of the body center onto the ground at reset. The orientation is: -Z aligned with gravity, +X aligned with the robot's facing direction projected onto the ground at reset.
+         * - **Body**: Local body frame. The origin is the body center. Orientation is fixed to the robot body (+X forward, +Z upward, +Y left).
+         * - **Body_rp**: Origin at body center. Orientation: -Z aligned with gravity, +X aligned with the robot's facing direction projected onto the ground.
+         * - **Body_rpy**: Origin at body center. Orientation matches the global frame.
+         *
+         * Example:
+         * @code
+         * // Start state estimation
+         * api->stateEstimation.startEstimation();
+         *
+         * // Get body position in world frame
+         * Eigen::Vector3f body_pos;
+         * api->stateEstimation.getBodyPos(RBQ_API::StateEstimation::Frame::World, body_pos);
+         * @endcode
+         */
+        enum class Frame : int {
+            /**
+             * World: Fixed to the environment. The origin is the projection of the body center onto the ground at reset.
+             * Orientation: -Z aligned with gravity, +X aligned with the robot's facing direction projected onto the ground at reset.
+             */
+            World = 0,
+
+            /**
+             * Body: Local body frame. Origin is the body center.
+             * Orientation is fixed to the robot body (+X forward, +Z upward, +Y left).
+             */
+            Body = 1,
+
+            /**
+             * Body_rp: Origin at body center.
+             * Orientation: -Z aligned with gravity, +X aligned with the robot's facing direction projected onto the ground.
+             */
+            Body_rp = 2,
+
+            /**
+             * Body_rpy: Origin at body center.
+             * Orientation matches the global frame.
+             */
+            Body_rpy = 3
+        };
+
+        enum class LegID : int {
+            HR = 0,  ///< Hind-right leg
+            HL = 1,  ///< Hind-left leg
+            FR = 2,  ///< Front-right leg
+            FL = 3,  ///< Front-left leg
+        };
+
+        StateEstimation(RBQ_API* parent) : m_parent(parent) {}
+
+        // reset state and start state estimation
+        int startEstimation();
+
+        // stop estimation
+        int stopEstimation();
+
+        // z direction external force is used for contact detection
+        // this function update update contact detection threshold
+        int updateContactThreshold(const float &_contact_threshold);
+
+        // get Estimator run state
+        int getEstimatorRunState(bool &run_or_not_);
+
+        int getBodyPos(const Frame _frame, Eigen::Vector3f &body_pos_);
+
+        int getBodyVel(const Frame _frame, Eigen::Vector3f &body_vel_);
+
+        int getFootPos(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_pos_);
+
+        int getFootPos(const Frame _frame, const LegID _legId, Eigen::Vector3f &foot_pos_){
+            return getFootPos(_frame, static_cast<int>(_legId), foot_pos_);
+        }
+
+        int getFootVel(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_vel_);
+
+        int getFootVel(const Frame _frame, const LegID &_legId, Eigen::Vector3f &foot_vel_){
+            return getFootVel(_frame, static_cast<int>(_legId), foot_vel_);
+        }
+
+        int getFootJacobian(const Frame _frame, const int &_legId, Eigen::Matrix3f &foot_jacobian_);
+
+        int getFootJacobian(const Frame _frame, const LegID &_legId, Eigen::Matrix3f &foot_jacobian_){
+            return getFootJacobian(_frame, static_cast<int>(_legId), foot_jacobian_);
+        }
+
+        int getFootForce(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_force_);
+
+        int getFootForce(const Frame _frame, const LegID &_legId, Eigen::Vector3f &foot_force_){
+            return getFootForce(_frame, static_cast<int>(_legId), foot_force_);
+        }
+
+        int getFootExtForce(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_contact_force_);
+
+        int getFootExtForce(const Frame _frame, const LegID &_legId, Eigen::Vector3f &foot_contact_force_){
+            return getFootForce(_frame, static_cast<int>(_legId), foot_contact_force_);
+        }
+
+    private:
+        RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
+    };
+    StateEstimation stateEstimation{this};
 
 #if defined(PRIVATE)
     struct Command {

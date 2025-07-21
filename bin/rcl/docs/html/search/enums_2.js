@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gait_5fstate_205',['GAIT_STATE',['../group__StatusAPI.html#ga725f6cb01b392ea4d4e09a7fb1a7b1ea',1,'RBQ_API::Status']]]
+  ['frame_218',['Frame',['../structRBQ__API_1_1StateEstimation.html#a535e056b1024010f03813b713169f1cf',1,'RBQ_API::StateEstimation']]]
 ];
