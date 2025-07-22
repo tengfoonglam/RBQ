@@ -2,17 +2,6 @@ cmake_minimum_required(VERSION 3.22)
 
 project(Simple-motion LANGUAGES CXX)
 
-include(GNUInstallDirs)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -ffunction-sections -fdata-sections")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,--gc-sections -s")
-
-find_package(Eigen3 REQUIRED)
-find_package(RBQ REQUIRED)
-find_package(onnxruntime REQUIRED)
-
 add_executable(${PROJECT_NAME} main.cpp JointControl.h)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -23,13 +12,19 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 target_link_libraries(${PROJECT_NAME}
+    pthread
+    rt
     Eigen3::Eigen
-    ${RBQ_LIBRARY}
+    ${RCL_LIBRARY}
+    Qt5::Core
+    Qt5::Network
+    ${RBDL_LIBRARY}
     onnxruntime::onnxruntime
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${RBQ_INCLUDE_DIR}
+    ${RCL_INCLUDE_DIR}
+    ${RBDL_INCLUDE_DIR}
 )
 
 install(TARGETS ${PROJECT_NAME}

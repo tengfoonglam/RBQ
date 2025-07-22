@@ -10,7 +10,7 @@
 #include <termios.h>
 #include <thread>
 
-#include "rbq/Api.h"
+#include "rcl/Api.h"
 
 int __IS_WORKING;
 
@@ -121,11 +121,11 @@ int main(int argc, char *argv[])
                 break;
             case '1':
                 std::cout << "Sit command received." << std::endl;
-                rbqApi->motion.ground();
+                rbqApi->motion.sit();
                 break;
             case '2':
                 std::cout << "Stance command received." << std::endl;   
-                rbqApi->motion.ready();
+                rbqApi->motion.stand();
                 break;
             case '3':
                 std::cout << "Walk command received." << std::endl;
@@ -139,26 +139,26 @@ int main(int argc, char *argv[])
                 std::cout << "Running command received." << std::endl;
                 rbqApi->motion.run();
                 break;
-            case 'w':
-                joyCommandUpdated = true;
-                rbqApi->gamepad.setLeftJogX(1.0f);
-                break;
-            case 's':
-                joyCommandUpdated = true;
-                rbqApi->gamepad.setLeftJogX(-1.0f);
-                break;
-            case 'a':
-                joyCommandUpdated = true;
-                rbqApi->gamepad.setLeftJogY(-1.0f);
-                break;
-            case 'd':
-                joyCommandUpdated = true;
-                rbqApi->gamepad.setLeftJogY(1.0f);
-                break;
+            // case 'w':
+            //     joyCommandUpdated = true;
+            //     rbqApi->gamepad.setLeftJogX(1.0f);
+            //     break;
+            // case 's':
+            //     joyCommandUpdated = true;
+            //     rbqApi->gamepad.setLeftJogX(-1.0f);
+            //     break;
+            // case 'a':
+            //     joyCommandUpdated = true;
+            //     rbqApi->gamepad.setLeftJogY(-1.0f);
+            //     break;
+            // case 'd':
+            //     joyCommandUpdated = true;
+            //     rbqApi->gamepad.setLeftJogY(1.0f);
+            //     break;
         }
 
         if(joyCommandUpdated) {
-           rbqApi->gamepad.sendCommand();
+           // rbqApi->gamepad.sendCommand();
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));  // 10Hz
 

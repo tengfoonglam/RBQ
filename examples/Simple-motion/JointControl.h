@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "rbq/Api.h"
+#include "rcl/Api.h"
 
 // Constants
 constexpr int kMaxJoint = 12;
@@ -141,7 +141,7 @@ public:
     double getAngle(int idx) const { return m_joints[idx]->getCurrentAngle(); }
     void setAngle(int idx, double angle) { m_joints[idx]->setCurrentAngle(angle); }
 
-    void setOwner(int idx) { m_api->Joint.setMotionOwner(idx); }
+    void setOwner(int idx) { m_api->joint.setMotionOwner(idx); }
     void setAllOwners() {
         for (int i = 0; i < m_jointCount; ++i)
             setOwner(i);
@@ -172,23 +172,23 @@ public:
 
     void syncReferenceToRobot(int idx) {
         float ref;
-        m_api->Joint.getPosRef(idx, ref);
-        m_api->Joint.setPosRef(idx, ref);
+        m_api->joint.getPosRef(idx, ref);
+        m_api->joint.setPosRef(idx, ref);
         m_joints[idx]->setMoving(false);
         m_joints[idx]->setCurrentAngle(ref);
     }
 
     void syncPositionToRobot(int idx) {
         float pos;
-        m_api->Joint.getPos(idx, pos);
-        m_api->Joint.setPosRef(idx, pos);
+        m_api->joint.getPos(idx, pos);
+        m_api->joint.setPosRef(idx, pos);
         m_joints[idx]->setMoving(false);
         m_joints[idx]->setCurrentAngle(pos);
     }
 
     void sendReferencesToRobot() {
         for (int i = 0; i < m_jointCount; ++i)
-            m_api->Joint.setPosRef(i, m_joints[i]->getCurrentAngle());
+            m_api->joint.setPosRef(i, m_joints[i]->getCurrentAngle());
     }
 
 private:

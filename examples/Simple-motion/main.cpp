@@ -9,11 +9,11 @@
 #include <ctime>
 #include <Eigen/Dense>
 
-#include <onnxruntime_cxx_api.h>
+// #include <onnxruntime_cxx_api.h>
 
-#include "rbq/Api.h"
-#include "rbq/Thread.h"
-#include "rbq/Parameters.h"
+#include "rcl/Api.h"
+#include "rcl/Thread.h"
+#include "rcl/Parameters.h"
 #include "JointControl.h"
 
 constexpr float kR2D = 57.295779513f;
@@ -216,17 +216,17 @@ void goToMotionReady() {
     g_jointController->setAllOwners();
 
     for (int i = 0; i < kMaxJoint; ++i) {
-        g_api->Joint.setGainKp(i, 200.0f);
-        g_api->Joint.setGainKd(i, 2.5f);
+        g_api->joint.setGainKp(i, 200.0f);
+        g_api->joint.setGainKd(i, 2.5f);
     }
     usleep(500 * 1000);
 
     float motionTime = 1400.0f;
     float pitchAngles[4];
-    g_api->Joint.getPosRef(RBQ_API::JOINT::JointID::HRP, pitchAngles[0]);
-    g_api->Joint.getPosRef(RBQ_API::JOINT::JointID::HLP, pitchAngles[1]);
-    g_api->Joint.getPosRef(RBQ_API::JOINT::JointID::FRP, pitchAngles[2]);
-    g_api->Joint.getPosRef(RBQ_API::JOINT::JointID::FLP, pitchAngles[3]);
+    g_api->joint.getPosRef(RBQ_API::Joint::JointID::HRP, pitchAngles[0]);
+    g_api->joint.getPosRef(RBQ_API::Joint::JointID::HLP, pitchAngles[1]);
+    g_api->joint.getPosRef(RBQ_API::Joint::JointID::FRP, pitchAngles[2]);
+    g_api->joint.getPosRef(RBQ_API::Joint::JointID::FLP, pitchAngles[3]);
 
     bool isGrounded = (pitchAngles[0] > 60 * kD2R && pitchAngles[1] > 60 * kD2R &&
                        pitchAngles[2] > 60 * kD2R && pitchAngles[3] > 60 * kD2R);
@@ -251,8 +251,8 @@ void goToMotionGround() {
     g_jointController->setAllOwners();
 
     for (int i = 0; i < kMaxJoint; ++i) {
-        g_api->Joint.setGainKp(i, 200.0f);
-        g_api->Joint.setGainKd(i, 2.5f);
+        g_api->joint.setGainKp(i, 200.0f);
+        g_api->joint.setGainKd(i, 2.5f);
     }
 
     float motionTime = 2400.0f;
