@@ -1080,27 +1080,32 @@ public:
          * api->stateEstimation.getBodyPos(RBQ_API::StateEstimation::Frame::World, body_pos);
          * @endcode
          */
+
+        /**
+         * @brief Definition of Frame of Reference.
+         * @ingroup StateEstimationAPI
+         */
         enum class Frame : int {
             /**
-             * World: Fixed to the environment. The origin is the projection of the body center onto the ground at reset.
+             * Fixed to the environment. The origin is the projection of the body center onto the ground at reset.
              * Orientation: -Z aligned with gravity, +X aligned with the robot's facing direction projected onto the ground at reset.
              */
             World = 0,
 
             /**
-             * Body: Local body frame. Origin is the body center.
+             * Local body frame. Origin is the body center.
              * Orientation is fixed to the robot body (+X forward, +Z upward, +Y left).
              */
             Body = 1,
 
             /**
-             * Body_rp: Origin at body center.
+             * Origin at body center.
              * Orientation: -Z aligned with gravity, +X aligned with the robot's facing direction projected onto the ground.
              */
             Body_rp = 2,
 
             /**
-             * Body_rpy: Origin at body center.
+             * Origin at body center.
              * Orientation matches the global frame.
              */
             Body_rpy = 3
@@ -1115,51 +1120,217 @@ public:
 
         StateEstimation(RBQ_API* parent) : m_parent(parent) {}
 
-        // reset state and start state estimation
+        /**
+         * @brief Starts the state estimation process.
+         *
+         * Resets the coordinate origin to the current body center, with the robot's facing direction set as +X.
+         * Once started, the estimator updates the robot's state at 500Hz.
+         *
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int startEstimation();
 
-        // stop estimation
+        /**
+         * @brief Stops the state estimation process.
+         *
+         * Halts the estimator and stops updating the robot's state.
+         *
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int stopEstimation();
 
         // z direction external force is used for contact detection
         // this function update update contact detection threshold
         int updateContactThreshold(const float &_contact_threshold);
 
-        // get Estimator run state
+        /**
+         * @brief Returns the current run state of the estimator.
+         *
+         * Sets @p run_or_not_ to indicate the estimator status:
+         * - 0: Estimator is stopped
+         * - Non-zero: Estimator is running
+         *
+         * @param run_or_not_ Reference to receive the estimator run state.
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getEstimatorRunState(bool &run_or_not_);
 
+        /**
+         * @brief Returns the position of the robot's body center.
+         *
+         * Retrieves the body center position in the specified coordinate frame and stores it in @p body_pos_.
+         *
+         * @param _frame The coordinate frame for the output position.
+         * @param body_pos_ Reference to store the body center position (in meters).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getBodyPos(const Frame _frame, Eigen::Vector3f &body_pos_);
 
+        /**
+         * @brief Returns the velocity of the robot's body center.
+         *
+         * Retrieves the body center velocity in the specified coordinate frame and stores it in @p body_vel_.
+         *
+         * @param _frame The coordinate frame for the output velocity.
+         * @param body_vel_ Reference to store the body center velocity (in meters per second).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getBodyVel(const Frame _frame, Eigen::Vector3f &body_vel_);
 
+        /**
+         * @brief Returns the orientation of the robot's body center as a quaternion.
+         *
+         * Retrieves the body orientation in the specified coordinate frame and stores it in @p body_quat_.
+         *
+         * @param _frame The coordinate frame for the output orientation.
+         * @param body_quat_ Reference to store the body orientation as a quaternion (w, x, y, z).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
+        int getBodyQuat(const Frame _frame, Eigen::Quaternion<float> &body_quat_);
+
+        /**
+         * @brief Returns the orientation of the robot's body center as roll, pitch, and yaw angles.
+         *
+         * Retrieves the body orientation in the specified coordinate frame and stores it in @p body_rpy_.
+         * The angles are defined by the Euler ZYX convention: yaw → pitch → roll.
+         *
+         * @param _frame The coordinate frame for the output orientation.
+         * @param body_rpy_ Reference to store (roll, pitch, yaw) angles in radians.
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
+        int getBodyRPY(const Frame _frame, Eigen::Vector3f &body_rpy_);
+
+        /**
+         * @brief Returns the rotation matrix of the robot's body center.
+         *
+         * Retrieves the body orientation in the specified coordinate frame and stores it in @p body_rot_.
+         * The rotation matrix is a 3x3 matrix representing the orientation of the body center.
+         *
+         * @param _frame The coordinate frame for the output orientation.
+         * @param body_rot_ Reference to store the body rotation matrix (3x3).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
+        int getBodyRot(const Frame _frame, Eigen::Matrix3f &body_rot_);
+
+        /**
+         * @brief Returns the position of a specific foot in the specified coordinate frame.
+         *
+         * Retrieves the foot position in the specified coordinate frame and stores it in @p foot_pos_.
+         *
+         * @param _frame The coordinate frame for the output position.
+         * @param _legId The leg ID (valid range: 0 to 3).
+         * @param foot_pos_ Reference to store the foot position (in meters).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getFootPos(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_pos_);
 
+        /**
+         * @brief Overload using LegID.
+         * @see getFootPos(const Frame, const int&, Eigen::Vector3f&)
+         * @ingroup StateEstimationAPI
+         */
         int getFootPos(const Frame _frame, const LegID _legId, Eigen::Vector3f &foot_pos_){
             return getFootPos(_frame, static_cast<int>(_legId), foot_pos_);
         }
 
+        /**
+         * @brief Returns the velocity of a specific foot in the specified coordinate frame.
+         *
+         * Retrieves the foot velocity in the specified coordinate frame and stores it in @p foot_vel_.
+         *
+         * @param _frame The coordinate frame for the output velocity.
+         * @param _legId The leg ID (valid range: 0 to 3).
+         * @param foot_vel_ Reference to store the foot velocity (in meters per second).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getFootVel(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_vel_);
 
+        /**
+         * @brief Overload using LegID.
+         * @see getFootVel(const Frame, const int&, Eigen::Vector3f&)
+         * @ingroup StateEstimationAPI
+         */
         int getFootVel(const Frame _frame, const LegID &_legId, Eigen::Vector3f &foot_vel_){
             return getFootVel(_frame, static_cast<int>(_legId), foot_vel_);
         }
 
+        /**
+         * @brief Returns the Jacobian matrix of a specific foot in the specified coordinate frame.
+         *
+         * Retrieves the foot Jacobian in the specified coordinate frame and stores it in @p foot_jacobian_.
+         * The Jacobian is a 3x3 matrix representing the relationship between joint velocities and foot velocities.
+         *
+         * @param _frame The coordinate frame for the output Jacobian.
+         * @param _legId The leg ID (valid range: 0 to 3).
+         * @param foot_jacobian_ Reference to store the foot Jacobian (3x3 matrix).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getFootJacobian(const Frame _frame, const int &_legId, Eigen::Matrix3f &foot_jacobian_);
 
+        /**
+         * @brief Overload using LegID.
+         * @see getFootJacobian(const Frame, const int&, Eigen::Matrix3f&)
+         * @ingroup StateEstimationAPI
+         */
         int getFootJacobian(const Frame _frame, const LegID &_legId, Eigen::Matrix3f &foot_jacobian_){
             return getFootJacobian(_frame, static_cast<int>(_legId), foot_jacobian_);
         }
 
+        /**
+         * @brief Returns the force applied by a specific foot in the specified coordinate frame.
+         *
+         * Retrieves the foot force in the specified coordinate frame and stores it in @p foot_force_.
+         * The force is expressed in Newtons (N).
+         *
+         * @param _frame The coordinate frame for the output force.
+         * @param _legId The leg ID (valid range: 0 to 3).
+         * @param foot_force_ Reference to store the foot force (in Newtons).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getFootForce(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_force_);
 
+        /**
+         * @brief Overload using LegID.
+         * @see getFootForce(const Frame, const int&, Eigen::Vector3f&)
+         * @ingroup StateEstimationAPI
+         */
         int getFootForce(const Frame _frame, const LegID &_legId, Eigen::Vector3f &foot_force_){
             return getFootForce(_frame, static_cast<int>(_legId), foot_force_);
         }
 
+        /**
+         * @brief Returns the external force detected at a specific foot in the specified coordinate frame.
+         *
+         * Retrieves the external force applied to the foot in the specified coordinate frame and stores it in @p foot_contact_force_.
+         * This force is used for contact detection and is expressed in Newtons (N).
+         *
+         * @param _frame The coordinate frame for the output external force.
+         * @param _legId The leg ID (valid range: 0 to 3).
+         * @param foot_contact_force_ Reference to store the external force (in Newtons).
+         * @return 1 on success.
+         * @ingroup StateEstimationAPI
+         */
         int getFootExtForce(const Frame _frame, const int &_legId, Eigen::Vector3f &foot_contact_force_);
 
+        /**
+         * @brief Overload using LegID.
+         * @see getFootExtForce(const Frame, const int&, Eigen::Vector3f&)
+         * @ingroup StateEstimationAPI
+         */
         int getFootExtForce(const Frame _frame, const LegID &_legId, Eigen::Vector3f &foot_contact_force_){
-            return getFootForce(_frame, static_cast<int>(_legId), foot_contact_force_);
+            return getFootExtForce(_frame, static_cast<int>(_legId), foot_contact_force_);
         }
 
     private:

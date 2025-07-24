@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['button_216',['Button',['../group__GamepadAPI.html#gaf9ae8cd9844d42867754b07d52f5a441',1,'RBQ_API::Gamepad']]]
+  ['button_242',['Button',['../group__GamepadAPI.html#gaf9ae8cd9844d42867754b07d52f5a441',1,'RBQ_API::Gamepad']]]
 ];
