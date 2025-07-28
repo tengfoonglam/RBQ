@@ -9,7 +9,6 @@ BUILD_DIR="build"
 BIN_DIR="bin"
 RCL_DIR="$PWD/bin/rcl"
 ROS_DIR="$PWD/ros2"
-RBDL_DIR="$PWD/3rdparty/rbdl"
 BUILD_ROS=false
 
 print_help() {
