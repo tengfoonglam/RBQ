@@ -32,7 +32,7 @@ var searchData=
   ['getrightjogy_83',['getRightJogY',['../group__GamepadAPI.html#gaf146d1e7063f1e4a46aa11ba3ad5a84a',1,'RBQ_API::Gamepad']]],
   ['getrighttrigger_84',['getRightTrigger',['../group__GamepadAPI.html#ga7fdc40e497d937f278642f347d8e6e2d',1,'RBQ_API::Gamepad']]],
   ['getrpy_85',['getRPY',['../group__IMUSensorAPI.html#ga518a70607484b63601056cca70d21b72',1,'RBQ_API::Imu']]],
-  ['getstatusword_86',['getStatusWord',['../group__StatusAPI.html#ga4ac1a03e2a7248c21d6f43f0494492b1',1,'RBQ_API::Status']]],
+  ['getstatusword_86',['getStatusWord',['../group__StatusAPI.html#ga42bd8abc72c23d785d9432e61c43fe25',1,'RBQ_API::Status']]],
   ['gettorque_87',['getTorque',['../group__JointControlAPI.html#ga513447cd04ca798ebea31ae2d477e4ff',1,'RBQ_API::Joint::getTorque(const int &amp;_jointId, float &amp;joint_torque_)'],['../group__JointControlAPI.html#gad9d2bfee69c2171a9bbc4d7690bd1526',1,'RBQ_API::Joint::getTorque(const JointID _jointId, float &amp;joint_torque_)']]],
   ['getvel_88',['getVel',['../group__JointControlAPI.html#ga1fe9127e43b68f6ba60c2307ade23f40',1,'RBQ_API::Joint::getVel(const int &amp;_jointId, float &amp;joint_vel_rad_per_sec_)'],['../group__JointControlAPI.html#ga894e3ac2fe557c6d5ddc366c481754cd',1,'RBQ_API::Joint::getVel(const JointID _jointId, float &amp;joint_vel_rad_per_sec_)']]]
 ];

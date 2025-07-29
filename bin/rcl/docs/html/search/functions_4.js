@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parametersupdate_219',['parametersUpdate',['../group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5',1,'RBQ_API::Motion']]]
+  ['initialize_220',['initialize',['../classRBQ__API.html#a2698c8289f1e0718865cf1142348c392',1,'RBQ_API']]]
 ];

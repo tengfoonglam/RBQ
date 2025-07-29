@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stat_249',['STAT',['../group__StatusAPI.html#ga55d067c30acca13567c9ee40857113f1',1,'RBQ_API::Status']]]
+  ['stat_250',['STAT',['../group__StatusAPI.html#ga55d067c30acca13567c9ee40857113f1',1,'RBQ_API::Status']]]
 ];
