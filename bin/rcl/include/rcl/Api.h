@@ -1,18 +1,27 @@
 #ifndef RBQ_API_H
 #define RBQ_API_H
 
+#include <mutex>
+
 #if defined(PRIVATE)
 #include "SharedMemory.h"
 #endif
 #include <Eigen/Dense>
 
-class RBQ_API
-{
+class StateEstimator;
+
+class RBQ_API {
 public:
+    static RBQ_API& instance();
+    RBQ_API(const RBQ_API&) = delete;
+    RBQ_API& operator=(const RBQ_API&) = delete;
+    RBQ_API(RBQ_API&&) = delete;
+    RBQ_API& operator=(RBQ_API&&) = delete;
+
     /**
-     * @brief Constructs an RBQ_API object with a specific process ID.
+     * @brief initialize an RBQ_API instance with a specific process ID.
      *
-     * This constructor assigns a unique process ID to this control instance.
+     * This function assigns a unique process ID to this control instance.
      * Process IDs in the range [20, 39] are reserved for user-level applications.
      * This allows multiple user processes or threads to interact with the robot independently.
      *
@@ -23,11 +32,12 @@ public:
      *
      * @param _processId The ID of this process (should be in range [20, 39] for user applications).
      */
-    RBQ_API(const int &_processId, const bool _local = true); //for user id range = [20, 39]
+    int initialize(const int &_processId, const bool _local); //for user id range = [20, 39]
 #if defined(PRIVATE)
-    RBQ_API(const bool _local = true);
+    int initialize(const bool _local);
 #endif
-    ~RBQ_API();
+
+    bool isInitialized() { return m_initialized; }
 
     struct Motion {
         /**
@@ -394,7 +404,7 @@ public:
          * 
          * @ingroup StatusAPI
          */
-        int getStatusWord(const STAT _stat, int &status_);
+        int getStatusWord(const STAT &_stat, int &status_);
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
@@ -1401,6 +1411,14 @@ private:
 
 
 #endif // PRIVATE
+
+private:
+    RBQ_API();
+    ~RBQ_API();
+    static bool         m_initialized;
+    static std::mutex   m_mutex;
+
+    friend class StateEstimator;
 };
 
 #endif // RBQ_API_H

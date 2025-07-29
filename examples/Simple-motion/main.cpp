@@ -21,7 +21,7 @@ constexpr float kD2R = 0.0174532925f;
 constexpr long kControlPeriodUs = kControlPeriodMs * 1000;
 
 JointTable g_jointTable;
-std::unique_ptr<RBQ_API> g_api;
+// std::unique_ptr<RBQ_API> RBQ_API::instance();
 std::unique_ptr<JointController> g_jointController;
 
 int g_jointJogNo = 0;
@@ -80,9 +80,10 @@ int main(int argc, char* argv[]) {
     }
 
     try {
-        g_api = std::make_unique<RBQ_API>(20);
-        g_jointController = std::make_unique<JointController>(g_api.get(), kMaxJoint);
+        RBQ_API::instance().initialize(22, true);
+        g_jointController = std::make_unique<JointController>(&RBQ_API::instance(), kMaxJoint);
         g_jointController->syncReferenceToRobot();
+        RBQ_API::instance().stateEstimation.startEstimation();
     } catch (const std::exception& e) {
         std::cerr << "Initialization failed: " << e.what() << "\n";
         cleanupResources();
@@ -99,7 +100,7 @@ int main(int argc, char* argv[]) {
 
     g_isWorking = true;
 
-    while (g_isWorking && g_api && g_jointController) {
+    while (g_isWorking && g_jointController) {
         char key = readKeyboard();
         UserCommand command = UserCommand::None;
 
@@ -142,7 +143,7 @@ void* controlLoop(void*) {
     usleep(100 * 1000);
     clock_gettime(CLOCK_REALTIME, &timeNext);
 
-    while (g_isWorking && g_api && g_jointController) {
+    while (g_isWorking && g_jointController) {
 
         switch (g_currentTask) {
             case TaskState::Idle:
@@ -206,27 +207,26 @@ void signalHandler(int signal) {
 void cleanupResources() {
     std::cout << "Cleaning up...\n";
     g_jointController.reset();
-    g_api.reset();
     std::cout << "Resources cleaned.\n";
 }
 
 void goToMotionReady() {
-    if (!g_jointController || !g_api) return;
+    if (!g_jointController) return;
     g_jointController->syncReferenceToRobot();
     g_jointController->setAllOwners();
 
     for (int i = 0; i < kMaxJoint; ++i) {
-        g_api->joint.setGainKp(i, 200.0f);
-        g_api->joint.setGainKd(i, 2.5f);
+        RBQ_API::instance().joint.setGainKp(i, 200.0f);
+        RBQ_API::instance().joint.setGainKd(i, 2.5f);
     }
     usleep(500 * 1000);
 
     float motionTime = 1400.0f;
     float pitchAngles[4];
-    g_api->joint.getPosRef(RBQ_API::Joint::JointID::HRP, pitchAngles[0]);
-    g_api->joint.getPosRef(RBQ_API::Joint::JointID::HLP, pitchAngles[1]);
-    g_api->joint.getPosRef(RBQ_API::Joint::JointID::FRP, pitchAngles[2]);
-    g_api->joint.getPosRef(RBQ_API::Joint::JointID::FLP, pitchAngles[3]);
+    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::HRP, pitchAngles[0]);
+    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::HLP, pitchAngles[1]);
+    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::FRP, pitchAngles[2]);
+    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::FLP, pitchAngles[3]);
 
     bool isGrounded = (pitchAngles[0] > 60 * kD2R && pitchAngles[1] > 60 * kD2R &&
                        pitchAngles[2] > 60 * kD2R && pitchAngles[3] > 60 * kD2R);
@@ -246,13 +246,13 @@ void goToMotionReady() {
 }
 
 void goToMotionGround() {
-    if (!g_jointController || !g_api) return;
+    if (!g_jointController) return;
     g_jointController->syncReferenceToRobot();
     g_jointController->setAllOwners();
 
     for (int i = 0; i < kMaxJoint; ++i) {
-        g_api->joint.setGainKp(i, 200.0f);
-        g_api->joint.setGainKd(i, 2.5f);
+        RBQ_API::instance().joint.setGainKp(i, 200.0f);
+        RBQ_API::instance().joint.setGainKd(i, 2.5f);
     }
 
     float motionTime = 2400.0f;
