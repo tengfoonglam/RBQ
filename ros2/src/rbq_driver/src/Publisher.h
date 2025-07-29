@@ -220,10 +220,14 @@ private:
     rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr m_publisher_IMUState;
 
     // std::vector<std::string> m_jointNames{"HRR", "HRP", "HRK", "HLR", "HLP", "HLK", "FRR", "FRP", "FRK", "FLR", "FLP", "FLK"};
-    std::vector<std::string> m_jointNames{"RR_hip_joint", "RR_thigh_joint", "RR_calf_joint",
-                                          "RL_hip_joint", "RL_thigh_joint", "RL_calf_joint",
-                                          "FR_hip_joint", "FR_thigh_joint", "FR_calf_joint",
-                                          "FL_hip_joint", "FL_thigh_joint", "FL_calf_joint"};
+    // std::vector<std::string> m_jointNames{"RR_hip_joint", "RR_thigh_joint", "RR_calf_joint",
+    //                                       "RL_hip_joint", "RL_thigh_joint", "RL_calf_joint",
+    //                                       "FR_hip_joint", "FR_thigh_joint", "FR_calf_joint",
+    //                                       "FL_hip_joint", "FL_thigh_joint", "FL_calf_joint"};
+    std::vector<std::string> m_jointNames{"joint0_HRR", "joint1_HRP", "joint2_HRK",
+                                          "joint3_HLR", "joint4_HLP", "joint5_HLK",
+                                          "joint6_FRR", "joint7_FRP", "joint8_FRK",
+                                          "joint9_FLR", "joint10_FLP", "joint11_FLK"};
     // ['RR_hip_joint', 'RR_thigh_joint', 'RR_calf_joint', 'RL_hip_joint', 'RL_thigh_joint', 'RL_calf_joint', 'FR_hip_joint', 'FR_thigh_joint', 'FR_calf_joint', 'FL_hip_joint', 'FL_thigh_joint', 'FL_calf_joint']
 
     std::shared_ptr<RobotApiHandler> m_robotApiHandler = nullptr;

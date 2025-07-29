@@ -26,9 +26,9 @@ def generate_launch_description() -> launch.LaunchDescription:
             ),
             DeclareLaunchArgument(name="arm", default_value="False", description="Flag to enable arm"),
             DeclareLaunchArgument(
-                "tf_prefix", default_value='"rbq"', description="Apply namespace prefix to robot links and joints"
+                "tf_prefix", default_value='"rbq10"', description="Apply namespace prefix to robot links and joints"
             ),
-            DeclareLaunchArgument("namespace", default_value="rbq", description="Namespace for robot tf topic"),
+            DeclareLaunchArgument("namespace", default_value="rbq10", description="Namespace for robot tf topic"),
             Node(
                 package="robot_state_publisher",
                 executable="robot_state_publisher",
@@ -48,7 +48,7 @@ def generate_launch_description() -> launch.LaunchDescription:
                 ],
                 namespace=LaunchConfiguration("namespace"),
                 remappings=[
-                    ('/joint_states', '/robot_state/joint_state')
+                    ('/joint_states', '/robot_state/joint_states')
                 ],
             ),
             Node(
@@ -58,7 +58,7 @@ def generate_launch_description() -> launch.LaunchDescription:
                 condition=launch.conditions.UnlessCondition(LaunchConfiguration("gui")),
                 namespace=LaunchConfiguration("namespace"),
                 remappings=[
-                    ('/joint_states', '/robot_state/joint_state')
+                    ('/joint_states', '/robot_state/joint_states')
                 ],
             ),
             Node(

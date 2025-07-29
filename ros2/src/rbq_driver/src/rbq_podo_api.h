@@ -1,6 +1,66 @@
 #ifndef RBQ_PODO_API_H
 #define RBQ_PODO_API_H
 
+#include <string>
+#include <map>
+
+const std::map<int, std::string> APP_NAMES {
+    //-------------------------------------Internal Programs----------------------------------
+    {0 , "Motion"},
+    {1 , "Network"},
+    {2 , "WalkReady"},
+    {3 , "QuadWalk"},
+    {4 , "ManiControl"},
+    {5 , "Calibration"},
+    {6 , "Estimation"},
+    {7 , "RcEquipment"},
+    {8 , "RLWalk"},
+    {9 , "GUI"},
+    {10, "0"},
+    {11, "0"},
+    {12, "0"},
+    {13, "0"},
+    {14, "0"},
+    {15, "0"},
+    {16, "0"},
+    {17, "0"},
+    {18, "0"},
+    {19, "0"},
+    //---------------------------------------------------------------------------------------
+
+    //----------------------------------External Programs for User---------------------------
+    {20, "0"},
+    {21, "0"},
+    {22, "0"},
+    {23, "0"},
+    {24, "0"},
+    {25, "0"},
+    {26, "0"},
+    {27, "0"},
+    {28, "0"},
+    {29, "0"},
+    {30, "0"},
+    {31, "0"},
+    {32, "0"},
+    {33, "0"},
+    {34, "0"},
+    {35, "0"},
+    {36, "0"},
+    {37, "0"},
+    {38, "0"},
+    {39, "0"},
+    //---------------------------------------------------------------------------------------
+};
+
+static inline int FindProgramNumberByName(const std::string& _name) {
+    for (const auto& pair : APP_NAMES) {
+        if (pair.second == _name) {
+            return pair.first;
+        }
+    }
+    return -1;
+}
+
 // GUI to ROBOT
 struct USER_COMMAND
 {
@@ -10,14 +70,6 @@ struct USER_COMMAND
     int     USER_PARA_INT   [40]    = {0,};
     float   USER_PARA_FLOAT [40]    = {0,};
     double  USER_PARA_DOUBLE[40]    = {0,};
-};
-
-enum MOTION_APP_IDs_e {
-    Daemon = 1,
-    WalkReady,
-    QuadWalk,
-    ManiControl,
-    Calibration,
 };
 
 // ---------Daemon AL------------

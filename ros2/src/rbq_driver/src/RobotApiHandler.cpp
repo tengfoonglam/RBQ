@@ -2,27 +2,6 @@
 #include <QProcess>
 #include <QDebug>
 
-static inline int command_terminal_ping_check(const std::string &ip)
-{
-    int ret=0;
-    QProcess *proc;
-    proc = new QProcess();
-    proc->start("ping", QStringList() << "-c 2" << ip.data());
-    proc->waitForFinished(-1);
-    QByteArray output = proc->readAllStandardOutput();
-    if (!output.isEmpty()){
-        if (-1 != QString(output).indexOf("ttl", 0, Qt::CaseInsensitive)){
-            qDebug() << ip.data() << ", PING OK";
-            ret = 1;
-        }
-        else{
-            qDebug() << ip.data() << ", PING Fail";
-        }
-    }
-    delete proc;
-    return ret;
-}
-
 #include <QCoreApplication>
 #include <QDebug>
 
@@ -115,7 +94,7 @@ void RobotApiHandler::startMotionProgram(const bool &_start, const int &_id)
         cmd.USER_COMMAND = 2; // stop
     }
     cmd.USER_PARA_INT[0] = _id;
-    cmd.COMMAND_TARGET = Daemon;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
 
     setUserCommand(cmd);
 }
@@ -124,7 +103,7 @@ void RobotApiHandler::autoStart()
 {
     qDebug() << "RobotApiHandler::autoStart()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = Daemon;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
     cmd.USER_COMMAND = DAEMON_INIT_AUTOSTART;
     int mode = 1; // Ground pose : 1,
     cmd.USER_PARA_CHAR[1] = mode;
@@ -135,7 +114,7 @@ void RobotApiHandler::canCheck()
 {
     qDebug() << "RobotApiHandler::canCheck()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = Daemon;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
     cmd.USER_COMMAND = DAEMON_INIT_CHECK_DEVICE;
     cmd.USER_PARA_CHAR[0] = 12; // ALL
     setUserCommand(cmd);
@@ -145,7 +124,7 @@ void RobotApiHandler::findHome()
 {
     qDebug() << "RobotApiHandler::findHome()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = Daemon;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
     cmd.USER_COMMAND = DAEMON_INIT_FIND_HOME;
     cmd.USER_PARA_CHAR[0] = -1; // ALL
     int mode = 1; // Ground pose : 1,
@@ -157,7 +136,7 @@ void RobotApiHandler::motionStaticLock()
 {
     qDebug() << "RobotApiHandler::motionStaticLock()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = WalkReady;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("WalkReady");
     cmd.USER_COMMAND = WalkReady_CURRENT_POS_LOCK;
     setUserCommand(cmd);
 }
@@ -166,7 +145,7 @@ void RobotApiHandler::motionStaticReady()
 {
     qDebug() << "RobotApiHandler::motionStaticReady()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = WalkReady;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("WalkReady");
     cmd.USER_COMMAND = WalkReady_MOTION_READY;
     setUserCommand(cmd);
 }
@@ -175,7 +154,7 @@ void RobotApiHandler::motionStaticGround()
 {
     qDebug() << "RobotApiHandler::motionStaticGround()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = WalkReady;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("WalkReady");
     cmd.USER_COMMAND = WalkReady_MOTION_GROUND;
     setUserCommand(cmd);
 }
@@ -184,7 +163,7 @@ void RobotApiHandler::motionDynamicGround()
 {
     qDebug() << "RobotApiHandler::motionDynamicGround()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_STAND_DOWN;
     setUserCommand(cmd);
     setWalking(false);
@@ -194,7 +173,7 @@ void RobotApiHandler::motionDynamicReady()
 {
     qDebug() << "RobotApiHandler::motionDynamicReady()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_TO_STANCE_MODE;
     setUserCommand(cmd);
     setWalking(false);
@@ -204,7 +183,7 @@ void RobotApiHandler::motionDynamicWalk()
 {
     qDebug() << "RobotApiHandler::motionDynamicWalk()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_TO_WALK_MODE;
     setUserCommand(cmd);
     setWalking(true);
@@ -214,7 +193,7 @@ void RobotApiHandler::motionDynamicWalkSlow()
 {
     qDebug() << "RobotApiHandler::motionDynamicWalkSlow()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_GAIT_TRANSITION;
     cmd.USER_PARA_CHAR[0] = TO_WAVE; // Wave
     setUserCommand(cmd);
@@ -225,7 +204,7 @@ void RobotApiHandler::motionDynamicWalkStairs()
 {
     qDebug() << "RobotApiHandler::motionDynamicWalkSlow()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_GAIT_TRANSITION;
     cmd.USER_PARA_CHAR[0] = TO_TROT_S; // Stairs
     setUserCommand(cmd);
@@ -236,7 +215,7 @@ void RobotApiHandler::motionDynamicRun()
 {
     qDebug() << "RobotApiHandler::motionsDynamicRun()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_GAIT_TRANSITION;
     cmd.USER_PARA_CHAR[0] = TO_RUN; // Run
     setUserCommand(cmd);
@@ -247,7 +226,7 @@ void RobotApiHandler::motionDynamicAim()
 {
     qDebug() << "RobotApiHandler::motionDynamicAim()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_TO_AIMING_MODE;
     setUserCommand(cmd);
     setWalking(false);
@@ -260,7 +239,7 @@ void RobotApiHandler::motionParametersUpdate()
              << " -- body height: " << m_bodyHeight
              << " -- foot height: " << m_footHeight;
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_WALK_PARAMETER_UPDATE;
     cmd.USER_PARA_FLOAT[0]= m_bodyHeight;
     cmd.USER_PARA_FLOAT[1]= m_maxSpeed;
@@ -275,7 +254,7 @@ void RobotApiHandler::motionDynamicNavigateTo(const float &_targetPosX, const fl
              << " -- body height: " << m_bodyHeight
              << " -- foot height: " << m_footHeight;
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET  = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND    = QuadWalk_WAVE_TO_TARGET_POINT;
     cmd.USER_PARA_FLOAT[0]  = _targetPosX;  // target position X (m)
     cmd.USER_PARA_FLOAT[1]  = _targetPosY;  // target position Y (m)
@@ -292,7 +271,7 @@ void RobotApiHandler::recovery1()
 {
     qDebug() << "RobotApiHandler::recovery1()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = WalkReady;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("WalkReady");
     cmd.USER_COMMAND = WalkReady_GO_RECOVERY_READY;
     setUserCommand(cmd);
 }
@@ -301,7 +280,7 @@ void RobotApiHandler::recovery2()
 {
     qDebug() << "RobotApiHandler::recovery2()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = WalkReady;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("WalkReady");
     cmd.USER_COMMAND = WalkReady_FALL_RECOVERY_MOTION;
     setUserCommand(cmd);
 }
@@ -310,7 +289,7 @@ void RobotApiHandler::calibrateAccelerometer()
 {
     qDebug() << "RobotApiHandler::calibrateAccelerometer()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = Daemon;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
     cmd.USER_COMMAND = DAEMON_ACC_CALIBRATION;
     setUserCommand(cmd);
 }
@@ -320,7 +299,7 @@ void RobotApiHandler::comEstimationCompensation(const int &stage)
     qDebug() << "RobotApiHandler::comEstimationCompensation()";
     if(-1 < stage && stage < 3) {
         USER_COMMAND cmd;
-        cmd.COMMAND_TARGET = QuadWalk;
+        cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
         cmd.USER_COMMAND = QuadWalk_SYS_ID;
         cmd.USER_PARA_INT[0] = stage;
         setUserCommand(cmd);
@@ -333,8 +312,18 @@ void RobotApiHandler::eStop()
 {
     qDebug() << "RobotApiHandler::eStop()";
     USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = QuadWalk;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
     cmd.USER_COMMAND = QuadWalk_E_STOP;
+    setUserCommand(cmd);
+}
+
+void RobotApiHandler::switchSecondaryGamepad(const bool &_secondary)
+{
+    qDebug() << "RobotApiHandler::switchSecondaryGamepad() " << _secondary;
+    USER_COMMAND cmd;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
+    cmd.USER_COMMAND = DAEMON_EXT_JOYSTICK_ONOFF;
+    cmd.USER_PARA_CHAR[0] = _secondary;
     setUserCommand(cmd);
 }
 
@@ -343,7 +332,7 @@ void RobotApiHandler::switchPowerOnOff(const PDU_PORT_IDs_e &pdu_port_id, const 
     qDebug() << "RobotApiHandler::switchPowerOnOff() switch id " << pdu_port_id << " state: " << state;
     USER_COMMAND cmd;
     cmd.USER_COMMAND = DAEMON_PDU_POWER_CONTROL;
-    cmd.COMMAND_TARGET = Daemon;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
     cmd.USER_PARA_CHAR[0] = pdu_port_id;
     cmd.USER_PARA_CHAR[1] = state; // 0: OFF;     1: ON;
     setUserCommand(cmd);
@@ -407,16 +396,6 @@ void RobotApiHandler::switchPowerUsbHub(const bool &state_)
 {
     qDebug() << "RobotApiHandler::switchPowerUsbHub()" << state_;
     switchPowerOnOff(PDU_PORT_5V_CAMERAS, state_);
-}
-
-void RobotApiHandler::switchSecondaryGamepad(const bool &_secondary)
-{
-    qDebug() << "RobotApiHandler::switchSecondaryGamepad() " << _secondary;
-    USER_COMMAND cmd;
-    cmd.COMMAND_TARGET = Daemon;
-    cmd.USER_COMMAND = DAEMON_EXT_JOYSTICK_ONOFF;
-    cmd.USER_PARA_CHAR[0] = _secondary;
-    setUserCommand(cmd);
 }
 
 void RobotApiHandler::setBodyHeight(const int &newBodyHeight)

@@ -6,7 +6,7 @@
     tf_prefix">
 
         <!-- Optional custom includes. -->
-            <xacro:include filename="$(find rbq_description)/urdf/rbq.urdf" />
+            <xacro:include filename="$(find rbq_description)/urdf/rbq10.urdf" />
 
         <!-- Include Arm if necessary-->
         <xacro:if value="${arm}">
