@@ -28,7 +28,7 @@ cd $APP_PATH
 while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then
-		./"$APP_NAME" 
+        ./"$APP_NAME" 
     fi
     sleep 2
 done
