@@ -169,6 +169,15 @@ public:
          */
         void eStop();
 
+        /**
+         * @ingroup MotionAPI
+         * @brief Immediately reboots the robot pc.
+         *
+         * To safely execute the command, first, call @ref sit() to sit down, then call @ref eStop() to stop.
+         *
+         */
+        void pcReboot();
+
         void cruiseControl(const bool &_increase = true);
 
         /**
@@ -185,6 +194,30 @@ public:
         void zmpCalibrate();
 
         void lockAllJoint();
+
+        int getHighLevelCMD(
+            float &roll, float &pitch, float &yaw,
+            float &vel_x, float &vel_y, float &omega_z,
+            float &delta_body_h, float &delta_foot_h, float &delta_max_speed,
+            int &gait_id);
+
+        int setHighLevelCMD(
+            const float &roll,
+            const float &pitch,
+            const float &yaw,
+            const float &vel_x,
+            const float &vel_y,
+            const float &omega_z,
+            const float &delta_body_h,
+            const float &delta_foot_h,
+            const float &delta_max_speed,
+            const int   &gait_id);
+
+        int setModeGamepadCommand();
+
+        int setModeHighLevelCommand();
+
+        void HighLevelCmd();
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
@@ -1383,6 +1416,10 @@ public:
 
     void setCommand(const COMMAND_STRUCT &cmd);
 
+    int setCommand(const HIGH_LEVEL_CMD &cmd);
+
+    void setCommand(const RBQ_SDK::HighLevelCmd_t &cmd);
+
 private:
     pRBCORE_SHM_COMMAND     m_sharedCMD            = nullptr;
     pRBCORE_SHM_REFERENCE   m_sharedREF            = nullptr;
@@ -1393,6 +1430,7 @@ private:
     pRBCORE_SHM_SENSOR _getSensorData();
     pRBCORE_SHM_REFERENCE _getRefData();
     pRBCORE_SHM_COMMAND _getCmdData();
+    pUSER_SHM _getUserData();
 
     int m_processId = -1;
 

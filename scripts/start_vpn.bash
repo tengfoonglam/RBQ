@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+if false; then
+    sudo apt install wireguard resolvconf -y && \
+    sudo systemctl enable resolvconf.service && \
+    sudo systemctl start resolvconf.service
+fi
+if false; then
+    sudo cp ./*.conf /etc/wireguard/wg0.conf
+fi
 clear
 while true; do
     if ping -c 1 -W 1 8.8.8.8 &> /dev/null; then

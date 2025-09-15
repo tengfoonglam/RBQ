@@ -48,6 +48,7 @@ add_executable(${PROJECT_NAME}
     src/ipc.h
     src/ipc.cpp
     src/VisionPublisher.h
+    src/VisionSubscriber.h
 )
 
 target_include_directories(

@@ -36,18 +36,18 @@ public:
         , m_sleepTime(_m_sleepTime)
         , m_robotApiHandler(robotApiHandler)
     {
-        m_publisher_robotState = this->create_publisher<rbq_msgs::msg::RobotState>("rbq10/robot_state", 10);
-        m_publisher_footStates = this->create_publisher<rbq_msgs::msg::FootStates>("rbq10/foot_state", 10);
+        m_publisher_robotState = this->create_publisher<rbq_msgs::msg::RobotState>("rbq/robot_state", 10);
+        m_publisher_footStates = this->create_publisher<rbq_msgs::msg::FootStates>("rbq/foot_state", 10);
         m_timer_robotState = this->create_wall_timer(
             m_sleepTime, std::bind(&Publisher::publishRobotState, this));
 
-        m_publisher_odometry = this->create_publisher<nav_msgs::msg::Odometry>("rbq10/odometry", 10);
+        m_publisher_odometry = this->create_publisher<nav_msgs::msg::Odometry>("rbq/odometry", 10);
 
-        m_publisher_jointStates = this->create_publisher<sensor_msgs::msg::JointState>("rbq10/joint_states", 10);
+        m_publisher_jointStates = this->create_publisher<sensor_msgs::msg::JointState>("rbq/joint_states", 10);
         m_timer_jointStates = this->create_wall_timer(
             m_sleepTime, std::bind(&Publisher::publishJointStates, this));
 
-        m_publisher_IMUState = this->create_publisher<sensor_msgs::msg::Imu>("rbq10/IMU_state", 10);
+        m_publisher_IMUState = this->create_publisher<sensor_msgs::msg::Imu>("rbq/IMU_state", 10);
         m_timer_IMUState = this->create_wall_timer(
             m_sleepTime, std::bind(&Publisher::publishIMUState, this));
 

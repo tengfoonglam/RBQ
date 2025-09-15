@@ -118,6 +118,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>wave</b> ()</td></tr>
 <tr class="memitem:ga27c2a9379c67ee7448a7e022a8d490ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#ga27c2a9379c67ee7448a7e022a8d490ea">eStop</a> ()</td></tr>
 <tr class="memdesc:ga27c2a9379c67ee7448a7e022a8d490ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediately stops the robot by disabling control and applying high damping to all joints.  <a href="group__MotionAPI.html#ga27c2a9379c67ee7448a7e022a8d490ea">More...</a><br /></td></tr>
 <tr class="separator:ga27c2a9379c67ee7448a7e022a8d490ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacba5df5dbd643edb1e354b7bb9e5a027"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#gacba5df5dbd643edb1e354b7bb9e5a027">pcReboot</a> ()</td></tr>
+<tr class="memdesc:gacba5df5dbd643edb1e354b7bb9e5a027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediately reboots the robot pc.  <a href="group__MotionAPI.html#gacba5df5dbd643edb1e354b7bb9e5a027">More...</a><br /></td></tr>
+<tr class="separator:gacba5df5dbd643edb1e354b7bb9e5a027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c58dfa78a457ddc8f79c6a48e6814f1"><td class="memItemLeft" align="right" valign="top"><a id="a4c58dfa78a457ddc8f79c6a48e6814f1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>cruiseControl</b> (const bool &amp;_increase=true)</td></tr>
 <tr class="separator:a4c58dfa78a457ddc8f79c6a48e6814f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,6 +133,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>zmpCalibrate</b> ()</
 <tr class="memitem:abbd5e3bad6b66b1d9ad75c529e0d332d"><td class="memItemLeft" align="right" valign="top"><a id="abbd5e3bad6b66b1d9ad75c529e0d332d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>lockAllJoint</b> ()</td></tr>
 <tr class="separator:abbd5e3bad6b66b1d9ad75c529e0d332d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a046657e52559fef928a508c87599e249"><td class="memItemLeft" align="right" valign="top"><a id="a046657e52559fef928a508c87599e249"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getHighLevelCMD</b> (float &amp;roll, float &amp;pitch, float &amp;yaw, float &amp;vel_x, float &amp;vel_y, float &amp;omega_z, float &amp;delta_body_h, float &amp;delta_foot_h, float &amp;delta_max_speed, int &amp;gait_id)</td></tr>
+<tr class="separator:a046657e52559fef928a508c87599e249"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac219435042cc7e5368d636f284835b91"><td class="memItemLeft" align="right" valign="top"><a id="ac219435042cc7e5368d636f284835b91"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>setHighLevelCMD</b> (const float &amp;roll, const float &amp;pitch, const float &amp;yaw, const float &amp;vel_x, const float &amp;vel_y, const float &amp;omega_z, const float &amp;delta_body_h, const float &amp;delta_foot_h, const float &amp;delta_max_speed, const int &amp;gait_id)</td></tr>
+<tr class="separator:ac219435042cc7e5368d636f284835b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8a69782f81557f2c7b4e70bb55ea37d"><td class="memItemLeft" align="right" valign="top"><a id="ab8a69782f81557f2c7b4e70bb55ea37d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>setModeGamepadCommand</b> ()</td></tr>
+<tr class="separator:ab8a69782f81557f2c7b4e70bb55ea37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a676cfa9c4749a40512bb5e096e6a436e"><td class="memItemLeft" align="right" valign="top"><a id="a676cfa9c4749a40512bb5e096e6a436e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>setModeHighLevelCommand</b> ()</td></tr>
+<tr class="separator:a676cfa9c4749a40512bb5e096e6a436e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d1503bee1938c28e9483f0709c03bd0"><td class="memItemLeft" align="right" valign="top"><a id="a6d1503bee1938c28e9483f0709c03bd0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>HighLevelCmd</b> ()</td></tr>
+<tr class="separator:a6d1503bee1938c28e9483f0709c03bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>/workspace/src/rcl/<a class="el" href="Api_8h_source.html">Api.h</a></li>

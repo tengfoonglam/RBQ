@@ -18,10 +18,18 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Exit if executed with sudo
-if [ "$EUID" -eq 0 ]; then
-    echo "Do not run this script with sudo. Exiting..."
-    exit 1
+if [ "$SIM_MODE" = true ]; then
+    if [ ! "$EUID" -eq 0 ]; then
+        echo "Run this script with sudo. Exiting..."
+        sleep 10
+        exit 1
+    fi
+else
+    if [ "$EUID" -eq 0 ]; then
+        echo "Do not run this script with sudo. Exiting..."
+        sleep 10
+        exit 1
+    fi
 fi
 
 # Check if already running
@@ -35,18 +43,12 @@ function set_terminal_title {
     echo -ne "\033]0;$1\007"
 }
 set_terminal_title "$APP_NAME"
-
 source ros2/install/setup.bash
 
-# Run loop
 while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then
-        if [ "$SIM_MODE" = true ]; then
-            ros2 launch rbq_description description.launch.py -s
-        else
-            ros2 launch rbq_description description.launch.py
-        fi
+        ros2 launch rbq_description description.launch.py
     fi
     sleep 2
 done

@@ -464,7 +464,7 @@ Visualization Manager:
       Value: true
   Enabled: true
   Global Options:
-    Background Color: 153; 193; 241
+    Background Color: 0; 0; 0
     Fixed Frame: trunk
     Frame Rate: 30
   Name: root

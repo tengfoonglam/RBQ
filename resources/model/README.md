@@ -19,3 +19,28 @@ The model is designed for use in simulation environments such as [MuJoCo](https:
 - `configs/rbq_enviroment.xml`: Main MJCF file for the RBQ robot model  
 - `meshes/`: Directory containing mesh and texture files  
 
+## 📜 License
+
+This project is licensed under the [Apache-2.0 License](LICENSE).  
+You are free to use, modify, and distribute it under the terms of this license.
+
+## 📚 Citation
+
+If you use this model in your research or publication, please consider citing Rainbow Robotics.  
+Citation details will be added once an official publication is available.
+
+## URDF → MJCF derivation steps
+
+1. Converted the DAE [mesh
+   files](https://github.com/unitreerobotics/unitree_ros/tree/master/robots/go2_description/meshes) to OBJ format using [Blender](https://www.blender.org/).
+   - When exporting, ensure "up axis" is `+Z`, and "forward axis" is `+Y`.
+2. Processed `.obj` files with [`obj2mjcf`](https://github.com/kevinzakka/obj2mjcf).
+3. Added `<mujoco> <compiler discardvisual="false" strippath="false" fusestatic="false"/> </mujoco>` to the URDF's
+   `<robot>` clause in order to preserve visual geometries.
+4. Loaded the URDF into MuJoCo and saved a corresponding MJCF.
+5. Added a `<freejoint/>` to the base.
+6. Manually edited the MJCF to extract common properties into the `<default>` section.
+7. Softened the contacts of the feet to approximate the effect of rubber and
+   increased `impratio` to reduce slippage.
+8. Added `scene.xml` which includes the robot, with a textured groundplane, skybox, and haze.
+

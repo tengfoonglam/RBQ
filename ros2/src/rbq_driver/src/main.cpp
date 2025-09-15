@@ -16,6 +16,10 @@
 #include <QProcess>
 #include <QDebug>
 #include <iostream>
+#include <ifaddrs.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 static inline int command_terminal_ping_check(const std::string &ip)
 {
     int ret=0;
@@ -37,10 +41,39 @@ static inline int command_terminal_ping_check(const std::string &ip)
     return ret;
 }
 
+static inline bool isMotionPC()
+{
+    struct ifaddrs *ifaddr, *ifa;
+    char ip[INET_ADDRSTRLEN];
+    bool isMotion = false;
+
+    if (getifaddrs(&ifaddr) == -1) {
+        perror("getifaddrs");
+        return false;
+    }
+
+    for (ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next) {
+        if (!ifa->ifa_addr || ifa->ifa_addr->sa_family != AF_INET)
+            continue;
+
+        void *addr = &((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
+        inet_ntop(AF_INET, addr, ip, INET_ADDRSTRLEN);
+
+        if (strcmp(ip, "192.168.0.10") == 0) {
+            isMotion = true;
+            break;
+        }
+    }
+
+    freeifaddrs(ifaddr);
+    return isMotion;
+}
+
 #include "RobotApiHandler.h"
 #include "Publisher.h"
 #include "Subscriber.h"
 #include "VisionPublisher.h"
+#include "VisionSubscriber.h"
 
 bool IS_SIM = false;
 
@@ -63,8 +96,13 @@ int main(int argc, char * argv[])
         host = "127.0.0.1";
         std::cout<<"ROS Simulation Mode (127.0.0.1)"<<std::endl;
     } else {
-        host = "192.168.0.10";
-        std::cout<<"ROS Robot Mode (192.168.0.10)"<<std::endl;
+        if (isMotionPC()) {
+            host = "192.168.0.10";
+            std::cout<<"ROS Robot Mode (192.168.0.10)"<<std::endl;
+        } else {
+            host = "192.168.0.12";
+            std::cout<<"ROS Robot Mode (192.168.0.12)"<<std::endl;
+        }
     }
 
     bool flag = true;
@@ -80,19 +118,35 @@ int main(int argc, char * argv[])
         }
     }
 
-
-    std::shared_ptr<RobotApiHandler> apiHandler = std::make_shared<RobotApiHandler>(host, 200);
+    std::shared_ptr<RobotApiHandler> apiHandler = nullptr;
+    std::thread thread_publisher;
+    std::thread thread_subscriber;
+    std::thread thread_vision_publisher;
+    std::thread thread_vision_subscriber;
 
     rclcpp::init(argc, argv);
 
-    rclcpp::Node::SharedPtr publisher = std::make_shared<Publisher>(apiHandler, 5ms);
-    std::thread thread_publisher(spin, publisher);
+    if (isMotionPC()) {
+        // Motion PC에서만 실행
+        std::cout << "Motion PC detected (192.168.0.10), starting RobotApiHandler, Publisher, Subscriber, VisionPublisher" << std::endl;
+        
+        apiHandler = std::make_shared<RobotApiHandler>(host, 200);
 
-    rclcpp::Node::SharedPtr subscriber = std::make_shared<Subscriber>(apiHandler);
-    std::thread thread_subscriber(spin, subscriber);
+        rclcpp::Node::SharedPtr publisher = std::make_shared<Publisher>(apiHandler, 5ms);
+        thread_publisher = std::thread(spin, publisher);
 
-    rclcpp::Node::SharedPtr vision_publisher = std::make_shared<VisionPublisher>(20ms);
-    std::thread thread_vision_publisher(spin, vision_publisher);
+        rclcpp::Node::SharedPtr subscriber = std::make_shared<Subscriber>(apiHandler);
+        thread_subscriber = std::thread(spin, subscriber);
+
+        rclcpp::Node::SharedPtr vision_publisher = std::make_shared<VisionPublisher>(20ms);
+        thread_vision_publisher = std::thread(spin, vision_publisher);
+    } else {
+        // Vision PC에서만 실행
+        std::cout << "Vision PC detected (192.168.0.12), starting VisionSubscriber only" << std::endl;
+        
+        rclcpp::Node::SharedPtr vision_subscriber = std::make_shared<VisionSubscriber>(20ms);
+        thread_vision_subscriber = std::thread(spin, vision_subscriber);
+    }
 
     while(rclcpp::ok()) {
         rclcpp::sleep_for(1000ms);
@@ -101,9 +155,16 @@ int main(int argc, char * argv[])
     GLOBAL_KILL_SIGNAL = true;
 
     rclcpp::shutdown();
-    thread_publisher.join();
-    thread_subscriber.join();
-    thread_vision_publisher.join();
+    
+    if (isMotionPC()) {
+        // Motion PC 스레드들 join
+        if (thread_publisher.joinable()) thread_publisher.join();
+        if (thread_subscriber.joinable()) thread_subscriber.join();
+        if (thread_vision_publisher.joinable()) thread_vision_publisher.join();
+    } else {
+        // Vision PC 스레드 join
+        if (thread_vision_subscriber.joinable()) thread_vision_subscriber.join();
+    }
 
     return 0;
 }

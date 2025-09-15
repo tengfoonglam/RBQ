@@ -9,6 +9,9 @@ fi
 path="$HOME/rbq_ws"
 
 sleep 5
+gnome-terminal --tab --title="PTP" -- bash -i -c "cd $path && bash scripts/start_ptp_master.bash"
+
+sleep 5
 gnome-terminal --tab --title="Motion" -- bash -i -c "cd $path && bash scripts/start_motion.bash"
 
 sleep 5

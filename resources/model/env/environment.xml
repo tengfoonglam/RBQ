@@ -44,13 +44,20 @@
         <geom name="floor" size="0 0 0.1" type="plane" material="groundplane" />
 
         <!-- stair terrain  -->
-        <geom name="stair1" class="obstacle" pos="5 0 0"       size="2.1 1.5 0.15"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
-        <geom name="stair2" class="obstacle" pos="5 0 0"       size="1.8 1.5 0.30"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
-        <geom name="stair3" class="obstacle" pos="5 0 0"       size="1.5 1.5 0.45"  quat="1.0 0 0 0" material="stair_material" rgba="0.3 0.3 0.3 1"/>
-        <geom name="stair4" class="obstacle" pos="5 0 0"       size="1.2 1.5 0.60"  quat="1.0 0 0 0" material="stair_material" rgba="0.2 0.2 0.2 1"/>
-        <geom name="stair5" class="obstacle" pos="5 0 0"       size="0.9 1.5 0.75"  quat="1.0 0 0 0" material="stair_material" rgba="0.15 0.15 0.15 1"/>
-        <geom name="stair6" class="obstacle" pos="5 0 0"       size="0.6 1.5 0.90"  quat="1.0 0 0 0" material="stair_material" rgba="0.1 0.1 0.1 1"/>
-    
+        <geom name="stair1" class="obstacle" pos="5.0 0 0"       size="1.0 1.5 0.15"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+        <geom name="stair2" class="obstacle" pos="5.2 0 0"       size="0.9 1.5 0.30"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stair3" class="obstacle" pos="5.4 0 0"       size="0.8 1.5 0.45"  quat="1.0 0 0 0" material="stair_material" rgba="0.3 0.3 0.3 1"/>
+        <geom name="stair4" class="obstacle" pos="5.6 0 0"       size="0.7 1.5 0.60"  quat="1.0 0 0 0" material="stair_material" rgba="0.2 0.2 0.2 1"/>
+        <geom name="stair5" class="obstacle" pos="5.8 0 0"       size="0.6 1.5 0.75"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stair6" class="obstacle" pos="6.0 0 0"       size="0.5 1.5 0.90"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+
+        <geom name="stair11" class="obstacle" pos="8.2 0 0"       size="1.0 1.5 0.15"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+        <geom name="stair12" class="obstacle" pos="8.0 0 0"       size="0.9 1.5 0.30"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stair13" class="obstacle" pos="7.8 0 0"       size="0.8 1.5 0.45"  quat="1.0 0 0 0" material="stair_material" rgba="0.3 0.3 0.3 1"/>
+        <geom name="stair14" class="obstacle" pos="7.6 0 0"       size="0.7 1.5 0.60"  quat="1.0 0 0 0" material="stair_material" rgba="0.2 0.2 0.2 1"/>
+        <geom name="stair15" class="obstacle" pos="7.4 0 0"       size="0.6 1.5 0.75"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stair16" class="obstacle" pos="7.2 0 0"       size="0.5 1.5 0.90"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+
         <!-- 장애물 설정-->
         <geom name="obstacle1" class="obstacle" pos="-2.2 0 0"      size="0.1 0.75 0.1"  quat="1.0 0 0 0"    rgba="0.4 0.4 0.8 1" />
         <geom name="obstacle2" class="obstacle" pos="-2.6 0 0"      size="0.1 0.75 0.1"  quat="1.0 0 0 0"    rgba="0.4 0.4 0.8 1" />
@@ -219,6 +226,31 @@
         <pair geom1="RL" geom2="stair6"/>
         <pair geom1="FR" geom2="stair6"/>
         <pair geom1="FL" geom2="stair6"/>
+
+        <pair geom1="RR" geom2="stair11"/>
+        <pair geom1="RL" geom2="stair11"/>
+        <pair geom1="FR" geom2="stair11"/>
+        <pair geom1="FL" geom2="stair11"/>
+        <pair geom1="RR" geom2="stair12"/>
+        <pair geom1="RL" geom2="stair12"/>
+        <pair geom1="FR" geom2="stair12"/>
+        <pair geom1="FL" geom2="stair12"/>
+        <pair geom1="RR" geom2="stair13"/>
+        <pair geom1="RL" geom2="stair13"/>
+        <pair geom1="FR" geom2="stair13"/>
+        <pair geom1="FL" geom2="stair13"/>
+        <pair geom1="RR" geom2="stair14"/>
+        <pair geom1="RL" geom2="stair14"/>
+        <pair geom1="FR" geom2="stair14"/>
+        <pair geom1="FL" geom2="stair14"/>
+        <pair geom1="RR" geom2="stair15"/>
+        <pair geom1="RL" geom2="stair15"/>
+        <pair geom1="FR" geom2="stair15"/>
+        <pair geom1="FL" geom2="stair15"/>
+        <pair geom1="RR" geom2="stair16"/>
+        <pair geom1="RL" geom2="stair16"/>
+        <pair geom1="FR" geom2="stair16"/>
+        <pair geom1="FL" geom2="stair16"/>
 
         <!-- Slope contacts -->
         <pair geom1="RR" geom2="slope20_1"/>

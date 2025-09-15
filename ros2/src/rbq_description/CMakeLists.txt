@@ -15,6 +15,14 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
+# Python 스크립트 설치
+install(
+  PROGRAMS 
+    scripts/robot_odometry_to_tf.py
+    scripts/slam_odometry_to_tf.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 install(
   DIRECTORY launch urdf meshes rviz
   DESTINATION share/${PROJECT_NAME}

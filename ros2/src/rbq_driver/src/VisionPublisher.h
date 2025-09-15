@@ -87,13 +87,35 @@ public:
             std::string name = (idx == 4) ? "sensor_front" : (idx == 5) ? "sensor_rear" : QString::asprintf("sensor_bottom_%d", idx).toStdString();
             VisionSensor_t sensor_;
             sensor_.setEnabled(name_prepend + name, (Vision_IPC::Sensors_e)idx);
-            sensor_.setEnabledIR(this);
+
+            if(idx == 0 || idx == 1 || idx == 2 || idx == 3) {
+                // sensor_.setEnabledRGB(this);
+                // sensor_.setEnabledRGBCompressed(this);
+                // sensor_.setEnabledRGBCameraInfo(this);
+
+                // sensor_.setEnabledIR(this);                
+                // sensor_.setEnabledIRCompressed(this);
+                // sensor_.setEnabledIRCameraInfo(this);
+
+                // sensor_.setEnabledDepth(this);
+                // sensor_.setEnabledDepthCompressed(this);
+                // sensor_.setEnabledDepthCameraInfo(this);
+            }
+
             if(idx == 4 || idx == 5) {
                 sensor_.setEnabledRGB(this);
-                sensor_.setEnabledCompressed(this);
+                sensor_.setEnabledRGBCompressed(this);
+                sensor_.setEnabledRGBCameraInfo(this);
+
+                sensor_.setEnabledIR(this);                
+                sensor_.setEnabledIRCompressed(this);
+                sensor_.setEnabledIRCameraInfo(this);
+
+                sensor_.setEnabledDepth(this);
+                sensor_.setEnabledDepthCompressed(this);
+                sensor_.setEnabledDepthCameraInfo(this);
             }
-            sensor_.setEnabledDepth(this);
-            sensor_.setEnabledCameraInfo(this);
+
             m_sensors.push_back(sensor_);
         }
         // Left
@@ -127,9 +149,13 @@ protected:
     class VisionSensor_t {
     public:
         rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr pub_camera_info;
+        rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr pub_rgb_camera_info;
+        rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr pub_ir_camera_info;
+        rclcpp::Publisher<sensor_msgs::msg::CameraInfo>::SharedPtr pub_depth_camera_info;
         rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr pub_rgb, pub_ir, pub_depth;
-        rclcpp::Publisher<sensor_msgs::msg::CompressedImage>::SharedPtr pub_rgb_compressed;
-        std::string name, name_rgb, name_ir, name_depth, name_camera_info, name_rgb_compressed = "";
+        rclcpp::Publisher<sensor_msgs::msg::CompressedImage>::SharedPtr pub_rgb_compressed, pub_ir_compressed, pub_depth_compressed;
+        std::string name, name_rgb, name_ir, name_depth, name_camera_info, name_rgb_compressed, name_ir_compressed, name_depth_compressed = "";
+        std::string name_rgb_camera_info, name_ir_camera_info, name_depth_camera_info = "";
         bool enabled, enabled_rgb, enabled_ir, enabled_depth, enabled_pcd, enabled_camera_info = false;
         Vision_IPC::Sensors_e id;
         void setEnabled(const std::string _name, const Vision_IPC::Sensors_e &_id) {
@@ -137,30 +163,48 @@ protected:
             name = _name;
             id = _id;
         }
-        void setEnabledIR(rclcpp::Node *_node) {
-            enabled_ir = true;
-            name_ir = name+"/ir";
-            pub_ir = _node->create_publisher<sensor_msgs::msg::Image>(name_ir, 10);
-        }
         void setEnabledRGB(rclcpp::Node *_node) {
             enabled_rgb = true;
             name_rgb = name+"/rgb";
             pub_rgb = _node->create_publisher<sensor_msgs::msg::Image>(name_rgb, 10);
         }
-        void setEnabledCameraInfo(rclcpp::Node *_node) {
-            enabled_camera_info = true;
-            name_camera_info = name + "/camera_info";
-            pub_camera_info = _node->create_publisher<sensor_msgs::msg::CameraInfo>(name_camera_info, 10);
+        void setEnabledRGBCompressed(rclcpp::Node *_node) {
+            name_rgb_compressed = name_rgb + "/compressed";
+            pub_rgb_compressed = _node->create_publisher<sensor_msgs::msg::CompressedImage>(name_rgb_compressed, 10);
         }
+        void setEnabledIR(rclcpp::Node *_node) {
+            enabled_ir = true;
+            name_ir = name+"/ir";
+            pub_ir = _node->create_publisher<sensor_msgs::msg::Image>(name_ir, 10);
+        }
+        void setEnabledIRCompressed(rclcpp::Node *_node) {
+            name_ir_compressed = name_ir + "/compressed";
+            pub_ir_compressed = _node->create_publisher<sensor_msgs::msg::CompressedImage>(name_ir_compressed, 10);
+        }
+        void setEnabledRGBCameraInfo(rclcpp::Node *_node) {
+            name_rgb_camera_info = name_rgb + "/camera_info";
+            pub_rgb_camera_info = _node->create_publisher<sensor_msgs::msg::CameraInfo>(name_rgb_camera_info, 10);
+        }
+        void setEnabledIRCameraInfo(rclcpp::Node *_node) {
+            name_ir_camera_info = name_ir + "/camera_info";
+            pub_ir_camera_info = _node->create_publisher<sensor_msgs::msg::CameraInfo>(name_ir_camera_info, 10);
+        }
+
+
         void setEnabledDepth(rclcpp::Node *_node) {
             enabled_depth = true;
             name_depth = name + "/depth";
             pub_depth = _node->create_publisher<sensor_msgs::msg::Image>(name_depth, 10);
         }
-        void setEnabledCompressed(rclcpp::Node *_node) {
-            name_rgb_compressed = name_rgb + "/compressed";
-            pub_rgb_compressed = _node->create_publisher<sensor_msgs::msg::CompressedImage>(name_rgb_compressed, 10);
+        void setEnabledDepthCameraInfo(rclcpp::Node *_node) {
+            name_depth_camera_info = name_depth + "/camera_info";
+            pub_depth_camera_info = _node->create_publisher<sensor_msgs::msg::CameraInfo>(name_depth_camera_info, 10);
         }
+        void setEnabledDepthCompressed(rclcpp::Node *_node) {
+            name_depth_compressed = name_depth + "/compressed";
+            pub_depth_compressed = _node->create_publisher<sensor_msgs::msg::CompressedImage>(name_depth_compressed, 10);
+        }
+
         bool getSubCountIR() {
             return enabled_ir && pub_ir && pub_ir->get_subscription_count() > 0;
         }
@@ -176,6 +220,21 @@ protected:
         bool getSubCountRGBCompressed() {
             return pub_rgb_compressed && pub_rgb_compressed->get_subscription_count() > 0;
         }
+        bool getSubCountIRCompressed() {
+            return pub_ir_compressed && pub_ir_compressed->get_subscription_count() > 0;
+        }
+        bool getSubCountRGBCameraInfo() {
+            return pub_rgb_camera_info && pub_rgb_camera_info->get_subscription_count() > 0;
+        }
+        bool getSubCountIRCameraInfo() {
+            return pub_ir_camera_info && pub_ir_camera_info->get_subscription_count() > 0;
+        }
+        bool getSubCountDepthCameraInfo() {
+            return pub_depth_camera_info && pub_depth_camera_info->get_subscription_count() > 0;
+        }
+        bool getSubCountDepthCompressed() {
+            return pub_depth_compressed && pub_depth_compressed->get_subscription_count() > 0;
+        }
 
     };
 
@@ -189,85 +248,138 @@ private:
 
         foreach (auto sensor_, m_sensors) {
             if(sensor_.enabled) {
-                if(sensor_.getSubCountIR()) {
-                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_ir[sensor_.id]);
-                    if(0 < tick_ && tick_ != m_ipc->shm_ir_tickWrite[sensor_.id]) {
-                        Vision_IPC::ImageIR_t imageIR_;
-                        m_ipc->getImageIR(sensor_.id, imageIR_);
-                        cv::Mat img_(imageIR_.height, imageIR_.width, CV_8U, (void*)(imageIR_.data), cv::Mat::AUTO_STEP);
-                        std_msgs::msg::Header header;
-                        header.stamp = this->now();
-                        header.frame_id = sensor_.name_ir;
-                        sensor_.pub_ir->publish(*(cv_bridge::CvImage(header, enc::MONO8, img_).toImageMsg()));
+                //필요 카메라 이미지 주석 해제
+
+                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_0){
+                //     // RGB 관련
+                //     if(sensor_.getSubCountRgb()) {
+                //         publishRGB(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountRGBCompressed()) {
+                //         publishRGBCompressed(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     // IR 관련
+                //     if(sensor_.getSubCountIR()) {
+                //         publishIR(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountIRCompressed()) {
+                //         publishIRCompressed(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                // }
+
+                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_1){
+                //     // RGB 관련
+                //     if(sensor_.getSubCountRgb()) {
+                //         publishRGB(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountRGBCompressed()) {
+                //         publishRGBCompressed(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     // IR 관련
+                //     if(sensor_.getSubCountIR()) {
+                //         publishIR(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountIRCompressed()) {
+                //         publishIRCompressed(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                // }
+
+                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_2){
+                //     // RGB 관련
+                //     if(sensor_.getSubCountRgb()) {
+                //         publishRGB(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountRGBCompressed()) {
+                //         publishRGBCompressed(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     // IR 관련
+                //     if(sensor_.getSubCountIR()) {
+                //         publishIR(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountIRCompressed()) {
+                //         publishIRCompressed(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                // }
+
+                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_3){
+                //     // RGB 관련
+                //     if(sensor_.getSubCountRgb()) {
+                //         publishRGB(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountRGBCompressed()) {
+                //         publishRGBCompressed(sensor_.id);
+                //         publishRGBCameraInfo(sensor_.id);
+                //     }
+                    
+                //     // IR 관련
+                //     if(sensor_.getSubCountIR()) {
+                //         publishIR(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                    
+                //     if(sensor_.getSubCountIRCompressed()) {
+                //         publishIRCompressed(sensor_.id);
+                //         publishIRCameraInfo(sensor_.id);
+                //     }
+                // }
+
+                if(sensor_.id == Vision_IPC::Sensors_e::Front || sensor_.id == Vision_IPC::Sensors_e::Rear) {
+                    // // RGB 관련
+                    // if(sensor_.getSubCountRgb()) {
+                    //     publishRGB(sensor_.id);
+                    //     publishRGBCameraInfo(sensor_.id);
+                    // }
+                    
+                    // if(sensor_.getSubCountRGBCompressed()) {
+                    //     publishRGBCompressed(sensor_.id);
+                    //     publishRGBCameraInfo(sensor_.id);
+                    // }
+                    
+                    // // IR 관련
+                    // if(sensor_.getSubCountIR()) {
+                    //     publishIR(sensor_.id);
+                    //     publishIRCameraInfo(sensor_.id);
+                    // }
+                    
+                    if(sensor_.getSubCountIRCompressed()) {
+                        publishIRCompressed(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
                     }
-                }
-                if(sensor_.getSubCountRgb()) {
-                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_color[sensor_.id]);
-                    if(0 < tick_ && tick_ != m_ipc->shm_color_tickWrite[sensor_.id]) {
-                        Vision_IPC::ImageColor_t imageColor_;
-                        m_ipc->getImageColor(sensor_.id, imageColor_);
-                        cv::Mat img_(imageColor_.height, imageColor_.width, CV_8UC3, (void*)(imageColor_.data), cv::Mat::AUTO_STEP);
-                        std_msgs::msg::Header header;
-                        header.stamp = this->now();
-                        header.frame_id = sensor_.name_rgb;
-                        sensor_.pub_rgb->publish(*(cv_bridge::CvImage(header, enc::BGR8, img_).toImageMsg()));
-                    }
-                }
-                if(sensor_.getSubCountDepth()) {
-                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_depth[sensor_.id]);
-                    if (0 < tick_ && tick_ != m_ipc->shm_depth_tickWrite[sensor_.id]) {
-                        Vision_IPC::Depth_t depth_;
-                        if (Vision_IPC::Error_e::noError == m_ipc->getDepth(sensor_.id, depth_)) {
-                            cv::Mat depth_img(depth_.height, depth_.width, CV_16UC1, (void*)(depth_.data), cv::Mat::AUTO_STEP);
 
-                            std_msgs::msg::Header header;
-                            header.stamp = this->now();
-                            header.frame_id = sensor_.name_depth;
-
-                            // Publish depth image (16-bit depth in mm)
-                            sensor_.pub_depth->publish(*(cv_bridge::CvImage(header, enc::TYPE_16UC1, depth_img).toImageMsg()));
-
-                            // Publish the transformation matrix for the depth frame
-                            appendStaticTfMsg(depth_.TF, parent_frame_id, sensor_.name_depth);
-                        }
-                        if (sensor_.getSubCountCameraInfo()) {
-                            sensor_msgs::msg::CameraInfo::UniquePtr msg_camera_info = std::make_unique<sensor_msgs::msg::CameraInfo>();
-                            msg_camera_info->header.stamp = this->now();
-                            msg_camera_info->header.frame_id = sensor_.name_depth;
-                            msg_camera_info->width = depth_.width;
-                            msg_camera_info->height = depth_.height;
-
-                            // Set intrinsic parameters
-                            msg_camera_info->k[0] = depth_.intrinsics[0];  // fx
-                            msg_camera_info->k[2] = depth_.intrinsics[2];  // cx
-                            msg_camera_info->k[4] = depth_.intrinsics[1];  // fy
-                            msg_camera_info->k[5] = depth_.intrinsics[3];  // cy
-                            msg_camera_info->k[8] = 1.0;  // Identity
-
-                            // Set distortion coefficients
-                            msg_camera_info->d = std::vector<double>(5);
-                            for (int i = 0; i < 5; i++) {
-                                msg_camera_info->d[i] = depth_.coeffs[i];
-                            }
-                            sensor_.pub_camera_info->publish(std::move(msg_camera_info));
-                        }
-                    }
-                }
-                if(sensor_.getSubCountRGBCompressed()) {
-                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_color[sensor_.id]);
-                    if(0 < tick_ && tick_ != m_ipc->shm_color_tickWrite[sensor_.id]) {
-                        Vision_IPC::ImageColor_t imageColor_;
-                        m_ipc->getImageColor(sensor_.id, imageColor_);
-                        cv::Mat img_(imageColor_.height, imageColor_.width, CV_8UC3, (void*)(imageColor_.data), cv::Mat::AUTO_STEP);
-                        std_msgs::msg::Header header;
-                        header.stamp = this->now();
-                        header.frame_id = sensor_.name_rgb;
-                        sensor_msgs::msg::CompressedImage::UniquePtr compressed_msg = std::make_unique<sensor_msgs::msg::CompressedImage>();
-                        compressed_msg->header = header;
-                        compressed_msg->format = "jpeg";
-                        cv::imencode(".jpg", img_, compressed_msg->data);
-                        sensor_.pub_rgb_compressed->publish(std::move(compressed_msg));
-                    }
+                    // // Depth 관련
+                    // if(sensor_.getSubCountDepth()) {
+                    //     publishDepth(sensor_.id);
+                    //     publishDepthCameraInfo(sensor_.id);
+                    // }
+                    
+                    // if(sensor_.getSubCountDepthCompressed()) {
+                    //     publishDepthCompressed(sensor_.id);
+                    //     publishDepthCameraInfo(sensor_.id);
+                    // }
+                    
                 }
             }
         }
@@ -363,7 +475,286 @@ private:
         m_static_tf_msgs.push_back(msg);
     }
 
-    std::chrono::milliseconds m_sleepTime = 100ms;
+    // RGB 
+    bool publishRGB(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                if(sensor_.getSubCountRgb()) {
+                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_color[sensor_.id]);
+                    if(0 < tick_ && tick_ != m_ipc->shm_color_tickWrite[sensor_.id]) {
+                        Vision_IPC::ImageColor_t imageColor_;
+                        m_ipc->getImageColor(sensor_.id, imageColor_);
+                        cv::Mat img_(imageColor_.height, imageColor_.width, CV_8UC3, (void*)(imageColor_.data), cv::Mat::AUTO_STEP);
+                        std_msgs::msg::Header header;
+                        header.stamp = this->now();
+                        header.frame_id = sensor_.name_rgb;
+                        sensor_.pub_rgb->publish(*(cv_bridge::CvImage(header, enc::BGR8, img_).toImageMsg()));
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    
+    bool publishRGBCompressed(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                if(sensor_.getSubCountRGBCompressed()) {
+                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_color[sensor_.id]);
+                    if(0 < tick_ && tick_ != m_ipc->shm_color_tickWrite[sensor_.id]) {
+                        Vision_IPC::ImageColor_t imageColor_;
+                        m_ipc->getImageColor(sensor_.id, imageColor_);
+                        cv::Mat img_(imageColor_.height, imageColor_.width, CV_8UC3, (void*)(imageColor_.data), cv::Mat::AUTO_STEP);
+                        std_msgs::msg::Header header;
+                        header.stamp = this->now();
+                        header.frame_id = sensor_.name_rgb;
+                        sensor_msgs::msg::CompressedImage::UniquePtr compressed_msg = std::make_unique<sensor_msgs::msg::CompressedImage>();
+                        compressed_msg->header = header;
+                        compressed_msg->format = "jpeg";
+                        // Optimize compression for speed (lower quality = faster compression)
+                        std::vector<int> compression_params = {cv::IMWRITE_JPEG_QUALITY, 70};
+                        cv::imencode(".jpg", img_, compressed_msg->data, compression_params);
+                        sensor_.pub_rgb_compressed->publish(std::move(compressed_msg));
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    
+    bool publishRGBCameraInfo(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                // RGB CameraInfo는 RGB 데이터와 독립적으로 발행 (tick 체크 없이)
+                Vision_IPC::ImageColor_t imageColor_;
+                m_ipc->getImageColor(sensor_.id, imageColor_);
+                
+                sensor_msgs::msg::CameraInfo::UniquePtr msg_camera_info = std::make_unique<sensor_msgs::msg::CameraInfo>();
+                msg_camera_info->header.stamp = this->now();
+                msg_camera_info->header.frame_id = sensor_.name_rgb;
+                msg_camera_info->width = imageColor_.width;
+                msg_camera_info->height = imageColor_.height;
+
+                // Set intrinsic parameters from ImageColor_t
+                msg_camera_info->k[0] = imageColor_.intrinsics[0];  // fx
+                msg_camera_info->k[2] = imageColor_.intrinsics[2];  // cx
+                msg_camera_info->k[4] = imageColor_.intrinsics[1];  // fy
+                msg_camera_info->k[5] = imageColor_.intrinsics[3];  // cy
+                msg_camera_info->k[8] = 1.0;  // Identity
+
+                // Set distortion coefficients
+                msg_camera_info->d = std::vector<double>(8);
+                for (int i = 0; i < 8; i++) {
+                    msg_camera_info->d[i] = imageColor_.coeffs[i];
+                }
+                sensor_.pub_rgb_camera_info->publish(std::move(msg_camera_info));
+                
+                // ROS_INFO("RGB CameraInfo PUBLISHED - Sensor %d: fx=%.2f, fy=%.2f, cx=%.2f, cy=%.2f", 
+                //     sensor_.id, imageColor_.intrinsics[0], imageColor_.intrinsics[1], 
+                //     imageColor_.intrinsics[2], imageColor_.intrinsics[3]);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // IR 
+    bool publishIR(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                if(sensor_.getSubCountIR()) {
+                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_ir[sensor_.id]);
+                    if(0 < tick_ && tick_ != m_ipc->shm_ir_tickWrite[sensor_.id]) {
+                        Vision_IPC::ImageIR_t imageIR_;
+                        m_ipc->getImageIR(sensor_.id, imageIR_);
+                        cv::Mat img_(imageIR_.height, imageIR_.width, CV_8U, (void*)(imageIR_.data), cv::Mat::AUTO_STEP);
+                        std_msgs::msg::Header header;
+                        header.stamp = this->now();
+                        header.frame_id = sensor_.name_ir;
+                        sensor_.pub_ir->publish(*(cv_bridge::CvImage(header, enc::MONO8, img_).toImageMsg()));
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    
+    bool publishIRCompressed(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                if(sensor_.getSubCountIRCompressed()) {
+                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_ir[sensor_.id]);
+                    if(0 < tick_ && tick_ != m_ipc->shm_ir_tickWrite[sensor_.id]) {
+                        Vision_IPC::ImageIR_t imageIR_;
+                        m_ipc->getImageIR(sensor_.id, imageIR_);
+                        cv::Mat img_(imageIR_.height, imageIR_.width, CV_8U, (void*)(imageIR_.data), cv::Mat::AUTO_STEP);
+                        std_msgs::msg::Header header;
+                        header.stamp = this->now();
+                        header.frame_id = sensor_.name_ir;
+                        sensor_msgs::msg::CompressedImage::UniquePtr compressed_msg = std::make_unique<sensor_msgs::msg::CompressedImage>();
+                        compressed_msg->header = header;
+                        compressed_msg->format = "jpeg";
+                        // Optimize compression for speed (lower quality = faster compression)
+                        std::vector<int> compression_params = {cv::IMWRITE_JPEG_QUALITY, 70};
+                        cv::imencode(".jpg", img_, compressed_msg->data, compression_params);
+                        sensor_.pub_ir_compressed->publish(std::move(compressed_msg));
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    
+    bool publishIRCameraInfo(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                // CameraInfo는 IR 데이터와 독립적으로 발행 (tick 체크 없이)
+                Vision_IPC::ImageIR_t imageIR_;
+                m_ipc->getImageIR(sensor_.id, imageIR_);
+                
+                sensor_msgs::msg::CameraInfo::UniquePtr msg_camera_info = std::make_unique<sensor_msgs::msg::CameraInfo>();
+                msg_camera_info->header.stamp = this->now();
+                msg_camera_info->header.frame_id = sensor_.name_ir;
+                msg_camera_info->width = imageIR_.width;
+                msg_camera_info->height = imageIR_.height;
+
+                        // Set intrinsic parameters from ImageIR_t
+                        msg_camera_info->k[0] = imageIR_.intrinsics[0];  // fx
+                        msg_camera_info->k[2] = imageIR_.intrinsics[2];  // cx
+                        msg_camera_info->k[4] = imageIR_.intrinsics[1];  // fy
+                        msg_camera_info->k[5] = imageIR_.intrinsics[3];  // cy
+                        msg_camera_info->k[8] = 1.0;  // Identity
+
+                // Set distortion coefficients
+                msg_camera_info->d = std::vector<double>(8);
+                for (int i = 0; i < 8; i++) {
+                    msg_camera_info->d[i] = imageIR_.coeffs[i];
+                }
+                sensor_.pub_ir_camera_info->publish(std::move(msg_camera_info));
+                
+                // ROS_INFO("IR CameraInfo PUBLISHED - Sensor %d: fx=%.2f, fy=%.2f, cx=%.2f, cy=%.2f", 
+                //     sensor_.id, imageIR_.intrinsics[0], imageIR_.intrinsics[1], 
+                //     imageIR_.intrinsics[2], imageIR_.intrinsics[3]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Depth 
+    bool publishDepth(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                if(sensor_.getSubCountDepth()) {
+                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_depth[sensor_.id]);
+                    if(0 < tick_ && tick_ != m_ipc->shm_depth_tickWrite[sensor_.id]) {
+                        Vision_IPC::Depth_t depth_;
+                        m_ipc->getDepth(sensor_.id, depth_);
+                        
+                        // Convert depth data to cv::Mat
+                        cv::Mat depth_image(depth_.height, depth_.width, CV_16UC1, (void*)(depth_.data), cv::Mat::AUTO_STEP);
+                        
+                        std_msgs::msg::Header header;
+                        header.stamp = this->now();
+                        header.frame_id = sensor_.name_depth;
+                        
+                        sensor_.pub_depth->publish(*(cv_bridge::CvImage(header, enc::TYPE_16UC1, depth_image).toImageMsg()));
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    
+    bool publishDepthCompressed(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                if(sensor_.getSubCountDepthCompressed()) {
+                    uint32_t tick_ = m_ipc->getTickWrite(m_ipc->shm_depth[sensor_.id]);
+                    if(0 < tick_ && tick_ != m_ipc->shm_depth_tickWrite[sensor_.id]) {
+                        Vision_IPC::Depth_t depth_;
+                        m_ipc->getDepth(sensor_.id, depth_);
+                        
+                        // Convert depth data to cv::Mat
+                        cv::Mat depth_image(depth_.height, depth_.width, CV_16UC1, (void*)(depth_.data), cv::Mat::AUTO_STEP);
+                        
+                        std_msgs::msg::Header header;
+                        header.stamp = this->now();
+                        header.frame_id = sensor_.name_depth;
+                        
+                        sensor_msgs::msg::CompressedImage::UniquePtr compressed_msg = std::make_unique<sensor_msgs::msg::CompressedImage>();
+                        compressed_msg->header = header;
+
+                        compressed_msg->format = "png";  
+                        std::vector<int> compression_params = {cv::IMWRITE_PNG_COMPRESSION, 6};  // 0-9, 높을수록 압축률 증가
+                        cv::imencode(".png", depth_image, compressed_msg->data, compression_params);
+                        
+                        sensor_.pub_depth_compressed->publish(std::move(compressed_msg));
+                        return true;
+                    }
+                }
+                break;
+            }
+        }
+        return false;
+    }
+    
+    bool publishDepthCameraInfo(Vision_IPC::Sensors_e sensor_id) {
+        // 해당 센서 찾기
+        for(auto& sensor_ : m_sensors) {
+            if(sensor_.id == sensor_id && sensor_.enabled) {
+                // Depth CameraInfo는 Depth 데이터와 독립적으로 발행 (tick 체크 없이)
+                Vision_IPC::Depth_t depth_;
+                m_ipc->getDepth(sensor_.id, depth_);
+                
+                sensor_msgs::msg::CameraInfo::UniquePtr msg_camera_info = std::make_unique<sensor_msgs::msg::CameraInfo>();
+                msg_camera_info->header.stamp = this->now();
+                msg_camera_info->header.frame_id = sensor_.name_depth;
+                msg_camera_info->width = depth_.width;
+                msg_camera_info->height = depth_.height;
+
+                // Set intrinsic parameters from Depth_t
+                msg_camera_info->k[0] = depth_.intrinsics[0];  // fx
+                msg_camera_info->k[2] = depth_.intrinsics[2];  // cx
+                msg_camera_info->k[4] = depth_.intrinsics[1];  // fy
+                msg_camera_info->k[5] = depth_.intrinsics[3];  // cy
+                msg_camera_info->k[8] = 1.0;  // Identity
+
+                // Set distortion coefficients
+                msg_camera_info->d = std::vector<double>(8);
+                for (int i = 0; i < 8; i++) {
+                    msg_camera_info->d[i] = depth_.coeffs[i];
+                }
+                sensor_.pub_depth_camera_info->publish(std::move(msg_camera_info));
+                
+                // ROS_INFO("Depth CameraInfo PUBLISHED - Sensor %d: fx=%.2f, fy=%.2f, cx=%.2f, cy=%.2f", 
+                //     sensor_.id, depth_.intrinsics[0], depth_.intrinsics[1], 
+                //     depth_.intrinsics[2], depth_.intrinsics[3]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    std::chrono::milliseconds m_sleepTime = 50ms;  // 15fps (1000ms / 15 = 66.67ms)
     rclcpp::TimerBase::SharedPtr m_timer;
 
     std::shared_ptr<tf2_ros::StaticTransformBroadcaster>    m_static_tf_broadcaster;
@@ -376,4 +767,3 @@ private:
 
     rclcpp::Logger _logger;
 };
-

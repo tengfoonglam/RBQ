@@ -107,6 +107,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:ga27c2a9379c67ee7448a7e022a8d490ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#ga27c2a9379c67ee7448a7e022a8d490ea">RBQ_API::Motion::eStop</a> ()</td></tr>
 <tr class="memdesc:ga27c2a9379c67ee7448a7e022a8d490ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediately stops the robot by disabling control and applying high damping to all joints.  <a href="group__MotionAPI.html#ga27c2a9379c67ee7448a7e022a8d490ea">More...</a><br /></td></tr>
 <tr class="separator:ga27c2a9379c67ee7448a7e022a8d490ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacba5df5dbd643edb1e354b7bb9e5a027"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#gacba5df5dbd643edb1e354b7bb9e5a027">RBQ_API::Motion::pcReboot</a> ()</td></tr>
+<tr class="memdesc:gacba5df5dbd643edb1e354b7bb9e5a027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediately reboots the robot pc.  <a href="group__MotionAPI.html#gacba5df5dbd643edb1e354b7bb9e5a027">More...</a><br /></td></tr>
+<tr class="separator:gacba5df5dbd643edb1e354b7bb9e5a027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1dd716e567cfe205484b8ee5e5538ab5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5">RBQ_API::Motion::parametersUpdate</a> (const uint8_t &amp;bodyHeight, const uint8_t &amp;speed, const uint8_t &amp;footHeight)</td></tr>
 <tr class="memdesc:ga1dd716e567cfe205484b8ee5e5538ab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates walking parameters such as body height, speed, and foot lift height.  <a href="group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5">More...</a><br /></td></tr>
 <tr class="separator:ga1dd716e567cfe205484b8ee5e5538ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -241,6 +244,26 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <li>Maximum walking speed (<code>speed</code>)</li>
 <li>Foot lifting height during swing phase (<code>footHeight</code>) </li>
 </ul>
+
+</div>
+</div>
+<a id="gacba5df5dbd643edb1e354b7bb9e5a027"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacba5df5dbd643edb1e354b7bb9e5a027">&#9670;&nbsp;</a></span>pcReboot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RBQ_API::Motion::pcReboot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Immediately reboots the robot pc. </p>
+<p>To safely execute the command, first, call <a class="el" href="group__MotionAPI.html#gada1aa40e23dcc59227ba2e9bd36096f5">sit()</a> to sit down, then call <a class="el" href="group__MotionAPI.html#ga27c2a9379c67ee7448a7e022a8d490ea">eStop()</a> to stop. </p>
 
 </div>
 </div>
