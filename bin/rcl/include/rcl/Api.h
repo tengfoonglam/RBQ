@@ -1381,6 +1381,70 @@ public:
     };
     StateEstimation stateEstimation{this};
 
+    struct PtzCamera {
+
+        /**
+         * @defgroup PtzCamera PTZ Camera API
+         * @brief APIs for controlling and retrieving the state of the PTZ camera.
+         *
+         * This group provides functions to get and set the pan, tilt, and zoom of the robot's PTZ camera.
+         * Pan and tilt angles are in radians, and zoom is a unitless scalar.
+         *
+         * ### Coordinate System
+         * - Pan: Positive values rotate the camera to the left.
+         * - Tilt: Positive values tilt the camera downwards.
+         *
+         * Example:
+         * @code
+         * // Get current PTZ state
+         * float pan, tilt, zoom;
+         * api->ptzCamera.getPanTiltZoom(pan, tilt, zoom);
+         *
+         * // Set new PTZ state
+         * api->ptzCamera.setPanTiltZoom(new_pan, new_tilt, new_zoom);
+         * @endcode
+         *
+         * @ingroup PtzCamera
+         */
+        PtzCamera(RBQ_API* parent) : m_parent(parent) {}
+
+        /**
+         * @brief Returns the pan, tilt angles (in radians) and zoom.
+         *
+         * Retrieves the current pan and tilt angles of the PTZ camera in radians, along with the zoom level.
+         * The pan angle is positive when rotating to the left, and the tilt angle is positive when tilting downwards.
+         * The zoom value is a unitless scalar representing the zoom level.
+         *
+         * @param out_pan_ Reference to store the pan angle (in radians).
+         * @param out_tilt_ Reference to store the tilt angle (in radians).
+         * @param out_zoom_ Reference to store the zoom level (unitless).
+         * @return Returns 1 on success.
+         *
+         * @ingroup PtzCamera
+         */
+        int getPanTiltZoom(float &out_pan_, float &out_tilt_, float &out_zoom_);
+
+        /**
+         * @brief Sets the pan, tilt angles (in radians) and zoom.
+         *
+         * Sets the desired pan and tilt angles of the PTZ camera in radians, along with the zoom level.
+         * The pan angle is positive when rotating to the left, and the tilt angle is positive when tilting downwards.
+         * The zoom value is a unitless scalar representing the zoom level.
+         *
+         * @param _pan The desired pan angle (in radians).
+         * @param _tilt The desired tilt angle (in radians).
+         * @param _zoom The desired zoom level (unitless).
+         * @return Returns 1 on success;
+         *
+         * @ingroup PtzCamera
+         */
+        int setPanTiltZoom(const float &_pan, const float &_tilt, const float &_zoom);
+
+    private:
+        RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
+    };
+    PtzCamera ptzCamera{this};
+
 #if defined(PRIVATE)
     struct Command {
         Command(RBQ_API* parent) : m_parent(parent) {
