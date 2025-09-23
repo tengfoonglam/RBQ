@@ -39,6 +39,7 @@ static Timer cmdHighLevelTimer;
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/char.hpp>
+#include <std_msgs/msg/float32_multi_array.hpp>
 #include <sensor_msgs/msg/joy.hpp>
 #include <rbq_msgs/msg/high_level_command.hpp>
 
@@ -148,6 +149,9 @@ public:
 
         m_sub_setMaxSpeed = this->create_subscription<std_msgs::msg::Char>(
             "rbq/setMaxSpeed", 10, std::bind(&Subscriber::callback_setMaxSpeed, this, _1));
+
+        m_sub_setPanTiltZoom = this->create_subscription<std_msgs::msg::Float32MultiArray>(
+            "rbq/setPanTiltZoom", 10, std::bind(&Subscriber::callback_setPanTiltZoom, this, _1));
     }
 
 private:
@@ -358,6 +362,13 @@ private:
     rclcpp::Subscription<std_msgs::msg::Char>::SharedPtr m_sub_setMaxSpeed;
     void callback_setMaxSpeed(const std_msgs::msg::Char::SharedPtr _stage) const {
         m_robotApiHandler->setMaxSpeed(_stage.get()->data);
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr m_sub_setPanTiltZoom;
+    void callback_setPanTiltZoom(const std_msgs::msg::Float32MultiArray::SharedPtr _ptz) const {
+        if(_ptz.get()->data.size() >= 3) {
+            m_robotApiHandler->setPanTiltZoom(_ptz.get()->data[0], _ptz.get()->data[1], _ptz.get()->data[2]);
+        }
     }
 
     std::shared_ptr<RobotApiHandler> m_robotApiHandler = nullptr;

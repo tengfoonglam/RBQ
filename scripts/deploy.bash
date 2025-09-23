@@ -56,7 +56,7 @@ ROS2_SRC_TO_DEPLOY=()
 
 if [ ${#SELECTED_BINARIES[@]} -eq 0 ]; then
     BINARIES_TO_DEPLOY=("${BINARIES[@]}")
-    SCRIPT_FILES=("RBQ.bash", "start_motion.bash" "start_vision.bash" "start_mediamtx.bash" "start_vpn.bash" "start_ros_driver.bash" "start_slam.bash")
+    SCRIPT_FILES=("RBQ.bash" "start_motion.bash" "start_vision.bash" "start_mediamtx.bash" "start_vpn.bash" "start_ros_driver.bash" "start_slam.bash")
     for SCRIPT in "${SCRIPT_FILES[@]}"; do
         if [ -f "$SCRIPTS_DIR/$SCRIPT" ]; then
             SCRIPTS_TO_DEPLOY+=("$SCRIPTS_DIR/$SCRIPT")

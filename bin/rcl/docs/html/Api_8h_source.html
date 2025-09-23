@@ -576,88 +576,93 @@ $(function() {
 <div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160; </div>
 <div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;        <a class="code" href="classRBQ__API.html">RBQ_API</a>* m_parent = <span class="keyword">nullptr</span>;  <span class="comment">// RBQ_API class pointer</span></div>
-<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;    };</div>
-<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;    <a class="code" href="structRBQ__API_1_1PtzCamera.html">PtzCamera</a> ptzCamera{<span class="keyword">this</span>};</div>
-<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160; </div>
-<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;<span class="preprocessor">#if defined(PRIVATE)</span></div>
-<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;    <span class="keyword">struct </span>Command {</div>
-<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;        Command(<a class="code" href="classRBQ__API.html">RBQ_API</a>* parent) : m_parent(parent) {</div>
+<div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160; </div>
+<div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;        <span class="keywordtype">float</span> m_pan   = 0.0f;   <span class="comment">// radians, positive to left</span></div>
+<div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;        <span class="keywordtype">float</span> m_tilt  = 0.0f;   <span class="comment">// radians, positive to down</span></div>
+<div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160;        <span class="keywordtype">float</span> m_zoom  = 1.0f;   <span class="comment">// unitless</span></div>
+<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;    };</div>
+<div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;    <a class="code" href="structRBQ__API_1_1PtzCamera.html">PtzCamera</a> ptzCamera{<span class="keyword">this</span>};</div>
 <div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160; </div>
-<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;        }</div>
-<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160; </div>
-<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;        <span class="keywordtype">int</span> getUserCommand(<span class="keywordtype">int</span> &amp;out_command_);</div>
-<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160;        <span class="keywordtype">int</span> getUserParaInt(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">int</span> &amp;out_parameter_);</div>
-<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;        <span class="keywordtype">int</span> getUserParaChar(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">char</span> &amp;out_parameter_);</div>
-<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160;        <span class="keywordtype">int</span> getUserParaFloat(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">float</span> &amp;out_parameter_);</div>
-<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;        <span class="keywordtype">int</span> getUserParaDouble(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">double</span> &amp;out_parameter_);</div>
-<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160; </div>
-<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;        <span class="keywordtype">int</span> setUserCommand(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_set_command);</div>
-<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;        <span class="keywordtype">int</span> setUserParaInt(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_set_parameter);</div>
-<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;        <span class="keywordtype">int</span> setUserParaChar(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">char</span> &amp;_set_parameter);</div>
-<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;        <span class="keywordtype">int</span> setUserParaFloat(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">float</span> &amp;_set_parameter);</div>
-<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;        <span class="keywordtype">int</span> setUserParaDouble(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">double</span> &amp;_set_parameter);</div>
-<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160; </div>
-<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;        <span class="keywordtype">int</span> getTotalCommand(COMMAND_STRUCT &amp;out_command_structure_);</div>
-<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;        COMMAND_STRUCT getTotalCommand(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_target_processId);</div>
-<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160; </div>
-<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;        <span class="keywordtype">int</span> sendCommand_internal(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_target_processID);</div>
-<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;        <span class="keywordtype">int</span> sendCommand_tcp(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_target_processID);</div>
-<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160; </div>
+<div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160;<span class="preprocessor">#if defined(PRIVATE)</span></div>
+<div class="line"><a name="l01453"></a><span class="lineno"> 1453</span>&#160;    <span class="keyword">struct </span>Command {</div>
+<div class="line"><a name="l01454"></a><span class="lineno"> 1454</span>&#160;        Command(<a class="code" href="classRBQ__API.html">RBQ_API</a>* parent) : m_parent(parent) {</div>
+<div class="line"><a name="l01455"></a><span class="lineno"> 1455</span>&#160; </div>
+<div class="line"><a name="l01456"></a><span class="lineno"> 1456</span>&#160;        }</div>
+<div class="line"><a name="l01457"></a><span class="lineno"> 1457</span>&#160; </div>
+<div class="line"><a name="l01458"></a><span class="lineno"> 1458</span>&#160;        <span class="keywordtype">int</span> getUserCommand(<span class="keywordtype">int</span> &amp;out_command_);</div>
+<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;        <span class="keywordtype">int</span> getUserParaInt(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">int</span> &amp;out_parameter_);</div>
+<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;        <span class="keywordtype">int</span> getUserParaChar(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">char</span> &amp;out_parameter_);</div>
+<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160;        <span class="keywordtype">int</span> getUserParaFloat(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">float</span> &amp;out_parameter_);</div>
+<div class="line"><a name="l01462"></a><span class="lineno"> 1462</span>&#160;        <span class="keywordtype">int</span> getUserParaDouble(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keywordtype">double</span> &amp;out_parameter_);</div>
+<div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160; </div>
+<div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;        <span class="keywordtype">int</span> setUserCommand(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_set_command);</div>
+<div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;        <span class="keywordtype">int</span> setUserParaInt(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_set_parameter);</div>
+<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;        <span class="keywordtype">int</span> setUserParaChar(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">char</span> &amp;_set_parameter);</div>
+<div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;        <span class="keywordtype">int</span> setUserParaFloat(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">float</span> &amp;_set_parameter);</div>
+<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;        <span class="keywordtype">int</span> setUserParaDouble(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_index, <span class="keyword">const</span> <span class="keywordtype">double</span> &amp;_set_parameter);</div>
+<div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160; </div>
+<div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;        <span class="keywordtype">int</span> getTotalCommand(COMMAND_STRUCT &amp;out_command_structure_);</div>
+<div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;        COMMAND_STRUCT getTotalCommand(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_target_processId);</div>
 <div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160; </div>
-<div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;        <a class="code" href="classRBQ__API.html">RBQ_API</a>* m_parent = <span class="keyword">nullptr</span>;  <span class="comment">// RBQ_API class pointer</span></div>
+<div class="line"><a name="l01473"></a><span class="lineno"> 1473</span>&#160;        <span class="keywordtype">int</span> sendCommand_internal(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_target_processID);</div>
+<div class="line"><a name="l01474"></a><span class="lineno"> 1474</span>&#160;        <span class="keywordtype">int</span> sendCommand_tcp(<span class="keyword">const</span> <span class="keywordtype">int</span> &amp;_target_processID);</div>
 <div class="line"><a name="l01475"></a><span class="lineno"> 1475</span>&#160; </div>
-<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160;        COMMAND_STRUCT m_command;</div>
-<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160;        <span class="keywordtype">int</span>* m_socket = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;    };</div>
-<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;    Command command{<span class="keyword">this</span>};</div>
-<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160; </div>
-<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;    <span class="keywordtype">void</span> setCommand(<span class="keyword">const</span> COMMAND_STRUCT &amp;cmd);</div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160; </div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;    <span class="keywordtype">int</span> setCommand(<span class="keyword">const</span> HIGH_LEVEL_CMD &amp;cmd);</div>
+<div class="line"><a name="l01476"></a><span class="lineno"> 1476</span>&#160; </div>
+<div class="line"><a name="l01477"></a><span class="lineno"> 1477</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;        <a class="code" href="classRBQ__API.html">RBQ_API</a>* m_parent = <span class="keyword">nullptr</span>;  <span class="comment">// RBQ_API class pointer</span></div>
+<div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160; </div>
+<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;        COMMAND_STRUCT m_command;</div>
+<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;        <span class="keywordtype">int</span>* m_socket = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;    };</div>
+<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;    Command command{<span class="keyword">this</span>};</div>
 <div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160; </div>
-<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;    <span class="keywordtype">void</span> setCommand(<span class="keyword">const</span> RBQ_SDK::HighLevelCmd_t &amp;cmd);</div>
+<div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;    <span class="keywordtype">void</span> setCommand(<span class="keyword">const</span> COMMAND_STRUCT &amp;cmd);</div>
 <div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160; </div>
-<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;    pRBCORE_SHM_COMMAND     m_sharedCMD            = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;    pRBCORE_SHM_REFERENCE   m_sharedREF            = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;    pRBCORE_SHM_SENSOR      m_sharedSEN            = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;    pUSER_SHM               m_sharedUSER           = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;    <span class="keywordtype">int</span>                     m_shmOpened            = 0;</div>
-<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;    <span class="keywordtype">int</span> _openSHM();</div>
-<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;    pRBCORE_SHM_SENSOR _getSensorData();</div>
-<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;    pRBCORE_SHM_REFERENCE _getRefData();</div>
-<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;    pRBCORE_SHM_COMMAND _getCmdData();</div>
-<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;    pUSER_SHM _getUserData();</div>
-<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160; </div>
-<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160;    <span class="keywordtype">int</span> m_processId = -1;</div>
-<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160; </div>
-<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> T&amp; clamp(<span class="keyword">const</span> T&amp; value, <span class="keyword">const</span> T&amp; low, <span class="keyword">const</span> T&amp; high)</div>
-<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;    {</div>
-<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;        <span class="keywordflow">return</span> (value &lt; low) ? low : (value &gt; high) ? high : value;</div>
-<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;    }</div>
-<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160; </div>
-<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">float</span> FLOAT_EPSILON = 1e-4f;</div>
-<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> floatEquals(<span class="keywordtype">float</span> a, <span class="keywordtype">float</span> b)</div>
-<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;    {</div>
-<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;        <span class="keywordflow">return</span> std::abs(a - b) &lt;= FLOAT_EPSILON;</div>
-<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160;    }</div>
-<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160; </div>
-<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160; </div>
-<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// PRIVATE</span></div>
-<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160; </div>
-<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160;    <a class="code" href="classRBQ__API.html">RBQ_API</a>();</div>
-<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160;    ~<a class="code" href="classRBQ__API.html">RBQ_API</a>();</div>
-<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span>         m_initialized;</div>
-<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;    <span class="keyword">static</span> std::mutex   m_mutex;</div>
-<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160; </div>
-<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>StateEstimator;</div>
-<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;};</div>
-<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160; </div>
-<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// RBQ_API_H</span></div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;    <span class="keywordtype">int</span> setCommand(<span class="keyword">const</span> HIGH_LEVEL_CMD &amp;cmd);</div>
+<div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160; </div>
+<div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;    <span class="keywordtype">void</span> setCommand(<span class="keyword">const</span> RBQ_SDK::HighLevelCmd_t &amp;cmd);</div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160; </div>
+<div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;    <span class="keywordtype">int</span> setCommand(<span class="keyword">const</span> RBQ_SDK::GeneralRequest_t &amp;cmd);</div>
+<div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;    pRBCORE_SHM_COMMAND     m_sharedCMD            = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;    pRBCORE_SHM_REFERENCE   m_sharedREF            = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;    pRBCORE_SHM_SENSOR      m_sharedSEN            = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;    pUSER_SHM               m_sharedUSER           = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160;    <span class="keywordtype">int</span>                     m_shmOpened            = 0;</div>
+<div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160;    <span class="keywordtype">int</span> _openSHM();</div>
+<div class="line"><a name="l01499"></a><span class="lineno"> 1499</span>&#160;    pRBCORE_SHM_SENSOR _getSensorData();</div>
+<div class="line"><a name="l01500"></a><span class="lineno"> 1500</span>&#160;    pRBCORE_SHM_REFERENCE _getRefData();</div>
+<div class="line"><a name="l01501"></a><span class="lineno"> 1501</span>&#160;    pRBCORE_SHM_COMMAND _getCmdData();</div>
+<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;    pUSER_SHM _getUserData();</div>
+<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160; </div>
+<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;    <span class="keywordtype">int</span> m_processId = -1;</div>
+<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160; </div>
+<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> T&amp; clamp(<span class="keyword">const</span> T&amp; value, <span class="keyword">const</span> T&amp; low, <span class="keyword">const</span> T&amp; high)</div>
+<div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;    {</div>
+<div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;        <span class="keywordflow">return</span> (value &lt; low) ? low : (value &gt; high) ? high : value;</div>
+<div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;    }</div>
+<div class="line"><a name="l01512"></a><span class="lineno"> 1512</span>&#160; </div>
+<div class="line"><a name="l01513"></a><span class="lineno"> 1513</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">float</span> FLOAT_EPSILON = 1e-4f;</div>
+<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> floatEquals(<span class="keywordtype">float</span> a, <span class="keywordtype">float</span> b)</div>
+<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;    {</div>
+<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160;        <span class="keywordflow">return</span> std::abs(a - b) &lt;= FLOAT_EPSILON;</div>
+<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;    }</div>
+<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160; </div>
+<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160; </div>
+<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// PRIVATE</span></div>
+<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160; </div>
+<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;    <a class="code" href="classRBQ__API.html">RBQ_API</a>();</div>
+<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;    ~<a class="code" href="classRBQ__API.html">RBQ_API</a>();</div>
+<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span>         m_initialized;</div>
+<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;    <span class="keyword">static</span> std::mutex   m_mutex;</div>
+<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160; </div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>StateEstimator;</div>
+<div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;};</div>
+<div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160; </div>
+<div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// RBQ_API_H</span></div>
 <div class="ttc" id="aclassRBQ__API_html"><div class="ttname"><a href="classRBQ__API.html">RBQ_API</a></div><div class="ttdef"><b>Definition:</b> Api.h:13</div></div>
 <div class="ttc" id="aclassRBQ__API_html_a2698c8289f1e0718865cf1142348c392"><div class="ttname"><a href="classRBQ__API.html#a2698c8289f1e0718865cf1142348c392">RBQ_API::initialize</a></div><div class="ttdeci">int initialize(const int &amp;_processId, const bool _local)</div><div class="ttdoc">initialize an RBQ_API instance with a specific process ID.</div></div>
 <div class="ttc" id="agroup__GamepadAPI_html_ga2975edc42ffe8d4bc280b3befcce1e05"><div class="ttname"><a href="group__GamepadAPI.html#ga2975edc42ffe8d4bc280b3befcce1e05">RBQ_API::Gamepad::getLeftJogX</a></div><div class="ttdeci">int getLeftJogX(float &amp;out_left_jog_x_)</div><div class="ttdoc">Gets the left joystick's X-axis input value.</div></div>

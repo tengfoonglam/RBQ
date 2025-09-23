@@ -1,6 +1,8 @@
 #include <QDebug>
 #include <QSharedMemory>
 
+#include "RBTypes.hpp"
+
 static inline uint32_t _getTickRead(QSharedMemory *shm)
 {
     uint32_t tickRead_;
@@ -63,6 +65,16 @@ Vision_IPC::Vision_IPC(QObject *parent) : QObject(parent)
             }
         }
     }
+
+    // PTZ GeneralRequest
+    if(nullptr == shm_ptzRequest) {
+        shm_ptzRequest = new QSharedMemory(shm_ptzRequest_key);
+        if(!shm_ptzRequest->create(sizeof(RBQ_SDK::GeneralRequest_t), QSharedMemory::ReadWrite) && shm_ptzRequest->error() == QSharedMemory::AlreadyExists) {
+            shm_ptzRequest->attach();
+            shm_ptzRequest_tickRead     = getTickRead(  shm_ptzRequest  );
+            shm_ptzRequest_tickWrite    = getTickWrite( shm_ptzRequest  );
+        }
+    }
 }
 
 Vision_IPC::~Vision_IPC()
@@ -87,6 +99,14 @@ Vision_IPC::~Vision_IPC()
             shm_ir[idx] = nullptr;
             // qDebug() << QString::asprintf("detach, key:%s", shm_ir_key[idx].toLocal8Bit().data());
         }
+    }
+
+    // PTZ GeneralRequest
+    if(nullptr != shm_ptzRequest) {
+        shm_ptzRequest->detach();
+        delete shm_ptzRequest;
+        shm_ptzRequest = nullptr;
+        // qDebug() << QString::asprintf("detach, key:%s", shm_ptzRequest_key.toLocal8Bit().data());
     }
 }
 
@@ -312,6 +332,59 @@ Vision_IPC::Error_e Vision_IPC::getImageIR(Sensors_e id, ImageIR_t &outImageIR)
         }
     } else {
         error_ = Vision_IPC::Error_e::idError;
+    }
+    return error_;
+}
+
+Vision_IPC::Error_e Vision_IPC::setPtzRequest(RBQ_SDK::GeneralRequest_t &newRequest)
+{
+    // qDebug() << " --" << this << "setPtzRequest() begin --";
+    Vision_IPC::Error_e error_ = Vision_IPC::Error_e::noError;
+    QSharedMemory *_shm = shm_ptzRequest;
+    if(_shm->size() == sizeof(RBQ_SDK::GeneralRequest_t)) {
+        if(_shm->lock())
+        {
+            // sync
+            newRequest.tickWrite    = _getTickWrite(_shm);
+            newRequest.tickRead     = _getTickRead(_shm);
+            memcpy((char*)_shm->data(), (char *)&newRequest, _shm->size());
+            // sync ticks
+            {
+                _incrementTickWrite(_shm);
+                shm_ptzRequest_tickRead     = _getTickRead(_shm);
+                shm_ptzRequest_tickWrite    = _getTickWrite(_shm);
+            }
+            _shm->unlock();
+        } else {
+            error_ = Vision_IPC::Error_e::shmLockError;
+        }
+    } else {
+        error_ = Vision_IPC::Error_e::sizeError;
+    }
+    return error_;
+}
+
+Vision_IPC::Error_e Vision_IPC::getPtzRequest(RBQ_SDK::GeneralRequest_t &outRequest)
+{
+    // qDebug() << " --" << this << "getPtzRequest() --";
+    Vision_IPC::Error_e error_ = Vision_IPC::Error_e::noError;
+    QSharedMemory *_shm = shm_ptzRequest;
+    if(_shm->size() == sizeof(RBQ_SDK::GeneralRequest_t)) {
+        if(_shm->lock())
+        {
+            memcpy((char*)&outRequest, (char*)_shm->constData(), _shm->size());
+            // sync ticks
+            {
+                _incrementTickRead(_shm);
+                shm_ptzRequest_tickRead     = _getTickRead(_shm);
+                shm_ptzRequest_tickWrite    = _getTickWrite(_shm);
+            }
+            _shm->unlock();
+        } else {
+            error_ = Vision_IPC::Error_e::shmLockError;
+        }
+    } else {
+        error_ = Vision_IPC::Error_e::sizeError;
     }
     return error_;
 }

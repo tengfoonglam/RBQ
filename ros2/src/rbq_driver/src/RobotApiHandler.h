@@ -2,6 +2,7 @@
 
 #include "RBTypes.hpp"
 #include "rbq_podo_api.h"
+#include "ipc.h"
 
 class RobotApiHandler
 {
@@ -110,8 +111,12 @@ public:
 
     void setWalking(bool newWalking) { m_walking = newWalking; }
 
+    void setPanTiltZoom(const float &_pan, const float &_tilt, const float &_zoom);
+
 private:
     void setUserCommand(const USER_COMMAND &usrCmd);
+
+    void setVisionCommand(RBQ_SDK::GeneralRequest_t &cmd);
 
     void qAppThread(const std::string &host, const int &_commFrequency = 100);
 
@@ -126,6 +131,8 @@ private:
     int m_maxSpeed = 50;
 
     bool m_walking = false;
+
+    Vision_IPC m_ipc;
 };
 
 

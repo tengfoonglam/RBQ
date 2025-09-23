@@ -1442,6 +1442,10 @@ public:
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
+
+        float m_pan   = 0.0f;   // radians, positive to left
+        float m_tilt  = 0.0f;   // radians, positive to down
+        float m_zoom  = 1.0f;   // unitless
     };
     PtzCamera ptzCamera{this};
 
@@ -1484,6 +1488,7 @@ public:
 
     void setCommand(const RBQ_SDK::HighLevelCmd_t &cmd);
 
+    int setCommand(const RBQ_SDK::GeneralRequest_t &cmd);
 private:
     pRBCORE_SHM_COMMAND     m_sharedCMD            = nullptr;
     pRBCORE_SHM_REFERENCE   m_sharedREF            = nullptr;

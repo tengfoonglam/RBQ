@@ -479,6 +479,248 @@ public:
 
 }; // Motion
 
+typedef std::chrono::high_resolution_clock Clock_t;
+typedef std::chrono::high_resolution_clock::time_point TimePoint_t;
+typedef std::chrono::duration<double, std::ratio<1> > Seconds_t;
+
+struct GeneralRequest_t
+{
+    uint32_t tickWrite  = 0;
+    uint32_t tickRead   = 0;
+
+    double time = 0;
+    TimePoint_t timePointWrite;
+
+    uint32_t senderIp4Addr = 0;
+    unsigned short senderPort = 0;
+    bool senderTcp = false;
+
+    int requestID = 0;
+    bool requestAccepted = false;
+
+    uint8_t containerSize = 10;
+    const static uint8_t maxContainerSize = 10;
+
+    bool            containerBools  [maxContainerSize] = {0,};
+    unsigned char   containerUchars [maxContainerSize] = {0,};
+    int             containerInts   [maxContainerSize] = {0,};
+    float           containerFloats [maxContainerSize] = {0,};
+
+    const unsigned char typeIdentifier = ID_GENERAL_REQUEST;
+    const unsigned char tail1 =  128;
+    const unsigned char tail2 =  127;
+
+    GeneralRequest_t()
+    {
+        timePointWrite = Clock_t::now();
+    }
+    GeneralRequest_t(const GeneralRequest_t& p)
+    {
+        tickWrite           = p.tickWrite;
+        tickRead            = p.tickRead;
+        time                = p.time;
+        timePointWrite      = p.timePointWrite;
+        senderIp4Addr       = p.senderIp4Addr;
+        senderPort          = p.senderPort;
+        senderTcp           = p.senderTcp;
+        requestID           = p.requestID;
+        requestAccepted     = p.requestAccepted;
+        containerSize       = p.containerSize;
+        memcpy(containerBools,  p.containerBools,   sizeof(bool)  * std::min(maxContainerSize, p.containerSize));
+        memcpy(containerUchars, p.containerUchars,  sizeof(char)  * std::min(maxContainerSize, p.containerSize));
+        memcpy(containerInts,   p.containerInts,    sizeof(int)   * std::min(maxContainerSize, p.containerSize));
+        memcpy(containerFloats, p.containerFloats,  sizeof(float) * std::min(maxContainerSize, p.containerSize));
+    }
+    GeneralRequest_t& operator=(const GeneralRequest_t& p)
+    {
+        tickWrite           = p.tickWrite;
+        tickRead            = p.tickRead;
+        time                = p.time;
+        timePointWrite      = p.timePointWrite;
+        requestID           = p.requestID;
+        requestAccepted     = p.requestAccepted;
+        senderIp4Addr       = p.senderIp4Addr;
+        senderPort          = p.senderPort;
+        senderTcp           = p.senderTcp;
+        memcpy(containerBools, p.containerBools, sizeof(bool)*containerSize);
+        memcpy(containerUchars, p.containerUchars, sizeof(char)*containerSize);
+        memcpy(containerInts, p.containerInts, sizeof(int)*containerSize);
+        memcpy(containerFloats, p.containerFloats, sizeof(float)*containerSize);
+        return *this;
+    }
+    double elapsed() const { return std::chrono::duration_cast<Seconds_t>(Clock_t::now() - timePointWrite).count(); }
+};
+
+enum RequestId_e {
+    undefinedRequest = 0,
+
+    ping = 1,
+    registerAsNewGcs = 2,
+    sendbackRobotState = 3,
+    sendbackDeviceStates = 4,
+    REQ_SENDBACK_LEG_STATE_ARRAY    = 5,
+
+    startProgram = 11,
+    killProgram = 12,
+
+    openDevice = 21,
+    closeDevice = 22,
+
+    GuideONOFF = 31,
+    StartStreamLive = 32,
+    DayNightSwitch = 33,
+
+    HeightmapStartCalc = 41,
+    HeightmapStateSendback = 42,
+
+    REQ_SENDBACK_PDU_STATE_01       = 101,
+    REQ_SENDBACK_DOCK_PARAMS        = 102,
+    REQ_SENDBACK_ANIMATION_STATE    = 103,
+
+    // doorHandlePose = 200,
+    Handeye_stateSendback   = 199,
+    Handeye_doorHandlePose  = 200,
+    Handeye_doorPose        = 201,
+    Handeye_lastRequest     = 202,
+
+
+    //SLAM
+    Slam_stateSendback  = 299,
+
+    // mapping
+    Slam_mapBuild       = 300,
+    Slam_mapStop        = 301,
+    Slam_mapSave        = 302,
+    Slam_mapLoad        = 303,
+    Slam_mapReload      = 304,
+    Slam_clearObsMap    = 305,
+
+    // localize
+    Slam_locStart       = 306,
+    Slam_locStop        = 307,
+    Slam_locInit        = 308,
+    Slam_autoInit       = 309,
+
+    // task
+    Slam_taskAdd        = 310,
+    Slam_taskDel        = 311,
+    Slam_taskSave       = 312,
+    Slam_taskLoad       = 313,
+    Slam_taskReload     = 314,
+    Slam_taskReady      = 315,
+    Slam_taskStart      = 316,
+    Slam_taskContinue   = 317,
+    Slam_taskPause      = 318,
+    Slam_taskResume     = 319,
+    Slam_taskCancel     = 320,
+
+    // schedule
+    Slam_scheduleStart  = 321,
+    Slam_scheduleStop   = 322,
+    Slam_scheduleLoad   = 323,
+
+    // Annotation
+    Slam_annotModeOnOff     = 324,
+    Slam_quickAnnotOnOff    = 325,
+    Slam_quickAddNode       = 326,
+    Slam_annotSave          = 327,
+    Slam_clearTopo          = 328,
+
+    // camera view
+    Slam_mapColorIntensity   = 329,
+    Slam_mapColorHeight      = 330,
+    Slam_mapColorNormal      = 331,
+
+    // Slam_modeAnnot  = 332,
+    // Slam_modeDrive  = 333,
+
+    Slam_mapPlotKfrm    = 334,
+    Slam_mapPlotLive    = 335,
+
+    Slam_pointSize      = 336,
+
+    Slam_plotViewFree   = 337,
+    Slam_plotViewTop    = 338,
+    Slam_plotViewFollow = 339,
+
+    Slam_streaming      = 340,
+
+    // clip
+    Slam_clipOnOff      = 341,
+    Slam_clipSize       = 342,
+
+    Slam_lookGoal       = 343,
+    Slam_rtb            = 344,
+    Slam_eStop          = 345,
+
+    // view
+    Slam_view_2d        = 400,
+    Slam_view_3d        = 401,
+    Slam_view_follow    = 402,
+
+    // settings
+    Slam_MAPPING_MODE   = 420,
+
+    // Slam requests here
+    Slam_lastRequest            = 999,
+
+    Streamer_stateSendback              = 1000,
+    Streamer_videoFrameTouchClicked     = 1001,
+    Streamer_videoFrameTouchDragged     = 1002,
+    Streamer_videoFrameTouchPressed     = 1003,
+    Streamer_videoFrameTouchReleased    = 1004,
+
+    Streamer_keyboardPressed            = 1010,
+
+    Streamer_zoomCCTV                   = 1020,
+
+    Streamer_programStateSendback       = 1050,
+    Streamer_deviceStateSendback        = 1051,
+
+    // Streamer requests here
+    Streamer_resetVision                = 1998,
+    Streamer_lastRequest                = 1999,
+
+    HAL_switchIRProjector               = 2000,
+    HAL_lastRequest                     = 2999,
+
+    Aruca_detect                = 3001,
+    Aruca_chargerPose           = 3002,
+    Aruca_lastRequest           = 3999,
+
+
+
+    REQ_ID_UNDEFINED                        = 0,
+    REQ_ID_PING                             = 1,
+    REQ_ID_REGISTER_AS_NEW_CLIENT           = 2,
+    REQ_ID_SENDBACK_ROBOT_STATE             = 3,
+    REQ_ID_SENDBACK_DEVICE_STATE            = 4,
+    REQ_ID_SENDBACK_LEG_STATE_ARRAY         = 5,
+    REQ_ID_SENDBACK_VISION_STATE            = 6,
+    REQ_ID_SENDBACK_ADDITIONAL_PTZ_STATE    = 7,
+
+    REQ_ID_SENDBACK_SENSOR_STATES_01       = 10001,
+    REQ_ID_SENDBACK_SENSOR_STATES_02       = 10002,
+
+    // ptz related requests start here !!!
+    REQ_ID_PTZ_CALIBRATE                    = 12000,
+    REQ_ID_PTZ_PAN_TILT_ZOOM_PERCENTAGE     = 12001,
+    REQ_ID_PTZ_PAN_TILT_RAD_ZOOM_X          = 12002,
+    REQ_ID_PTZ_PAN_TILT_ZOOM_VELOCITY_DEG   = 12006,
+    REQ_ID_PTZ_PAN_TILT_ZOOM_STOP           = 12007,
+    REQ_ID_PTZ_PAN_TILT_ZOOM_RETURN_CENTER  = 12008,
+    REQ_ID_PTZ_ZOOM_X                       = 12009,
+    REQ_ID_PTZ_ZOOM_VEL                     = 12010,
+    REQ_ID_PTZ_LED_CONTROL                  = 12011,
+    REQ_ID_PTZ_IR_LED_CONTROL               = 12012,
+
+    // put the desired request descriptions here !!!
+    REQ_ID_PTZ_ROBOT_STATE_SRA_01_SENDBACK  = 12901,
+
+    // ptz related requests end here !!!
+    REQ_ID_PTZ_LAST_REQUEST                 = 12999,
+};
+
 } // namespace RBQ_SDK
 
 #endif // RBTYPES_HPP

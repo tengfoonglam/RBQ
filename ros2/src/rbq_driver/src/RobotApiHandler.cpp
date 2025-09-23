@@ -18,7 +18,7 @@ std::thread *th = nullptr;
 
 using namespace RBQ_SDK;
 
-RobotApiHandler::RobotApiHandler(const std::string &host, const int &_commFrequency)
+RobotApiHandler::RobotApiHandler(const std::string &host, const int &_commFrequency) : m_ipc()
 {
     th = new std::thread(&RobotApiHandler::qAppThread, this, host, _commFrequency);
 }
@@ -75,6 +75,14 @@ void RobotApiHandler::setUserCommand(const USER_COMMAND &usrCmd)
         network->sendTCP(sendData);
     } else {
         qDebug() << "RobotApiHandler::setUserCommand() failed network is down";
+    }
+}
+
+void RobotApiHandler::setVisionCommand(RBQ_SDK::GeneralRequest_t &cmd)
+{
+    if(RBQ_SDK::REQ_ID_PTZ_CALIBRATE <= cmd.requestID && cmd.requestID <= RBQ_SDK::REQ_ID_PTZ_LAST_REQUEST) {
+        // qCDebug(NetworkLog) << "setPtzRequest() id: " << _request.requestID;
+        m_ipc.setPtzRequest(cmd);
     }
 }
 
@@ -435,4 +443,14 @@ void RobotApiHandler::setMaxSpeed(const int &newMaxSpeed)
     } else {
         qDebug() << "RobotApiHandler::setMaxSpeed() invalid speed !! ";
     }
+}
+
+void RobotApiHandler::setPanTiltZoom(const float &_pan, const float &_tilt, const float &_zoom)
+{
+    RBQ_SDK::GeneralRequest_t request_;
+    request_.requestID  = RBQ_SDK::REQ_ID_PTZ_PAN_TILT_RAD_ZOOM_X;
+    request_.containerFloats[0] = _pan;
+    request_.containerFloats[1] = _tilt;
+    request_.containerFloats[2] = _zoom;
+    setVisionCommand(request_);
 }

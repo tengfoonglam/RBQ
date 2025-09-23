@@ -24,5 +24,6 @@ find_package(RBDL REQUIRED)
 
 add_subdirectory(Simple-command)
 add_subdirectory(Simple-motion)
+add_subdirectory(Simple-Ptz)
 # add_subdirectory(Simple-RL)
 

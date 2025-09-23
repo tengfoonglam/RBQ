@@ -13,6 +13,10 @@ typedef std::chrono::high_resolution_clock Clock_t;
 typedef std::chrono::high_resolution_clock::time_point TimePoint_t;
 typedef std::chrono::duration<double, std::ratio<1> > Seconds_t;
 
+namespace RBQ_SDK {
+struct GeneralRequest_t;
+}
+
 class Vision_IPC : public QObject
 {
     Q_OBJECT
@@ -284,6 +288,15 @@ public:
     Vision_IPC::Error_e setImageIR(Vision_IPC::Sensors_e id, Vision_IPC::ImageIR_t &newImageIR);
     Vision_IPC::Error_e getImageIR(Vision_IPC::Sensors_e id, Vision_IPC::ImageIR_t &outImageIR);
     // -------------------------------------------------------------------------------------------
+
+    // shared memory for PTZ general request
+    uint32_t shm_ptzRequest_tickRead = 0;
+    uint32_t shm_ptzRequest_tickWrite = 0;
+    const QString shm_ptzRequest_key = "shm_ptzRequest";
+    QSharedMemory *shm_ptzRequest = nullptr;
+    Vision_IPC::Error_e setPtzRequest(RBQ_SDK::GeneralRequest_t &newRequest);
+    Vision_IPC::Error_e getPtzRequest(RBQ_SDK::GeneralRequest_t &outRequest);
+
 };
 
 #endif // Vision_IPC_H
