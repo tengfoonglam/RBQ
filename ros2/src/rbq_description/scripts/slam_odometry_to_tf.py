@@ -18,8 +18,7 @@ class OdometryToTF(Node):
         # Odometry 토픽 구독
         self.odom_subscription = self.create_subscription(
             Odometry,
-            # '/Odometry',
-            '/rbq10/slam_odometry',            
+            '/rbq/slam_odometry',
             self.odom_callback,
             10
         )

@@ -105,7 +105,7 @@ int main(int argc, char * argv[])
         }
     }
 
-    bool flag = true;
+    bool flag = !IS_SIM;
     while(flag) {
         if(command_terminal_ping_check(host)) {
             flag = false;
@@ -126,43 +126,33 @@ int main(int argc, char * argv[])
 
     rclcpp::init(argc, argv);
 
-    if (isMotionPC()) {
-        // Motion PC에서만 실행
-        std::cout << "Motion PC detected (192.168.0.10), starting RobotApiHandler, Publisher, Subscriber, VisionPublisher" << std::endl;
-        
+    if (IS_SIM || isMotionPC()) {
+        std::cout << "Starting RobotApiHandler, Publisher, Subscriber, VisionPublisher" << std::endl;
         apiHandler = std::make_shared<RobotApiHandler>(host, 200);
-
         rclcpp::Node::SharedPtr publisher = std::make_shared<Publisher>(apiHandler, 5ms);
         thread_publisher = std::thread(spin, publisher);
-
         rclcpp::Node::SharedPtr subscriber = std::make_shared<Subscriber>(apiHandler);
         thread_subscriber = std::thread(spin, subscriber);
-
         rclcpp::Node::SharedPtr vision_publisher = std::make_shared<VisionPublisher>(20ms);
         thread_vision_publisher = std::thread(spin, vision_publisher);
-    } else {
-        // Vision PC에서만 실행
-        std::cout << "Vision PC detected (192.168.0.12), starting VisionSubscriber only" << std::endl;
-        
-        rclcpp::Node::SharedPtr vision_subscriber = std::make_shared<VisionSubscriber>(20ms);
-        thread_vision_subscriber = std::thread(spin, vision_subscriber);
-    }
 
-    while(rclcpp::ok()) {
-        rclcpp::sleep_for(1000ms);
-    }
-
-    GLOBAL_KILL_SIGNAL = true;
-
-    rclcpp::shutdown();
-    
-    if (isMotionPC()) {
-        // Motion PC 스레드들 join
+        while(rclcpp::ok()) {
+            rclcpp::sleep_for(1000ms);
+        }
+        GLOBAL_KILL_SIGNAL = true;
+        rclcpp::shutdown();
         if (thread_publisher.joinable()) thread_publisher.join();
         if (thread_subscriber.joinable()) thread_subscriber.join();
         if (thread_vision_publisher.joinable()) thread_vision_publisher.join();
-    } else {
-        // Vision PC 스레드 join
+    } else if (!isMotionPC()) {
+        std::cout << "Starting VisionSubscriber only" << std::endl;
+        rclcpp::Node::SharedPtr vision_subscriber = std::make_shared<VisionSubscriber>(20ms);
+        thread_vision_subscriber = std::thread(spin, vision_subscriber);
+        while(rclcpp::ok()) {
+            rclcpp::sleep_for(1000ms);
+        }
+        GLOBAL_KILL_SIGNAL = true;
+        rclcpp::shutdown();
         if (thread_vision_subscriber.joinable()) thread_vision_subscriber.join();
     }
 

@@ -61,8 +61,10 @@ while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then
         if [ "$SIM_MODE" = true ]; then
+            echo "Starting ROS2 driver in simulation mode..."
             ros2 run rbq_driver rbq_driver -s
         else
+            echo "Starting ROS2 driver..."
             ros2 run rbq_driver rbq_driver
         fi
     fi
