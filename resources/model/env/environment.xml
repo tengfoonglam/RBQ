@@ -22,6 +22,14 @@
         <texture type="2d" name="stair_checker" builtin="checker" mark="edge" rgb1="0.4 0.4 0.4" rgb2="0.6 0.6 0.6"
             markrgb="0.2 0.2 0.2" width="256" height="256"/>
         <material name="stair_material" texture="stair_checker" texuniform="true" texrepeat="3 3" reflectance="0.1"/>
+        
+        <!-- 도킹 스테이션 메시 -->
+        <mesh name="docking_station" file="../meshes/env/Docking_station.obj"/>
+        <texture type="2d" name="bottom_aruco" file="env/bottom_id.png"/>
+        <texture type="2d" name="rear_aruco" file="env/rear_id.png"/>
+        <material name="bottom_aruco_material" texture="bottom_aruco" texuniform="false" texrepeat="1 1" reflectance="0.1"/>
+        <material name="rear_aruco_material" texture="rear_aruco" texuniform="false" texrepeat="1 1" reflectance="0.1"/>
+
     </asset>
 
     <!-- Default class definitions -->
@@ -32,6 +40,7 @@
         <default class="slippery">
             <geom type="box" priority="2"/>
         </default>
+
     </default>
 
     <!-- 월드 바디 정의 -->
@@ -44,19 +53,21 @@
         <geom name="floor" size="0 0 0.1" type="plane" material="groundplane" />
 
         <!-- stair terrain  -->
-        <geom name="stair1" class="obstacle" pos="5.0 0 0"       size="1.0 1.5 0.15"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
-        <geom name="stair2" class="obstacle" pos="5.2 0 0"       size="0.9 1.5 0.30"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
-        <geom name="stair3" class="obstacle" pos="5.4 0 0"       size="0.8 1.5 0.45"  quat="1.0 0 0 0" material="stair_material" rgba="0.3 0.3 0.3 1"/>
-        <geom name="stair4" class="obstacle" pos="5.6 0 0"       size="0.7 1.5 0.60"  quat="1.0 0 0 0" material="stair_material" rgba="0.2 0.2 0.2 1"/>
-        <geom name="stair5" class="obstacle" pos="5.8 0 0"       size="0.6 1.5 0.75"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
-        <geom name="stair6" class="obstacle" pos="6.0 0 0"       size="0.5 1.5 0.90"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+        <geom name="stair1" class="obstacle" pos="5 0 0"  size="2.1 1.5 0.15"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+        <geom name="stair2" class="obstacle" pos="5 0 0"  size="1.8 1.5 0.30"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stair3" class="obstacle" pos="5 0 0"  size="1.5 1.5 0.45"  quat="1.0 0 0 0" material="stair_material" rgba="0.3 0.3 0.3 1"/>
+        <geom name="stair4" class="obstacle" pos="5 0 0"  size="1.2 1.5 0.60"  quat="1.0 0 0 0" material="stair_material" rgba="0.2 0.2 0.2 1"/>
+        <geom name="stair5" class="obstacle" pos="5 0 0"  size="0.9 1.5 0.75"  quat="1.0 0 0 0" material="stair_material" rgba="0.15 0.15 0.15 1"/>
+        <geom name="stair6" class="obstacle" pos="5 0 0"  size="0.6 1.5 0.90"  quat="1.0 0 0 0" material="stair_material" rgba="0.1 0.1 0.1 1"/>
+        
+        <!--docking station -->
+        <body name="docking_station" pos="-1.5 -6 0.005" quat="0 1 0 0">
+            <geom name="docking_station_visual" type="mesh" mesh="docking_station" rgba="0.7 0.7 0.7 1" contype="0" conaffinity="0"/>
+            <geom name="bottom_id" pos="-0.1 -0.08 -0.035" euler="-3.141592 0 1.5708"type="box" size="0.05 0.05 0.001" material="bottom_aruco_material"/>
+            <geom name="rear_id" pos="-0.4 -0.08 -0.50" euler="-1.5708 1.5708 0" type="box" size="0.05 0.05 0.001" material="rear_aruco_material"/>
+            <!-- <geom type="box" size="0.001 0.001 0.001" pos="0 0 -0" class="collision"/> -->
+        </body>
 
-        <geom name="stair11" class="obstacle" pos="8.2 0 0"       size="1.0 1.5 0.15"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
-        <geom name="stair12" class="obstacle" pos="8.0 0 0"       size="0.9 1.5 0.30"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
-        <geom name="stair13" class="obstacle" pos="7.8 0 0"       size="0.8 1.5 0.45"  quat="1.0 0 0 0" material="stair_material" rgba="0.3 0.3 0.3 1"/>
-        <geom name="stair14" class="obstacle" pos="7.6 0 0"       size="0.7 1.5 0.60"  quat="1.0 0 0 0" material="stair_material" rgba="0.2 0.2 0.2 1"/>
-        <geom name="stair15" class="obstacle" pos="7.4 0 0"       size="0.6 1.5 0.75"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
-        <geom name="stair16" class="obstacle" pos="7.2 0 0"       size="0.5 1.5 0.90"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
 
         <!-- 장애물 설정-->
         <geom name="obstacle1" class="obstacle" pos="-2.2 0 0"      size="0.1 0.75 0.1"  quat="1.0 0 0 0"    rgba="0.4 0.4 0.8 1" />
@@ -227,7 +238,7 @@
         <pair geom1="FR" geom2="stair6"/>
         <pair geom1="FL" geom2="stair6"/>
 
-        <pair geom1="RR" geom2="stair11"/>
+        <!-- <pair geom1="RR" geom2="stair11"/>
         <pair geom1="RL" geom2="stair11"/>
         <pair geom1="FR" geom2="stair11"/>
         <pair geom1="FL" geom2="stair11"/>
@@ -250,7 +261,7 @@
         <pair geom1="RR" geom2="stair16"/>
         <pair geom1="RL" geom2="stair16"/>
         <pair geom1="FR" geom2="stair16"/>
-        <pair geom1="FL" geom2="stair16"/>
+        <pair geom1="FL" geom2="stair16"/> -->
 
         <!-- Slope contacts -->
         <pair geom1="RR" geom2="slope20_1"/>

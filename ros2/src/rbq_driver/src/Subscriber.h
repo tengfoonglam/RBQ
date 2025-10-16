@@ -164,14 +164,16 @@ private:
 
         RBQ_SDK::HighLevelCmd_t cmd_;
 
-        cmd_.roll         = _highLevel->roll;
-        cmd_.pitch        = _highLevel->pitch;
-        cmd_.yaw          = _highLevel->yaw;
-        cmd_.vel_x        = _highLevel->vel_x;
-        cmd_.vel_y        = _highLevel->vel_y;
-        cmd_.omega_z      = _highLevel->omega_z;
-        cmd_.delta_body_h = _highLevel->delta_body_h;
-        cmd_.delta_foot_h = _highLevel->delta_foot_h;
+        cmd_.roll           = _highLevel->roll;
+        cmd_.pitch          = _highLevel->pitch;
+        cmd_.yaw            = _highLevel->yaw;
+        cmd_.vel_x          = _highLevel->vel_x;
+        cmd_.vel_y          = _highLevel->vel_y;
+        cmd_.omega_z        = _highLevel->omega_z;
+        cmd_.delta_body_h   = _highLevel->delta_body_h;
+        cmd_.delta_foot_h   = _highLevel->delta_foot_h;
+        cmd_.gaitID         = _highLevel->gait_state;
+        cmd_.gaitTransition = _highLevel->gait_transition;
 
         if(m_robotApiHandler != nullptr) {
             m_robotApiHandler->setHighLevelCommand(cmd_);

@@ -61,9 +61,10 @@ struct HighLevelCmd_t {
     float delta_body_h      = 0;
     float delta_foot_h      = 0;
     int gaitID              = 0;
+    bool gaitTransition     = false;
 
     /// CommandContainer_t type identifier
-    const unsigned char typeIdentifier = ID_HIGH_LEVEL_COMMAND;
+    const unsigned char typeIdentifier = 3;
 
     const unsigned char tail1 =  128;
     const unsigned char tail2 =  127;
@@ -87,6 +88,7 @@ struct HighLevelCmd_t {
         delta_body_h    = p.delta_body_h;
         delta_foot_h    = p.delta_foot_h;
         gaitID          = p.gaitID;
+        gaitTransition  = p.gaitTransition;
     }
     HighLevelCmd_t& operator=(const HighLevelCmd_t& p)
     {
@@ -106,6 +108,7 @@ struct HighLevelCmd_t {
         delta_body_h    = p.delta_body_h;
         delta_foot_h    = p.delta_foot_h;
         gaitID          = p.gaitID;
+        gaitTransition  = p.gaitTransition;
         return *this;
     }
 };

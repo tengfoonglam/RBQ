@@ -90,6 +90,11 @@ Enumerations</h2></td></tr>
 , <a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071aba19ce2ed26cb675d0393ab17c23ca59">RBQ_API::Joint::FLR</a> = 9
 , <a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071a8579ea2fae24dc2693283535d82775c6">RBQ_API::Joint::FLP</a> = 10
 , <a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071ad15e95b614f71c4ae9365bee0cbb0125">RBQ_API::Joint::FLK</a> = 11
+, <br />
+&#160;&#160;<a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071ab42515f559c0d5346eb10347b8e6c1b9">RBQ_API::Joint::HRW</a> = 12
+, <a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071ab6a910a2c93adbf62a80bb53c3ad6c48">RBQ_API::Joint::HLW</a> = 13
+, <a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071ad729d9d53dfc8e9337b236cc688c4c16">RBQ_API::Joint::FRW</a> = 14
+, <a class="el" href="group__JointControlAPI.html#gga006742a92d0ba21c56361dcaf5124071a57074dedc8fcab7501967e038c1fd56b">RBQ_API::Joint::FLW</a> = 15
 <br />
  }</td></tr>
 <tr class="memdesc:ga006742a92d0ba21c56361dcaf5124071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of all joint IDs in the quadruped robot.  <a href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">More...</a><br /></td></tr>
@@ -169,12 +174,66 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6377fcf665186b70b3d2cd903a7ee0d0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga6377fcf665186b70b3d2cd903a7ee0d0">RBQ_API::Joint::getGainKd</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, float &amp;joint_kd_)</td></tr>
 <tr class="memdesc:ga6377fcf665186b70b3d2cd903a7ee0d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga6377fcf665186b70b3d2cd903a7ee0d0">More...</a><br /></td></tr>
 <tr class="separator:ga6377fcf665186b70b3d2cd903a7ee0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b433c2518656b59240c2cec044e4e05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga7b433c2518656b59240c2cec044e4e05">RBQ_API::Joint::getPosRef</a> (const int &amp;_jointId, float &amp;joint_pos_ref_)</td></tr>
+<tr class="memdesc:ga7b433c2518656b59240c2cec044e4e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current position reference of the specified joint.  <a href="group__JointControlAPI.html#ga7b433c2518656b59240c2cec044e4e05">More...</a><br /></td></tr>
+<tr class="separator:ga7b433c2518656b59240c2cec044e4e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9aa0985f1eb6e536dff1a9d98152ed2f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga9aa0985f1eb6e536dff1a9d98152ed2f">RBQ_API::Joint::getPosRef</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, float &amp;joint_pos_rad_)</td></tr>
+<tr class="memdesc:ga9aa0985f1eb6e536dff1a9d98152ed2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga9aa0985f1eb6e536dff1a9d98152ed2f">More...</a><br /></td></tr>
+<tr class="separator:ga9aa0985f1eb6e536dff1a9d98152ed2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad644641e858f77a718a75dddb656b82b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gad644641e858f77a718a75dddb656b82b">RBQ_API::Joint::getTorqueRef</a> (const int &amp;_jointId, float &amp;joint_torque_ref_)</td></tr>
+<tr class="memdesc:gad644641e858f77a718a75dddb656b82b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current torque reference of the specified joint.  <a href="group__JointControlAPI.html#gad644641e858f77a718a75dddb656b82b">More...</a><br /></td></tr>
+<tr class="separator:gad644641e858f77a718a75dddb656b82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga978ed6a19f4c4e12fb8ba041ee79f483"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga978ed6a19f4c4e12fb8ba041ee79f483">RBQ_API::Joint::getTorqueRef</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, float &amp;joint_torque_)</td></tr>
+<tr class="memdesc:ga978ed6a19f4c4e12fb8ba041ee79f483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga978ed6a19f4c4e12fb8ba041ee79f483">More...</a><br /></td></tr>
+<tr class="separator:ga978ed6a19f4c4e12fb8ba041ee79f483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga752c6bece3b213f5dd13faa6f23c5ea7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga752c6bece3b213f5dd13faa6f23c5ea7">RBQ_API::Joint::getGainKpRef</a> (const int &amp;_jointId, float &amp;joint_kp_ref_)</td></tr>
+<tr class="memdesc:ga752c6bece3b213f5dd13faa6f23c5ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current position gain (Kp) reference of the specified joint.  <a href="group__JointControlAPI.html#ga752c6bece3b213f5dd13faa6f23c5ea7">More...</a><br /></td></tr>
+<tr class="separator:ga752c6bece3b213f5dd13faa6f23c5ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0dcaabce3b16aa4e6b4285de63240674"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga0dcaabce3b16aa4e6b4285de63240674">RBQ_API::Joint::getGainKpRef</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, float &amp;joint_kp_ref_)</td></tr>
+<tr class="memdesc:ga0dcaabce3b16aa4e6b4285de63240674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga0dcaabce3b16aa4e6b4285de63240674">More...</a><br /></td></tr>
+<tr class="separator:ga0dcaabce3b16aa4e6b4285de63240674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfc18476b550a1f26058fd06e5187dcd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gacfc18476b550a1f26058fd06e5187dcd">RBQ_API::Joint::getGainKdRef</a> (const int &amp;_jointId, float &amp;joint_kd_ref_)</td></tr>
+<tr class="memdesc:gacfc18476b550a1f26058fd06e5187dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current damping gain (Kd) reference of the specified joint.  <a href="group__JointControlAPI.html#gacfc18476b550a1f26058fd06e5187dcd">More...</a><br /></td></tr>
+<tr class="separator:gacfc18476b550a1f26058fd06e5187dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc6864e7c98d3a60e8bb88823ec0a817"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gabc6864e7c98d3a60e8bb88823ec0a817">RBQ_API::Joint::getGainKdRef</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, float &amp;joint_kd_ref_)</td></tr>
+<tr class="memdesc:gabc6864e7c98d3a60e8bb88823ec0a817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#gabc6864e7c98d3a60e8bb88823ec0a817">More...</a><br /></td></tr>
+<tr class="separator:gabc6864e7c98d3a60e8bb88823ec0a817"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb35bb00851e34961552452347e45b56"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gabb35bb00851e34961552452347e45b56">RBQ_API::Joint::getMotionOwner</a> (const int &amp;_jointId, int &amp;joint_processID_)</td></tr>
 <tr class="memdesc:gabb35bb00851e34961552452347e45b56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current motion owner (process ID) of the specified joint.  <a href="group__JointControlAPI.html#gabb35bb00851e34961552452347e45b56">More...</a><br /></td></tr>
 <tr class="separator:gabb35bb00851e34961552452347e45b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabbf4b0c0f948500e4bfe08f5e99e8b3c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gabbf4b0c0f948500e4bfe08f5e99e8b3c">RBQ_API::Joint::getMotionOwner</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, int &amp;joint_processID_)</td></tr>
 <tr class="memdesc:gabbf4b0c0f948500e4bfe08f5e99e8b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#gabbf4b0c0f948500e4bfe08f5e99e8b3c">More...</a><br /></td></tr>
 <tr class="separator:gabbf4b0c0f948500e4bfe08f5e99e8b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d230b30a0ac5163e2d734ba7b4ed020"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga7d230b30a0ac5163e2d734ba7b4ed020">RBQ_API::Joint::getConnectionStatus</a> (const int &amp;_jointId, bool &amp;connection_status_)</td></tr>
+<tr class="memdesc:ga7d230b30a0ac5163e2d734ba7b4ed020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the connection status of the specified joint.  <a href="group__JointControlAPI.html#ga7d230b30a0ac5163e2d734ba7b4ed020">More...</a><br /></td></tr>
+<tr class="separator:ga7d230b30a0ac5163e2d734ba7b4ed020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54d811619dfbc44527dadc00ab190c95"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga54d811619dfbc44527dadc00ab190c95">RBQ_API::Joint::getConnectionStatus</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, bool &amp;connection_status_)</td></tr>
+<tr class="memdesc:ga54d811619dfbc44527dadc00ab190c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga54d811619dfbc44527dadc00ab190c95">More...</a><br /></td></tr>
+<tr class="separator:ga54d811619dfbc44527dadc00ab190c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga847e013c51d23d82a8da51022cb7677b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga847e013c51d23d82a8da51022cb7677b">RBQ_API::Joint::getHomingStatus</a> (const int &amp;_jointId, bool &amp;homming_status_)</td></tr>
+<tr class="memdesc:ga847e013c51d23d82a8da51022cb7677b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the homing status of the specified joint.  <a href="group__JointControlAPI.html#ga847e013c51d23d82a8da51022cb7677b">More...</a><br /></td></tr>
+<tr class="separator:ga847e013c51d23d82a8da51022cb7677b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa23b1eaa0af6c7fb008803f13a07bcee"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gaa23b1eaa0af6c7fb008803f13a07bcee">RBQ_API::Joint::getHomingStatus</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, bool &amp;homming_status_)</td></tr>
+<tr class="memdesc:gaa23b1eaa0af6c7fb008803f13a07bcee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#gaa23b1eaa0af6c7fb008803f13a07bcee">More...</a><br /></td></tr>
+<tr class="separator:gaa23b1eaa0af6c7fb008803f13a07bcee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1ab088bd5b439014ccfb3229a86c201"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gaf1ab088bd5b439014ccfb3229a86c201">RBQ_API::Joint::getRunStatus</a> (const int &amp;_jointId, bool &amp;run_status_)</td></tr>
+<tr class="memdesc:gaf1ab088bd5b439014ccfb3229a86c201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the run status of the specified joint.  <a href="group__JointControlAPI.html#gaf1ab088bd5b439014ccfb3229a86c201">More...</a><br /></td></tr>
+<tr class="separator:gaf1ab088bd5b439014ccfb3229a86c201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f36f3939a0dd0f10788b511f82b9d41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga1f36f3939a0dd0f10788b511f82b9d41">RBQ_API::Joint::getRunStatus</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, bool &amp;run_status_)</td></tr>
+<tr class="memdesc:ga1f36f3939a0dd0f10788b511f82b9d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga1f36f3939a0dd0f10788b511f82b9d41">More...</a><br /></td></tr>
+<tr class="separator:ga1f36f3939a0dd0f10788b511f82b9d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0928730dfba91c62b1369666ddd77e29"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga0928730dfba91c62b1369666ddd77e29">RBQ_API::Joint::getMotorTemperature</a> (const int &amp;_jointId, int &amp;motor_temp_)</td></tr>
+<tr class="memdesc:ga0928730dfba91c62b1369666ddd77e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the motor temperature of the specified joint.  <a href="group__JointControlAPI.html#ga0928730dfba91c62b1369666ddd77e29">More...</a><br /></td></tr>
+<tr class="separator:ga0928730dfba91c62b1369666ddd77e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafda598df1325e40abf913d5b4de3c48c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gafda598df1325e40abf913d5b4de3c48c">RBQ_API::Joint::getMotorTemperature</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, int &amp;motor_temp_)</td></tr>
+<tr class="memdesc:gafda598df1325e40abf913d5b4de3c48c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#gafda598df1325e40abf913d5b4de3c48c">More...</a><br /></td></tr>
+<tr class="separator:gafda598df1325e40abf913d5b4de3c48c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd37cace3772fe234e4fe8cbca5ca537"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#gafd37cace3772fe234e4fe8cbca5ca537">RBQ_API::Joint::getBoardTemperature</a> (const int &amp;_jointId, int &amp;borad_temp_)</td></tr>
+<tr class="memdesc:gafd37cace3772fe234e4fe8cbca5ca537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the board temperature of the specified joint.  <a href="group__JointControlAPI.html#gafd37cace3772fe234e4fe8cbca5ca537">More...</a><br /></td></tr>
+<tr class="separator:gafd37cace3772fe234e4fe8cbca5ca537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10b333295d6391657b9af320ce2d7a28"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__JointControlAPI.html#ga10b333295d6391657b9af320ce2d7a28">RBQ_API::Joint::getBoardTemperature</a> (const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a> _jointId, int &amp;borad_temp_)</td></tr>
+<tr class="memdesc:ga10b333295d6391657b9af320ce2d7a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using JointID.  <a href="group__JointControlAPI.html#ga10b333295d6391657b9af320ce2d7a28">More...</a><br /></td></tr>
+<tr class="separator:ga10b333295d6391657b9af320ce2d7a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -263,11 +322,175 @@ Damping Gain Modes</h3>
 </td></tr>
 <tr><td class="fieldname"><a id="gga006742a92d0ba21c56361dcaf5124071ad15e95b614f71c4ae9365bee0cbb0125"></a>FLK&#160;</td><td class="fielddoc"><p>Front-left knee joint. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga006742a92d0ba21c56361dcaf5124071ab42515f559c0d5346eb10347b8e6c1b9"></a>HRW&#160;</td><td class="fielddoc"><p>Hind-right wheel (RBQ-W) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga006742a92d0ba21c56361dcaf5124071ab6a910a2c93adbf62a80bb53c3ad6c48"></a>HLW&#160;</td><td class="fielddoc"><p>Hind-left wheel (RBQ-W) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga006742a92d0ba21c56361dcaf5124071ad729d9d53dfc8e9337b236cc688c4c16"></a>FRW&#160;</td><td class="fielddoc"><p>Front-right wheel (RBQ-W) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga006742a92d0ba21c56361dcaf5124071a57074dedc8fcab7501967e038c1fd56b"></a>FLW&#160;</td><td class="fielddoc"><p>Front-left wheel (RBQ-W) </p>
+</td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gafd37cace3772fe234e4fe8cbca5ca537"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd37cace3772fe234e4fe8cbca5ca537">&#9670;&nbsp;</a></span>getBoardTemperature() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getBoardTemperature </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>borad_temp_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the board temperature of the specified joint. </p>
+<p>Retrieves the current temperature of the joint's control board (in degrees Celsius).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">borad_temp_</td><td>Reference to store the board temperature (°C). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="ga10b333295d6391657b9af320ce2d7a28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10b333295d6391657b9af320ce2d7a28">&#9670;&nbsp;</a></span>getBoardTemperature() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getBoardTemperature </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>borad_temp_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd>getBoardTemperature(const int&amp;, float&amp;) </dd></dl>
+
+</div>
+</div>
+<a id="ga7d230b30a0ac5163e2d734ba7b4ed020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d230b30a0ac5163e2d734ba7b4ed020">&#9670;&nbsp;</a></span>getConnectionStatus() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getConnectionStatus </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>connection_status_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the connection status of the specified joint. </p>
+<p>Retrieves whether the joint is currently connected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">connection_status_</td><td>Reference to store the connection status (true if connected). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="ga54d811619dfbc44527dadc00ab190c95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54d811619dfbc44527dadc00ab190c95">&#9670;&nbsp;</a></span>getConnectionStatus() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getConnectionStatus </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>connection_status_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#ga7d230b30a0ac5163e2d734ba7b4ed020" title="Returns the connection status of the specified joint.">getConnectionStatus(const int&amp;, bool&amp;)</a> </dd></dl>
+
+</div>
+</div>
 <a id="gae8684bc65ef33e2abea2e69374c220e2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gae8684bc65ef33e2abea2e69374c220e2">&#9670;&nbsp;</a></span>getGainKd() <span class="overload">[1/2]</span></h2>
 
@@ -299,11 +522,11 @@ Damping Gain Modes</h3>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">joint_kd_</td><td>Reference parameter to receive the damping gain value in Nm*s/rad. </td></tr>
-    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11).</td></tr>
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns 1 if the gain is successfully retrieved; returns -2 if the joint ID is out of range. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
 
 </div>
 </div>
@@ -346,6 +569,84 @@ Damping Gain Modes</h3>
 
 </div>
 </div>
+<a id="gacfc18476b550a1f26058fd06e5187dcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacfc18476b550a1f26058fd06e5187dcd">&#9670;&nbsp;</a></span>getGainKdRef() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getGainKdRef </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_kd_ref_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current damping gain (Kd) reference of the specified joint. </p>
+<p>Retrieves the damping gain reference (Kd, in Nm*s/rad) set for the joint by the system process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">joint_kd_ref_</td><td>Reference to store the Kd reference (in Nm*s/rad). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
+
+</div>
+</div>
+<a id="gabc6864e7c98d3a60e8bb88823ec0a817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc6864e7c98d3a60e8bb88823ec0a817">&#9670;&nbsp;</a></span>getGainKdRef() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getGainKdRef </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_kd_ref_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#gacfc18476b550a1f26058fd06e5187dcd" title="Returns the current damping gain (Kd) reference of the specified joint.">getGainKdRef(const int&amp;, float&amp;)</a> </dd></dl>
+
+</div>
+</div>
 <a id="gac22ee00323f72bc4658f471a3203e323"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gac22ee00323f72bc4658f471a3203e323">&#9670;&nbsp;</a></span>getGainKp() <span class="overload">[1/2]</span></h2>
 
@@ -377,11 +678,11 @@ Damping Gain Modes</h3>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">joint_kp_</td><td>Reference parameter to receive the gain value in Nm/rad. </td></tr>
-    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11).</td></tr>
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns 1 if the gain is successfully retrieved; returns -2 if the joint ID is out of range. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
 
 </div>
 </div>
@@ -424,6 +725,162 @@ Damping Gain Modes</h3>
 
 </div>
 </div>
+<a id="ga752c6bece3b213f5dd13faa6f23c5ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga752c6bece3b213f5dd13faa6f23c5ea7">&#9670;&nbsp;</a></span>getGainKpRef() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getGainKpRef </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_kp_ref_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current position gain (Kp) reference of the specified joint. </p>
+<p>Retrieves the position gain reference (Kp, in Nm/rad) set for the joint by the system process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">joint_kp_ref_</td><td>Reference to store the Kp reference (in Nm/rad). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
+
+</div>
+</div>
+<a id="ga0dcaabce3b16aa4e6b4285de63240674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0dcaabce3b16aa4e6b4285de63240674">&#9670;&nbsp;</a></span>getGainKpRef() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getGainKpRef </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_kp_ref_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#ga752c6bece3b213f5dd13faa6f23c5ea7" title="Returns the current position gain (Kp) reference of the specified joint.">getGainKpRef(const int&amp;, float&amp;)</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga847e013c51d23d82a8da51022cb7677b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga847e013c51d23d82a8da51022cb7677b">&#9670;&nbsp;</a></span>getHomingStatus() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getHomingStatus </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>homming_status_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the homing status of the specified joint. </p>
+<p>Retrieves whether the joint has found home position. homing process is included in Autostart sequence. before finding home position robot need to be put on the flat ground. (see Operation Manual)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">homming_status_</td><td>Reference to store the homing status (true if homed). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="gaa23b1eaa0af6c7fb008803f13a07bcee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa23b1eaa0af6c7fb008803f13a07bcee">&#9670;&nbsp;</a></span>getHomingStatus() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getHomingStatus </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>homming_status_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#ga847e013c51d23d82a8da51022cb7677b" title="Returns the homing status of the specified joint.">getHomingStatus(const int&amp;, bool&amp;)</a> </dd></dl>
+
+</div>
+</div>
 <a id="gabb35bb00851e34961552452347e45b56"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gabb35bb00851e34961552452347e45b56">&#9670;&nbsp;</a></span>getMotionOwner() <span class="overload">[1/2]</span></h2>
 
@@ -454,7 +911,7 @@ Damping Gain Modes</h3>
 <p>In a multi-process control architecture, each joint can only be controlled by a single process at a time — the motion owner. This function returns the process ID currently owning the specified joint.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">joint_processID_</td><td>Reference variable to receive the motion owner's process ID.</td></tr>
   </table>
   </dd>
@@ -502,6 +959,84 @@ Damping Gain Modes</h3>
 
 </div>
 </div>
+<a id="ga0928730dfba91c62b1369666ddd77e29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0928730dfba91c62b1369666ddd77e29">&#9670;&nbsp;</a></span>getMotorTemperature() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getMotorTemperature </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>motor_temp_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the motor temperature of the specified joint. </p>
+<p>Retrieves the current temperature of the joint's motor (in degrees Celsius).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">motor_temp_</td><td>Reference to store the motor temperature (°C). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="gafda598df1325e40abf913d5b4de3c48c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafda598df1325e40abf913d5b4de3c48c">&#9670;&nbsp;</a></span>getMotorTemperature() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getMotorTemperature </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>motor_temp_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd>getMotorTemperature(const int&amp;, float&amp;) </dd></dl>
+
+</div>
+</div>
 <a id="ga9c5af9224707b7e675f4cfa8d5c49111"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9c5af9224707b7e675f4cfa8d5c49111">&#9670;&nbsp;</a></span>getPos() <span class="overload">[1/2]</span></h2>
 
@@ -532,12 +1067,12 @@ Damping Gain Modes</h3>
 <p>This function retrieves the measured joint angle for the specified joint. The value is obtained from the sensor and expressed in radians.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">joint_pos_rad_</td><td>Reference variable that will be filled with the measured joint position (in radians).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns 1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
 
 </div>
 </div>
@@ -580,6 +1115,162 @@ Damping Gain Modes</h3>
 
 </div>
 </div>
+<a id="ga7b433c2518656b59240c2cec044e4e05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7b433c2518656b59240c2cec044e4e05">&#9670;&nbsp;</a></span>getPosRef() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getPosRef </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_pos_ref_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current position reference of the specified joint. </p>
+<p>Retrieves the position reference (in radians) set for the joint by the system process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">joint_pos_ref_</td><td>Reference to store the position reference (in radians). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
+
+</div>
+</div>
+<a id="ga9aa0985f1eb6e536dff1a9d98152ed2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9aa0985f1eb6e536dff1a9d98152ed2f">&#9670;&nbsp;</a></span>getPosRef() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getPosRef </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_pos_rad_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#ga7b433c2518656b59240c2cec044e4e05" title="Returns the current position reference of the specified joint.">getPosRef(const int&amp;, float&amp;)</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaf1ab088bd5b439014ccfb3229a86c201"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf1ab088bd5b439014ccfb3229a86c201">&#9670;&nbsp;</a></span>getRunStatus() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getRunStatus </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>run_status_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the run status of the specified joint. </p>
+<p>Retrieves whether the joint is currently running (motor enabled).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">run_status_</td><td>Reference to store the run status (true if running). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="ga1f36f3939a0dd0f10788b511f82b9d41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f36f3939a0dd0f10788b511f82b9d41">&#9670;&nbsp;</a></span>getRunStatus() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getRunStatus </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>run_status_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#gaf1ab088bd5b439014ccfb3229a86c201" title="Returns the run status of the specified joint.">getRunStatus(const int&amp;, bool&amp;)</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga513447cd04ca798ebea31ae2d477e4ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga513447cd04ca798ebea31ae2d477e4ff">&#9670;&nbsp;</a></span>getTorque() <span class="overload">[1/2]</span></h2>
 
@@ -610,12 +1301,12 @@ Damping Gain Modes</h3>
 <p>This function retrieves the measured torque value applied to the specified joint. The value is obtained from the sensor and expressed in Newton-meters.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">joint_torque_</td><td>Reference variable that will be filled with the measured joint torque (in Nm).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns 1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
 
 </div>
 </div>
@@ -658,6 +1349,84 @@ Damping Gain Modes</h3>
 
 </div>
 </div>
+<a id="gad644641e858f77a718a75dddb656b82b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad644641e858f77a718a75dddb656b82b">&#9670;&nbsp;</a></span>getTorqueRef() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getTorqueRef </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_torque_ref_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current torque reference of the specified joint. </p>
+<p>Retrieves the torque reference (in Newton-meters) set for the joint by the system process.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
+    <tr><td class="paramname">joint_torque_ref_</td><td>Reference to store the torque reference (in Nm). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
+
+</div>
+</div>
+<a id="ga978ed6a19f4c4e12fb8ba041ee79f483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga978ed6a19f4c4e12fb8ba041ee79f483">&#9670;&nbsp;</a></span>getTorqueRef() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Joint::getTorqueRef </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071">JointID</a>&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_torque_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload using JointID. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__JointControlAPI.html#gad644641e858f77a718a75dddb656b82b" title="Returns the current torque reference of the specified joint.">getTorqueRef(const int&amp;, float&amp;)</a> </dd></dl>
+
+</div>
+</div>
 <a id="ga1fe9127e43b68f6ba60c2307ade23f40"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1fe9127e43b68f6ba60c2307ade23f40">&#9670;&nbsp;</a></span>getVel() <span class="overload">[1/2]</span></h2>
 
@@ -688,12 +1457,12 @@ Damping Gain Modes</h3>
 <p>This function retrieves the measured joint angular velocity for the specified joint. The value is obtained from the sensor and expressed in radians per second (rad/s).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">joint_vel_rad_per_sec_</td><td>Reference variable that will be filled with the measured joint velocity (in rad/s).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns 1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>1 : success, -1 : fail to access data, -2 : joint ID is out of range. </dd></dl>
 
 </div>
 </div>
@@ -811,7 +1580,7 @@ Damping Gain Modes</h3>
 <p>This function sets the desired Kd gain for a specified joint after quantizing it based on predefined resolution steps. For roll/pitch joints (IDs: 0, 1, 3, 4, 6, 7, 9, 10), the quantization step is 0.035255 Nm*s/rad, and for knee joints (IDs: 2, 5, 8, 11), the quantization step is 0.051109 Nm*s/rad. The quantized gain is applied and the actual gain (i.e. the nearest multiple of the resolution step) is returned via the real_kd_ parameter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">_set_kd</td><td>The desired Kd gain value in Nm*s/rad (valid range: 0.0 to 10.0). </td></tr>
     <tr><td class="paramname">real_kd_</td><td>Reference parameter to receive the actual applied damping gain value after quantization.</td></tr>
   </table>
@@ -981,7 +1750,7 @@ Damping Gain Modes</h3>
 <p>This function sets the desired Kp gain for a specified joint after quantizing it based on predefined resolution steps. For roll/pitch joints (IDs: 0, 1, 3, 4, 6, 7, 9, 10), the quantization step is 17.62734 Nm/rad, and for knee joints (IDs: 2, 5, 8, 11), the quantization step is 25.55443 Nm/rad. The quantized gain is applied and the actual gain (nearest multiple of the resolution step) is returned via the real_kp_ parameter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">&lt;em&gt;set_kp&lt;/em&gt;</td><td>The desired Kp gain value in Nm/rad (valid range: 0.0 to 5000.0). </td></tr>
     <tr><td class="paramname">real_kp_</td><td>Reference parameter to receive the actual applied gain value after quantization.</td></tr>
   </table>
@@ -1165,7 +1934,7 @@ Damping Gain Modes</h3>
 <p>This function sets the desired joint position (in radians) for the specified joint.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The joint ID (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">_joint_pos_rad</td><td>The desired joint position in radians.</td></tr>
   </table>
   </dd>
@@ -1249,7 +2018,7 @@ Damping Gain Modes</h3>
 <p>If the input value is outside the allowed range, it is clamped to the nearest valid value. To ensure the reference takes effect, the calling process must first acquire motion ownership using <code><a class="el" href="group__JointControlAPI.html#gaac540bbe36f9c8a3a523da3d83eb98d2" title="Assigns motion ownership of the specified joint to the current process.">setMotionOwner()</a></code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11). </td></tr>
+    <tr><td class="paramname">_jointId</td><td>The ID of the joint (valid range: 0 to 11, wheel: 12 to 15). </td></tr>
     <tr><td class="paramname">_torque_Nm</td><td>The desired torque in Newton-meters (Nm).</td></tr>
   </table>
   </dd>

@@ -63,6 +63,7 @@
         <material name="darker_gray" rgba="0.2 0.2 0.2 1.0"/>
 
         <mesh name="trunk" file="../meshes/rbq/trunk.obj" scale="1 1 1"/>
+        <mesh name="trunk_collision" file="../meshes/rbq/trunk_collision.obj" scale="1 1 1"/>
         <mesh name="hip2" file="../meshes/rbq/hip2.obj" scale="1 1 1"/>
         <mesh name="hip3" file="../meshes/rbq/hip3.obj" scale="1 1 1"/>
         <mesh name="thigh" file="../meshes/rbq/thigh.obj" scale="1 1 1"/>
@@ -78,7 +79,7 @@
             <freejoint/>
             <site name="imu" pos="-0.02557 0 0.04232"/>
             <geom type="mesh" mesh="trunk" material="graygray" class="visual"/>
-            <geom type="box" size="0.4 0.1 0.074" class="collision"/>
+            <geom type="mesh" mesh="trunk_collision" material="graygray" class="collision"/>
             <camera name="track_cam" mode="track" target="base_link" pos="0 -2 1" euler="20 0 0"/>
 
             <body name="BT0_body" pos="0.36462 0 -0.02663" quat="0 -0.1736482 0 0.9848078">
@@ -126,7 +127,6 @@
                     resolution="640 360"
                     sensorsize="384e-5 240e-5"/>
             </body>
-
             <body name="RR0_body" pos="-0.388031 0.037500 0.037764" quat="-0.5 -0.5 -0.5 -0.5">
                 <camera name="RR0"
                     mode="fixed"

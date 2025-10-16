@@ -8,3 +8,5 @@ float64 vel_y
 float64 omega_z
 float64 delta_body_h
 float64 delta_foot_h
+int8	gait_state
+bool	gait_transition

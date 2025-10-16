@@ -85,6 +85,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gabe2711231941a993db81be44b9200df2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMUSensorAPI.html#gabe2711231941a993db81be44b9200df2">RBQ_API::Imu::getAcc</a> (Eigen::Matrix&lt; float, 3, 1 &gt; &amp;out_acc_)</td></tr>
 <tr class="memdesc:gabe2711231941a993db81be44b9200df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the IMU linear acceleration in m/s².  <a href="group__IMUSensorAPI.html#gabe2711231941a993db81be44b9200df2">More...</a><br /></td></tr>
 <tr class="separator:gabe2711231941a993db81be44b9200df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ce0595422e53f5fd7eb0f3a2e51d825"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMUSensorAPI.html#ga9ce0595422e53f5fd7eb0f3a2e51d825">RBQ_API::Imu::getConnectionStatus</a> (bool &amp;connection_status_)</td></tr>
+<tr class="memdesc:ga9ce0595422e53f5fd7eb0f3a2e51d825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the connection status of the IMU sensor.  <a href="group__IMUSensorAPI.html#ga9ce0595422e53f5fd7eb0f3a2e51d825">More...</a><br /></td></tr>
+<tr class="separator:ga9ce0595422e53f5fd7eb0f3a2e51d825"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>APIs for accessing IMU sensor data such as orientation, angular velocity, and linear acceleration. </p>
@@ -133,6 +136,34 @@ IMU Sensor Placement</h3>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns 1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="ga9ce0595422e53f5fd7eb0f3a2e51d825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9ce0595422e53f5fd7eb0f3a2e51d825">&#9670;&nbsp;</a></span>getConnectionStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Imu::getConnectionStatus </td>
+          <td>(</td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>connection_status_</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the connection status of the IMU sensor. </p>
+<p>Retrieves whether the IMU sensor is currently connected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">connection_status_</td><td>Reference to store the connection status (true if connected). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success, -1 if shared memory is not accessible. </dd></dl>
 
 </div>
 </div>

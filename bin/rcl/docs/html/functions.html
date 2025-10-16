@@ -181,11 +181,16 @@ $(function() {
 <li>getBatteryVoltage()
 : <a class="el" href="group__PowerControlAPI.html#ga0c8d715de6e6dbb69b7ab505eff6a3f8">RBQ_API::PowerControl</a>
 </li>
+<li>getBoardTemperature()
+: <a class="el" href="group__JointControlAPI.html#gafd37cace3772fe234e4fe8cbca5ca537">RBQ_API::Joint</a>
+</li>
 <li>getBodyPos()
-: <a class="el" href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">RBQ_API::StateEstimation</a>
+: <a class="el" href="group__SimulatorAPI.html#ga256d165b4d010fd7c7a05b02f280ff6a">RBQ_API::Simulator</a>
+, <a class="el" href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">RBQ_API::StateEstimation</a>
 </li>
 <li>getBodyQuat()
-: <a class="el" href="group__StateEstimationAPI.html#gac4be1267eac9b5d5a896f60ce780a07c">RBQ_API::StateEstimation</a>
+: <a class="el" href="group__SimulatorAPI.html#ga1282cf32b08f701a428905c9af26eb94">RBQ_API::Simulator</a>
+, <a class="el" href="group__StateEstimationAPI.html#gac4be1267eac9b5d5a896f60ce780a07c">RBQ_API::StateEstimation</a>
 </li>
 <li>getBodyRot()
 : <a class="el" href="group__StateEstimationAPI.html#ga1f15f80810e6e6085bd16fce717bdc49">RBQ_API::StateEstimation</a>
@@ -194,13 +199,24 @@ $(function() {
 : <a class="el" href="group__StateEstimationAPI.html#gae058ff2107a323b7f7b5c3d8da7a474e">RBQ_API::StateEstimation</a>
 </li>
 <li>getBodyVel()
-: <a class="el" href="group__StateEstimationAPI.html#gaea229a4d9f5d3a16fc5d07585deeea3b">RBQ_API::StateEstimation</a>
+: <a class="el" href="group__SimulatorAPI.html#ga6671486996006c81af076ba33ec33810">RBQ_API::Simulator</a>
+, <a class="el" href="group__StateEstimationAPI.html#gaea229a4d9f5d3a16fc5d07585deeea3b">RBQ_API::StateEstimation</a>
 </li>
 <li>getButtonState()
 : <a class="el" href="group__GamepadAPI.html#gaeb68b31dd47cad124342dd8da317b4ab">RBQ_API::Gamepad</a>
 </li>
+<li>getConnectionStatus()
+: <a class="el" href="group__IMUSensorAPI.html#ga9ce0595422e53f5fd7eb0f3a2e51d825">RBQ_API::Imu</a>
+, <a class="el" href="group__JointControlAPI.html#ga7d230b30a0ac5163e2d734ba7b4ed020">RBQ_API::Joint</a>
+</li>
 <li>getEstimatorRunState()
 : <a class="el" href="group__StateEstimationAPI.html#gae211de18ae3ce008205b635f504e1940">RBQ_API::StateEstimation</a>
+</li>
+<li>getFootContact()
+: <a class="el" href="group__SimulatorAPI.html#ga82cd60ea0264f86b8af4b5b583f68ee1">RBQ_API::Simulator</a>
+</li>
+<li>getFootContactForce()
+: <a class="el" href="group__SimulatorAPI.html#gaf6a93b933cd3fe0734b31dd640864a05">RBQ_API::Simulator</a>
 </li>
 <li>getFootExtForce()
 : <a class="el" href="group__StateEstimationAPI.html#ga296bd360b2030fa3ff4499de4825cda7">RBQ_API::StateEstimation</a>
@@ -220,11 +236,29 @@ $(function() {
 <li>getGainKd()
 : <a class="el" href="group__JointControlAPI.html#gae8684bc65ef33e2abea2e69374c220e2">RBQ_API::Joint</a>
 </li>
+<li>getGainKdRef()
+: <a class="el" href="group__JointControlAPI.html#gacfc18476b550a1f26058fd06e5187dcd">RBQ_API::Joint</a>
+</li>
 <li>getGainKp()
-: <a class="el" href="group__JointControlAPI.html#gac22ee00323f72bc4658f471a3203e323">RBQ_API::Joint</a>
+: <a class="el" href="group__JointControlAPI.html#gaa4df29fe5a4854923d52b00748871768">RBQ_API::Joint</a>
+</li>
+<li>getGainKpRef()
+: <a class="el" href="group__JointControlAPI.html#ga752c6bece3b213f5dd13faa6f23c5ea7">RBQ_API::Joint</a>
 </li>
 <li>getGyro()
 : <a class="el" href="group__IMUSensorAPI.html#ga61feacab46250d3dfb7bd5aa3ee90b4d">RBQ_API::Imu</a>
+</li>
+<li>getHomingStatus()
+: <a class="el" href="group__JointControlAPI.html#ga847e013c51d23d82a8da51022cb7677b">RBQ_API::Joint</a>
+</li>
+<li>getJointPos()
+: <a class="el" href="group__SimulatorAPI.html#gaebdf5f04c9634df014783fa5ff886a8b">RBQ_API::Simulator</a>
+</li>
+<li>getJointTorque()
+: <a class="el" href="group__SimulatorAPI.html#ga5f96a7f17eb5803a43b2ceece20cf6da">RBQ_API::Simulator</a>
+</li>
+<li>getJointVel()
+: <a class="el" href="group__SimulatorAPI.html#gae7322e49015067e26745d347f987c2f7">RBQ_API::Simulator</a>
 </li>
 <li>getLeftJogX()
 : <a class="el" href="group__GamepadAPI.html#ga2975edc42ffe8d4bc280b3befcce1e05">RBQ_API::Gamepad</a>
@@ -238,11 +272,17 @@ $(function() {
 <li>getMotionOwner()
 : <a class="el" href="group__JointControlAPI.html#gabb35bb00851e34961552452347e45b56">RBQ_API::Joint</a>
 </li>
+<li>getMotorTemperature()
+: <a class="el" href="group__JointControlAPI.html#ga0928730dfba91c62b1369666ddd77e29">RBQ_API::Joint</a>
+</li>
 <li>getPanTiltZoom()
 : <a class="el" href="group__PtzCamera.html#gacd61a7025f3b625c7b46e979bc8d7db5">RBQ_API::PtzCamera</a>
 </li>
 <li>getPos()
-: <a class="el" href="group__JointControlAPI.html#ga9c5af9224707b7e675f4cfa8d5c49111">RBQ_API::Joint</a>
+: <a class="el" href="group__JointControlAPI.html#gac5e1b274c1eb8e3a70030ca495c73ff7">RBQ_API::Joint</a>
+</li>
+<li>getPosRef()
+: <a class="el" href="group__JointControlAPI.html#ga7b433c2518656b59240c2cec044e4e05">RBQ_API::Joint</a>
 </li>
 <li>getPowerState()
 : <a class="el" href="group__PowerControlAPI.html#ga49b13715f7705ffe77db4fbc89a9097c">RBQ_API::PowerControl</a>
@@ -262,11 +302,20 @@ $(function() {
 <li>getRPY()
 : <a class="el" href="group__IMUSensorAPI.html#ga518a70607484b63601056cca70d21b72">RBQ_API::Imu</a>
 </li>
+<li>getRunStatus()
+: <a class="el" href="group__JointControlAPI.html#gaf1ab088bd5b439014ccfb3229a86c201">RBQ_API::Joint</a>
+</li>
 <li>getStatusWord()
 : <a class="el" href="group__StatusAPI.html#ga42bd8abc72c23d785d9432e61c43fe25">RBQ_API::Status</a>
 </li>
+<li>getTime()
+: <a class="el" href="group__SimulatorAPI.html#gaa16491a26b1cad206f636ba0472ea4b6">RBQ_API::Simulator</a>
+</li>
 <li>getTorque()
 : <a class="el" href="group__JointControlAPI.html#ga513447cd04ca798ebea31ae2d477e4ff">RBQ_API::Joint</a>
+</li>
+<li>getTorqueRef()
+: <a class="el" href="group__JointControlAPI.html#gad644641e858f77a718a75dddb656b82b">RBQ_API::Joint</a>
 </li>
 <li>getVel()
 : <a class="el" href="group__JointControlAPI.html#ga1fe9127e43b68f6ba60c2307ade23f40">RBQ_API::Joint</a>
@@ -277,6 +326,9 @@ $(function() {
 <h3><a id="index_i"></a>- i -</h3><ul>
 <li>initialize()
 : <a class="el" href="classRBQ__API.html#a2698c8289f1e0718865cf1142348c392">RBQ_API</a>
+</li>
+<li>isSimulator()
+: <a class="el" href="group__SimulatorAPI.html#gaaa69561b3d6b9b0d0eaee6fb3d3d6d3c">RBQ_API::Simulator</a>
 </li>
 </ul>
 
@@ -290,7 +342,8 @@ $(function() {
 
 <h3><a id="index_l"></a>- l -</h3><ul>
 <li>LegID
-: <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">RBQ_API::StateEstimation</a>
+: <a class="el" href="structRBQ__API_1_1Simulator.html#af4dac2d25d221be406addb81ca890e17">RBQ_API::Simulator</a>
+, <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">RBQ_API::StateEstimation</a>
 </li>
 </ul>
 
