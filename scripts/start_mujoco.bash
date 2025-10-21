@@ -54,7 +54,7 @@ cd $APP_PATH
 while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then
-        sudo ./"$APP_NAME" "${CMD_ARGS[@]}"
+        ./"$APP_NAME" "${CMD_ARGS[@]}"
     fi
     sleep 2
 done

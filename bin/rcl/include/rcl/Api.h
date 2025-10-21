@@ -1850,7 +1850,9 @@ private:
     pRBCORE_SHM_REFERENCE _getRefData();
     pRBCORE_SHM_COMMAND _getCmdData();
     pUSER_SHM _getUserData();
-    pSIM_VARIABLE _getSimData();
+    pSIM_VARIABLE _getSimInfo();
+    MOTION_REF _getMotionRef() const;
+    bool m_shm = false;
 
     int m_processId = -1;
 

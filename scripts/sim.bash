@@ -42,8 +42,8 @@ else
 fi
 
 if [ "$ROS_ENABLED" = "true" ]; then
-    gnome-terminal --tab --title="rbq_ros_driver " -- bash -i -c "sudo bash scripts/start_ros_driver.bash --sim"
-    gnome-terminal --tab --title="rbq_description" -- bash -i -c "sudo bash scripts/start_rviz.bash --sim"
+    gnome-terminal --tab --title="rbq_ros_driver " -- bash -i -c "bash scripts/start_ros_driver.bash --sim"
+    gnome-terminal --tab --title="rbq_description" -- bash -i -c "bash scripts/start_rviz.bash --sim"
 fi
 
 gnome-terminal --tab --title="GUI" -- bash -i -c "bash scripts/start_gui.bash --sim ${ROBOT_ARGS[@]}"
