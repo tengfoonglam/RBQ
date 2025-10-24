@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['docking_21',['DOCKING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa4bc339494ca187e35621c61284d0d8e4',1,'RBQ_API::Status']]],
-  ['docking_22',['docking',['../group__MotionAPI.html#ga9314e494d5231fa40985530563098490',1,'RBQ_API::Motion']]],
+  ['docking_21',['docking',['../group__MotionAPI.html#ga9314e494d5231fa40985530563098490',1,'RBQ_API::Motion']]],
+  ['docking_22',['DOCKING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa4bc339494ca187e35621c61284d0d8e4',1,'RBQ_API::Status']]],
   ['docking_5fapproach_23',['DOCKING_APPROACH',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19af00cdbca36e198049a10c2bcb365525a',1,'RBQ_API::Status']]],
   ['docking_5fapproach_5foffset_24',['DOCKING_APPROACH_OFFSET',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a0a6f5501c55fea38873fb5cdc701c6ae',1,'RBQ_API::Status']]],
   ['docking_5fapproach_5fwide_25',['DOCKING_APPROACH_WIDE',['../group__StatusAPI.html#ggacafa98314bd35271aae9cd7e14cf9b19a9d0576b2780fe19477a566aedea199ef',1,'RBQ_API::Status']]],

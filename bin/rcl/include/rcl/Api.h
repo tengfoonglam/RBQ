@@ -520,6 +520,30 @@ public:
         static constexpr float TORQUE_KNEE_UPPER  = 140.f;   ///< @brief Upper bound torque for knee joints [Nm] @ingroup JointControlAPI
         static constexpr float TORQUE_KNEE_LOWER  = -70.f;   ///< @brief Lower bound torque for knee joints [Nm] @ingroup JointControlAPI
 
+        /**
+         * @brief Set all joint references from local to the robot.
+         *
+         * This function synchronizes the all joint reference values (position, torque, Kp, Kd)
+         * from the the local variable within this API instance to the robot.
+         * It should be called periodically once after setting each joint reference values.
+         * Such as at the end of the each control loop iteration.
+         *
+         * Example:
+         * @code
+         * for (int i=0; i<12; i++) {
+         *     RBQ_API::instance().joint.setPosRef(i, desired_position[i]);
+         *     RBQ_API::instance().joint.setTorqueRef(i, desired_torque[i]);
+         *     RBQ_API::instance().joint.setGainKpRef(i, desired_kp[i]);
+         *     RBQ_API::instance().joint.setGainKdRef(i, desired_kd[i]);
+         * }
+         * RBQ_API::instance().joint.setAllJointRef();
+         * @endcode
+         *
+         * @return Returns 1 on successful update.
+         *
+         * @ingroup JointControlAPI
+         */
+        int setAllJointRef();
 
         /**
          * @brief Assigns motion ownership of the specified joint to the current process.
@@ -637,35 +661,35 @@ public:
          *
          * @ingroup JointControlAPI
          */
-        int setGainKp(const int &_jointId, const float &_set_kp, float &real_kp_);
+        int setGainKpRef(const int &_jointId, const float &_set_kp, float &real_kp_);
 
         /**
          * @brief Overload using JointID.
-         * @see setGainKp(const int&, const float&, float&)
+         * @see setGainKpRef(const int&, const float&, float&)
          * @ingroup JointControlAPI
          */
-        int setGainKp(const JointID _jointId, const float &_set_kp, float &real_kp_){
-            return setGainKp(static_cast<int>(_jointId), _set_kp, real_kp_);
+        int setGainKpRef(const JointID _jointId, const float &_set_kp, float &real_kp_){
+            return setGainKpRef(static_cast<int>(_jointId), _set_kp, real_kp_);
         }
 
         /**
          * @brief Overload without return gain value.
-         * @see setGainKp(const int&, const float&, float&)
+         * @see setGainKpRef(const int&, const float&, float&)
          * @ingroup JointControlAPI
          */
-        int setGainKp(const int &_jointId, const float &_set_kp){
+        int setGainKpRef(const int &_jointId, const float &_set_kp){
             float dummy;
-            return setGainKp(_jointId, _set_kp, dummy);
+            return setGainKpRef(_jointId, _set_kp, dummy);
         }
 
         /**
          * @brief Overload using JointID, and without return gain value.
-         * @see setGainKp(const int&, const float&, float&)
+         * @see setGainKpRef(const int&, const float&, float&)
          * @ingroup JointControlAPI
          */
-        int setGainKp(const JointID _jointId, const float &_set_kp){
+        int setGainKpRef(const JointID _jointId, const float &_set_kp){
             float dummy;
-            return setGainKp(static_cast<int>(_jointId), _set_kp, dummy);
+            return setGainKpRef(static_cast<int>(_jointId), _set_kp, dummy);
         }
 
         /**
@@ -689,35 +713,35 @@ public:
          *
          * @ingroup JointControlAPI
          */
-        int setGainKd(const int &_jointId, const float &_set_kd, float &real_kd_);
+        int setGainKdRef(const int &_jointId, const float &_set_kd, float &real_kd_);
 
         /**
          * @brief Overload using JointID.
-         * @see setGainKd(const int&, const float&, float&)
+         * @see setGainKdRef(const int&, const float&, float&)
          * @ingroup JointControlAPI
          */
-        int setGainKd(const JointID _jointId, const float &_set_kd, float &real_kd_){
-            return setGainKd(static_cast<int>(_jointId), _set_kd, real_kd_);
+        int setGainKdRef(const JointID _jointId, const float &_set_kd, float &real_kd_){
+            return setGainKdRef(static_cast<int>(_jointId), _set_kd, real_kd_);
         }
 
         /**
          * @brief Overload without return gain value.
-         * @see setGainKd(const int&, const float&, float&)
+         * @see setGainKdRef(const int&, const float&, float&)
          * @ingroup JointControlAPI
          */
-        int setGainKd(const int &_jointId, const float &_set_kd) {
+        int setGainKdRef(const int &_jointId, const float &_set_kd) {
             float dummy;
-            return setGainKd(_jointId, _set_kd, dummy);
+            return setGainKdRef(_jointId, _set_kd, dummy);
         }
 
         /**
          * @brief Overload using JointID, without return gain value.
-         * @see setGainKd(const int&, const float&, float&)
+         * @see setGainKdRef(const int&, const float&, float&)
          * @ingroup JointControlAPI
          */
-        int setGainKd(const JointID _jointId, const float &_set_kd) {
+        int setGainKdRef(const JointID _jointId, const float &_set_kd) {
             float dummy;
-            return setGainKd(static_cast<int>(_jointId), _set_kd, dummy);
+            return setGainKdRef(static_cast<int>(_jointId), _set_kd, dummy);
         }
 
         /**
@@ -1057,6 +1081,8 @@ public:
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
+
+        MOTION_REF m_motionRef;
     };
     Joint joint{this};
 
@@ -1695,6 +1721,12 @@ public:
          */
         int getBodyQuat(Eigen::Quaternion<float> &body_quat_);
 
+        int getImuQuat(Eigen::Quaternion<float> &imu_quat_);
+
+        int getImuAcc(Eigen::Vector3f &imu_acc_);
+
+        int getImuGyro(Eigen::Vector3f &imu_gyro_);
+
         /**
          * @brief Returns the velocity of the robot's body center.
          *
@@ -1843,16 +1875,17 @@ private:
     pRBCORE_SHM_REFERENCE   m_sharedREF            = nullptr;
     pRBCORE_SHM_SENSOR      m_sharedSEN            = nullptr;
     pUSER_SHM               m_sharedUSER           = nullptr;
-    pSIM_VARIABLE           m_sharedSIM            = nullptr;
     int                     m_shmOpened            = 0;
     int _openSHM();
     pRBCORE_SHM_SENSOR _getSensorData();
     pRBCORE_SHM_REFERENCE _getRefData();
     pRBCORE_SHM_COMMAND _getCmdData();
-    pUSER_SHM _getUserData();
-    pSIM_VARIABLE _getSimInfo();
-    MOTION_REF _getMotionRef() const;
-    bool m_shm = false;
+    pUSER_SHM           _getUserData();
+    SIM_VARIABLE        _getSimInfo() const;
+    MOTION_REF          _getMotionRef() const;
+
+    bool m_shm      = true;
+    bool m_shm_ref  = true;
 
     int m_processId = -1;
 
