@@ -48,7 +48,8 @@ def generate_launch_description() -> launch.LaunchDescription:
                 ],
                 namespace=LaunchConfiguration("namespace"),
                 remappings=[
-                    ('/joint_states', '/robot_state/joint_states')
+                    # ('/joint_states', '/rbq/joint/joint_states')
+                    ('joint_states', 'joint/joint_states')
                 ],
             ),
             Node(
@@ -58,7 +59,8 @@ def generate_launch_description() -> launch.LaunchDescription:
                 condition=launch.conditions.UnlessCondition(LaunchConfiguration("gui")),
                 namespace=LaunchConfiguration("namespace"),
                 remappings=[
-                    ('/joint_states', '/robot_state/joint_states')
+                    # ('/joint_states', '/rbq/joint/joint_states')
+                    ('joint_states', 'joint/joint_states')
                 ],
             ),
             Node(

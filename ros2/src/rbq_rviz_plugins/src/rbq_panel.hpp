@@ -3,14 +3,27 @@
 
 #include <QtWidgets>
 #include <QBasicTimer>
+#include <QTimer>
 #undef NO_ERROR
 
 #include <memory>
 #include <string>
 #include <vector>
+#include <thread>
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp/executors/single_threaded_executor.hpp"
 #include "rviz_common/panel.hpp"
+#include "rbq_msgs/msg/robot_status.hpp"
+#include "rbq_msgs/msg/battery_state.hpp"
+#include "rbq_msgs/msg/joint_status.hpp"
+#include "sensor_msgs/msg/joint_state.hpp"
+#include "nav_msgs/msg/odometry.hpp"
+#include "sensor_msgs/msg/imu.hpp"
+#include <QTabWidget>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QHeaderView>
 
 class QPushButton;
 
@@ -56,15 +69,22 @@ private Q_SLOTS:
     void walk              ();
     void walkSlow          ();
     void run               ();
-    void calibrateImu      ();
-    void staticLock        ();
-    void staticReady       ();
-    void staticGround      ();
-    void recoveryErrorClear();
-    void recoveryFlex      ();
+    void dock              ();
     void emergency         ();
+    
+    // RL 관련 함수들
+    void stairs            ();
+    void rlTrot            ();
+    void rlBound           ();
+    void rlPace            ();
+    void rlPronk           ();
+    void rlTrotVision      ();
+    void rlTrotRun         ();
+    void rlSilent          ();
+    void rlFrontWalk       ();
 
     void switchGamepadPort (const bool &powerON = false);
+    void extJoyToggle      ();
     void powerLeg          (const bool &powerON = false);
     void powerArm          (const bool &powerON = false);
     void powerVisionPC     (const bool &powerON = false);
@@ -98,14 +118,21 @@ private:
     QPushButton* bt_walk               = nullptr;
     QPushButton* bt_walkSlow           = nullptr;
     QPushButton* bt_run                = nullptr;
-    QPushButton* bt_calibrateImu       = nullptr;
-    QPushButton* bt_staticLock         = nullptr;
-    QPushButton* bt_staticReady        = nullptr;
-    QPushButton* bt_staticGround       = nullptr;
-    QPushButton* bt_recoveryErrorClear = nullptr;
-    QPushButton* bt_recoveryFlex       = nullptr;
+    
+    // RL 관련 버튼들
+    QPushButton* bt_stairs             = nullptr;
+    QPushButton* bt_rlTrot             = nullptr;
+    QPushButton* bt_rlBound            = nullptr;
+    QPushButton* bt_rlPace             = nullptr;
+    QPushButton* bt_rlPronk            = nullptr;
+    QPushButton* bt_rlTrotVision       = nullptr;
+    QPushButton* bt_rlTrotRun          = nullptr;
+    QPushButton* bt_rlSilent           = nullptr;
+    QPushButton* bt_rlFrontWalk        = nullptr;
+    QPushButton* bt_dock               = nullptr;
     QPushButton* bt_emergency          = nullptr;
     QPushButton* bt_switchGamepadPort  = nullptr;
+    QPushButton* bt_extJoy             = nullptr;
     QPushButton* bt_powerLeg           = nullptr;
     QPushButton* bt_powerArm           = nullptr;
     QPushButton* bt_powerVisionPC      = nullptr;
@@ -163,6 +190,80 @@ private:
 
     template<typename T>
     static inline std::string toLabel(T & msg);
+
+    // Status indicators
+    QLabel* lbl_battery_voltage;
+    QLabel* lbl_motor_check_status;
+    QLabel* lbl_initialize_pose_status;
+    QLabel* lbl_control_start_status;
+    QLabel* lbl_imu_status;
+    
+    // ROS2 node for subscriptions
+    rclcpp::Node::SharedPtr ros_node_;
+    rclcpp::executors::SingleThreadedExecutor::SharedPtr executor_;
+    std::thread executor_thread_;
+    
+    // ROS2 subscriptions
+    rclcpp::Subscription<rbq_msgs::msg::RobotStatus>::SharedPtr status_subscription_;
+    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_states_subscription_;
+    rclcpp::Subscription<rbq_msgs::msg::JointStatus>::SharedPtr joint_status_subscription_;
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odometry_subscription_;
+    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_subscription_;
+    
+    // Callback functions
+    void statusCallback(const rbq_msgs::msg::RobotStatus::SharedPtr msg);
+    void batteryStateCallback(const rbq_msgs::msg::BatteryState::SharedPtr msg);
+    void jointStatesCallback(const sensor_msgs::msg::JointState::SharedPtr msg);
+    void jointStatusCallback(const rbq_msgs::msg::JointStatus::SharedPtr msg);
+    void odometryCallback(const nav_msgs::msg::Odometry::SharedPtr msg);
+    void imuCallback(const sensor_msgs::msg::Imu::SharedPtr msg);
+    
+    // Executor thread function
+    void executorThreadFunction();
+    
+    // Gait button color update function
+    void updateGaitButtonColors(int currentGaitId);
+    
+    // Ext joy button color update function
+    void updateExtJoyButtonColor(bool extJoyConnected);
+    
+    // Joint table update function
+    void updateJointTable();
+    
+    // Odometry table update function
+    void updateOdometryTable();
+    
+    // IMU table update function
+    void updateImuTable();
+    
+    // Tab widget
+    QTabWidget* tab_widget_;
+    
+    // Tab creation functions
+    QWidget* createMainTab();
+    QWidget* createAdvancedTab();
+    
+    // Update timer for batch table updates (like GUI)
+    QTimer* update_timer_;
+    
+    // Data storage for batch updates
+    struct RobotData {
+        rbq_msgs::msg::RobotStatus::SharedPtr robot_status;
+        sensor_msgs::msg::JointState::SharedPtr joint_states;
+        rbq_msgs::msg::JointStatus::SharedPtr joint_status;
+        nav_msgs::msg::Odometry::SharedPtr odometry;
+        sensor_msgs::msg::Imu::SharedPtr imu;
+        rbq_msgs::msg::BatteryState::SharedPtr battery_state;
+        
+        std::mutex data_mutex;
+    } robot_data_;
+    
+    
+    // ExtJoy 상태 변수
+    bool extJoy_state_;
+    
+    // Batch update function
+    void batchUpdateTables();
 };
 
 }  // namespace rbq_rviz_plugins

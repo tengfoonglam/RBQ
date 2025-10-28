@@ -139,6 +139,12 @@ void NetworkHandler::readSocketMotionDatagram()
         memcpy((char *)&legStateArray_, buffer_.data(), sizeof(RBQ_SDK::Motion::LegStateArray_t));
         buffer_.remove(0, buffer_.size());
         this->setLegStateArray(legStateArray_);
+    } else if(buffer_.size() == sizeof(RBQ_SDK::Motion::JointStatus_t)) {
+        RBQ_SDK::Motion::JointStatus_t jointStatus_;
+        memcpy((char *)&jointStatus_, buffer_.data(), sizeof(jointStatus_));
+        buffer_.remove(0, buffer_.size());
+        // qDebug() << "Received JointStatus data";
+        this->setJointStatus(jointStatus_);
     } else {
         qDebug() << " -- ERROR -- buffer_.size() != sizeof(RBQ_SDK::RobotState_t)";
     }
@@ -157,6 +163,9 @@ void NetworkHandler::sendRequestMotionFeedback()
         request_.requestID = RBQ_SDK::Motion::RequestId_e::sendbackRobotState;
     } else if(reqFeedbackCount == 2) {
         request_.requestID = RBQ_SDK::Motion::RequestId_e::REQ_SENDBACK_LEG_STATE_ARRAY;
+    } else if(reqFeedbackCount == 3) {
+        request_.requestID = RBQ_SDK::Motion::RequestId_e::REQ_SENDBACK_JOINT_STATUS;
+        // qDebug() << "Requesting JointStatus data";
         reqFeedbackCount = 0;
     }
     QByteArray ba_ = QByteArray::fromRawData((const char *)&request_, sizeof(RBQ_SDK::Request_t));

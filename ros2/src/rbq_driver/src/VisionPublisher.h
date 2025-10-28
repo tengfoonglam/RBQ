@@ -250,135 +250,135 @@ private:
             if(sensor_.enabled) {
                 //필요 카메라 이미지 주석 해제
 
-                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_0){
-                //     // RGB 관련
-                //     if(sensor_.getSubCountRgb()) {
-                //         publishRGB(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                if(sensor_.id == Vision_IPC::Sensors_e::Bottom0){
+                    // RGB 관련
+                    if(sensor_.getSubCountRgb()) {
+                        publishRGB(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountRGBCompressed()) {
-                //         publishRGBCompressed(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                    if(sensor_.getSubCountRGBCompressed()) {
+                        publishRGBCompressed(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     // IR 관련
-                //     if(sensor_.getSubCountIR()) {
-                //         publishIR(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
+                    // IR 관련
+                    if(sensor_.getSubCountIR()) {
+                        publishIR(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountIRCompressed()) {
-                //         publishIRCompressed(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
-                // }
+                    if(sensor_.getSubCountIRCompressed()) {
+                        publishIRCompressed(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
+                }
 
-                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_1){
-                //     // RGB 관련
-                //     if(sensor_.getSubCountRgb()) {
-                //         publishRGB(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                if(sensor_.id == Vision_IPC::Sensors_e::Bottom1){
+                    // RGB 관련
+                    if(sensor_.getSubCountRgb()) {
+                        publishRGB(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountRGBCompressed()) {
-                //         publishRGBCompressed(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                    if(sensor_.getSubCountRGBCompressed()) {
+                        publishRGBCompressed(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     // IR 관련
-                //     if(sensor_.getSubCountIR()) {
-                //         publishIR(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
+                    // IR 관련
+                    if(sensor_.getSubCountIR()) {
+                        publishIR(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountIRCompressed()) {
-                //         publishIRCompressed(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
-                // }
+                    if(sensor_.getSubCountIRCompressed()) {
+                        publishIRCompressed(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
+                }
 
-                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_2){
-                //     // RGB 관련
-                //     if(sensor_.getSubCountRgb()) {
-                //         publishRGB(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                if(sensor_.id == Vision_IPC::Sensors_e::Bottom2){
+                    // RGB 관련
+                    if(sensor_.getSubCountRgb()) {
+                        publishRGB(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountRGBCompressed()) {
-                //         publishRGBCompressed(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                    if(sensor_.getSubCountRGBCompressed()) {
+                        publishRGBCompressed(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     // IR 관련
-                //     if(sensor_.getSubCountIR()) {
-                //         publishIR(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
+                    // IR 관련
+                    if(sensor_.getSubCountIR()) {
+                        publishIR(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountIRCompressed()) {
-                //         publishIRCompressed(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
-                // }
+                    if(sensor_.getSubCountIRCompressed()) {
+                        publishIRCompressed(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
+                }
 
-                // if(sensor_.id == Vision_IPC::Sensors_e::Bottom_3){
-                //     // RGB 관련
-                //     if(sensor_.getSubCountRgb()) {
-                //         publishRGB(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                if(sensor_.id == Vision_IPC::Sensors_e::Bottom3){
+                    // RGB 관련
+                    if(sensor_.getSubCountRgb()) {
+                        publishRGB(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountRGBCompressed()) {
-                //         publishRGBCompressed(sensor_.id);
-                //         publishRGBCameraInfo(sensor_.id);
-                //     }
+                    if(sensor_.getSubCountRGBCompressed()) {
+                        publishRGBCompressed(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                //     // IR 관련
-                //     if(sensor_.getSubCountIR()) {
-                //         publishIR(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
+                    // IR 관련
+                    if(sensor_.getSubCountIR()) {
+                        publishIR(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
                     
-                //     if(sensor_.getSubCountIRCompressed()) {
-                //         publishIRCompressed(sensor_.id);
-                //         publishIRCameraInfo(sensor_.id);
-                //     }
-                // }
+                    if(sensor_.getSubCountIRCompressed()) {
+                        publishIRCompressed(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
+                }
 
                 if(sensor_.id == Vision_IPC::Sensors_e::Front || sensor_.id == Vision_IPC::Sensors_e::Rear) {
                     // // RGB 관련
-                    // if(sensor_.getSubCountRgb()) {
-                    //     publishRGB(sensor_.id);
-                    //     publishRGBCameraInfo(sensor_.id);
-                    // }
+                    if(sensor_.getSubCountRgb()) {
+                        publishRGB(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                    // if(sensor_.getSubCountRGBCompressed()) {
-                    //     publishRGBCompressed(sensor_.id);
-                    //     publishRGBCameraInfo(sensor_.id);
-                    // }
+                    if(sensor_.getSubCountRGBCompressed()) {
+                        publishRGBCompressed(sensor_.id);
+                        publishRGBCameraInfo(sensor_.id);
+                    }
                     
-                    // // IR 관련
-                    // if(sensor_.getSubCountIR()) {
-                    //     publishIR(sensor_.id);
-                    //     publishIRCameraInfo(sensor_.id);
-                    // }
+                    // IR 관련
+                    if(sensor_.getSubCountIR()) {
+                        publishIR(sensor_.id);
+                        publishIRCameraInfo(sensor_.id);
+                    }
                     
                     if(sensor_.getSubCountIRCompressed()) {
                         publishIRCompressed(sensor_.id);
                         publishIRCameraInfo(sensor_.id);
                     }
 
-                    // // Depth 관련
-                    // if(sensor_.getSubCountDepth()) {
-                    //     publishDepth(sensor_.id);
-                    //     publishDepthCameraInfo(sensor_.id);
-                    // }
+                    // Depth 관련
+                    if(sensor_.getSubCountDepth()) {
+                        publishDepth(sensor_.id);
+                        publishDepthCameraInfo(sensor_.id);
+                    }
                     
-                    // if(sensor_.getSubCountDepthCompressed()) {
-                    //     publishDepthCompressed(sensor_.id);
-                    //     publishDepthCameraInfo(sensor_.id);
-                    // }
+                    if(sensor_.getSubCountDepthCompressed()) {
+                        publishDepthCompressed(sensor_.id);
+                        publishDepthCameraInfo(sensor_.id);
+                    }
                     
                 }
             }

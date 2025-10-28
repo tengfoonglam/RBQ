@@ -13,6 +13,7 @@ public:
     RBQ_SDK::Motion::RobotState_t *robotState();
 
     RBQ_SDK::Motion::LegStateArray_t *legStateArray();
+    RBQ_SDK::Motion::JointStatus_t *jointStatus();
 
     void setHighLevelCommand(const RBQ_SDK::HighLevelCmd_t &_cmd);
 
@@ -44,6 +45,38 @@ public:
 
     void motionDynamicAim();
 
+    void motionDynamicStairs();
+
+    void motionRLTrot();
+
+    void motionRLFrontWalk();
+
+    void motionRLHindWalk();
+
+    void motionRLLeftWalk();
+
+    void motionRLRightWalk();
+
+    void motionRLBound();
+
+    void motionRLPace();
+
+    void motionRLPronk();
+
+    void motionRL3LegHR();
+
+    void motionRL3LegHL();
+
+    void motionRL3LegFR();
+
+    void motionRL3LegFL();
+
+    void motionRLTrotVision();
+
+    void motionRLTrotRun();
+
+    void motionRLSilent();
+
     void motionParametersUpdate();
 
     // approach mode selection
@@ -73,6 +106,9 @@ public:
 
     void eStop();
 
+    void powerControl(const PDU_PORT_IDs_e &pdu_port_id, const bool &status);
+
+    void switchGait(const int &gait_id);
 
     void switchPowerComm(const bool &state_ = false);
 
@@ -99,7 +135,9 @@ public:
 
     void comEstimationCompensation(const int &stage = 0);
 
-    void switchSecondaryGamepad(const bool &_secondary = false);
+    void switchExternalJoystick(const bool &_external = false);
+
+    void powerControl(const int &gait_id, const bool &status);
 
     void setBodyHeight(const int &newBodyHeight);
 
@@ -113,6 +151,7 @@ public:
 
     void setPanTiltZoom(const float &_pan, const float &_tilt, const float &_zoom);
 
+    void docking();
 private:
     void setUserCommand(const USER_COMMAND &usrCmd);
 

@@ -16,6 +16,8 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/char.hpp>
+#include <std_msgs/msg/int8.hpp>
+#include <std_msgs/msg/int8_multi_array.hpp>
 
 using namespace std::chrono_literals;
 
@@ -26,36 +28,43 @@ public:
     {
         std::cout << nodeName << std::endl;
 
-        m_pub_autoStart            = this->create_publisher<std_msgs::msg::Bool>("rbq/autoStart",            10);
-        m_pub_canCheck             = this->create_publisher<std_msgs::msg::Bool>("rbq/canCheck",             10);
-        m_pub_findHome             = this->create_publisher<std_msgs::msg::Bool>("rbq/findHome",             10);
-        m_pub_sit                  = this->create_publisher<std_msgs::msg::Bool>("rbq/sit",                  10);
-        m_pub_stand                = this->create_publisher<std_msgs::msg::Bool>("rbq/stand",                10);
-        m_pub_walk                 = this->create_publisher<std_msgs::msg::Bool>("rbq/walk",                 10);
-        m_pub_walkSlow             = this->create_publisher<std_msgs::msg::Bool>("rbq/walkSlow",             10);
-        m_pub_run                  = this->create_publisher<std_msgs::msg::Bool>("rbq/run",                  10);
-        m_pub_switchGamepadPort    = this->create_publisher<std_msgs::msg::Bool>("rbq/switchGamepadPort",    10);
-        m_pub_calibrateImu         = this->create_publisher<std_msgs::msg::Bool>("rbq/calibrateImu",         10);
-        m_pub_staticLock           = this->create_publisher<std_msgs::msg::Bool>("rbq/staticLock",           10);
-        m_pub_staticReady          = this->create_publisher<std_msgs::msg::Bool>("rbq/staticReady",          10);
-        m_pub_staticGround         = this->create_publisher<std_msgs::msg::Bool>("rbq/staticGround",         10);
-        m_pub_recoveryErrorClear   = this->create_publisher<std_msgs::msg::Bool>("rbq/recoveryErrorClear",   10);
-        m_pub_recoveryFlex         = this->create_publisher<std_msgs::msg::Bool>("rbq/recoveryFlex",         10);
-        m_pub_emergency            = this->create_publisher<std_msgs::msg::Bool>("rbq/emergency",            10);
-        m_pub_powerLeg             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerLeg",             10);
-        m_pub_powerArm             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerArm",             10);
-        m_pub_powerVisionPC        = this->create_publisher<std_msgs::msg::Bool>("rbq/powerVisionPC",        10);
-        m_pub_powerUsbHub          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerUsbHub",          10);
-        m_pub_powerCctv            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerCctv",            10);
-        m_pub_powerThermal         = this->create_publisher<std_msgs::msg::Bool>("rbq/powerThermal",         10);
-        m_pub_powerLidar           = this->create_publisher<std_msgs::msg::Bool>("rbq/powerLidar",           10);
-        m_pub_powerExt52V          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerExt52V",          10);
-        m_pub_powerIrLEDs          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerIrLEDs",          10);
-        m_pub_powerComm            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerComm",            10);
-        m_pub_setBodyHeight        = this->create_publisher<std_msgs::msg::Char>("rbq/setBodyHeight",        10);
-        m_pub_setFootHeight        = this->create_publisher<std_msgs::msg::Char>("rbq/setFootHeight",        10);
-        m_pub_setMaxSpeed          = this->create_publisher<std_msgs::msg::Char>("rbq/setMaxSpeed",          10);
-        m_pub_comEstimation        = this->create_publisher<std_msgs::msg::Char>("rbq/comEstimation",        10);
+        m_pub_autoStart            = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/autoStart",            10);
+        m_pub_canCheck             = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/canCheck",             10);
+        m_pub_findHome             = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/findHome",             10);
+        m_pub_sit                  = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/sit",                  10);
+        m_pub_stand                = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/stand",                10);
+        m_pub_walk                 = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/walk",                 10);
+        m_pub_walkSlow             = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/walkSlow",             10);
+        m_pub_run                  = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/run",                  10);
+        m_pub_switchGait          = this->create_publisher<std_msgs::msg::Int8>("rbq/motion/switchGait",              10);
+        m_pub_switchPowerOnOff     = this->create_publisher<std_msgs::msg::Int8MultiArray>("rbq/powerControl/switchPowerOnOff", 10);
+        m_pub_switchExtJoy         = this->create_publisher<std_msgs::msg::Bool>("rbq/gamepad/switchExtJoy",           10);
+        m_pub_dock                 = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/docking",              10);
+        m_pub_emergency            = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/emergency",            10);
+        m_pub_powerLeg             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Leg",             10);
+        m_pub_powerArm             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Arm",             10);
+        m_pub_powerVisionPC        = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/VisionPC",        10);
+        m_pub_powerUsbHub          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/UsbHub",          10);
+        m_pub_powerCctv            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Cctv",            10);
+        m_pub_powerThermal         = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Thermal",         10);
+        m_pub_powerLidar           = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Lidar",           10);
+        m_pub_powerExt52V          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Ext52V",          10);
+        m_pub_powerIrLEDs          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/IrLEDs",          10);
+        m_pub_powerComm            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Comm",            10);
+        m_pub_setBodyHeight        = this->create_publisher<std_msgs::msg::Char>("rbq/motion/setBodyHeight",        10);
+        m_pub_setFootHeight        = this->create_publisher<std_msgs::msg::Char>("rbq/motion/setFootHeight",        10);
+        m_pub_setMaxSpeed          = this->create_publisher<std_msgs::msg::Char>("rbq/motion/setMaxSpeed",          10);
+        m_pub_comEstimation        = this->create_publisher<std_msgs::msg::Char>("rbq/stateEstimation/comEstimation",        10);
+        
+        m_pub_stairs               = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/stairs",               10);
+        m_pub_rlTrot               = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_trot",              10);
+        m_pub_rlBound              = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_bound",             10);
+        m_pub_rlPace               = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_pace",              10);
+        m_pub_rlPronk              = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_pronk",             10);
+        m_pub_rlTrotVision         = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_trot_vision",       10);
+        m_pub_rlTrotRun            = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_trot_run",          10);
+        m_pub_rlSilent             = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_silent",            10);
+        m_pub_rlFrontWalk          = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/rl_front_walk",        10);
     }
 
     void pub_autoStart()
@@ -114,54 +123,36 @@ public:
         m_pub_run->publish(msg);
     }
 
-    void pub_switchGamepadPort(const bool &rosJoy)
+    void pub_switchGait(const int &gait_id)
     {
-        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
-        msg.data = rosJoy;
-        m_pub_switchGamepadPort->publish(msg);
+        std_msgs::msg::Int8 msg = std_msgs::msg::Int8();
+        msg.data = gait_id;
+        m_pub_switchGait->publish(msg);
     }
 
-    void pub_calibrateImu()
+    void pub_switchPowerOnOff(const int &port_id, const bool &powerON)
+    {
+        std_msgs::msg::Int8MultiArray msg = std_msgs::msg::Int8MultiArray();
+        msg.data.resize(2);
+        msg.data[0] = port_id;
+        msg.data[1] = powerON ? 1 : 0;
+        m_pub_switchPowerOnOff->publish(msg);
+    }
+
+    void pub_switchExtJoy(const bool &extJoy)
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = extJoy;
+        m_pub_switchExtJoy->publish(msg);
+    }
+
+    void pub_dock()
     {
         std_msgs::msg::Bool msg = std_msgs::msg::Bool();
         msg.data = true;
-        m_pub_calibrateImu->publish(msg);
+        m_pub_dock->publish(msg);
     }
 
-    void pub_staticLock()
-    {
-        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
-        msg.data = true;
-        m_pub_staticLock->publish(msg);
-    }
-
-    void pub_staticReady()
-    {
-        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
-        msg.data = true;
-        m_pub_staticReady->publish(msg);
-    }
-
-    void pub_staticGround()
-    {
-        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
-        msg.data = true;
-        m_pub_staticGround->publish(msg);
-    }
-
-    void pub_recoveryErrorClear()
-    {
-        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
-        msg.data = true;
-        m_pub_recoveryErrorClear->publish(msg);
-    }
-
-    void pub_recoveryFlex()
-    {
-        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
-        msg.data = true;
-        m_pub_recoveryFlex->publish(msg);
-    }
 
     void pub_emergency()
     {
@@ -268,6 +259,71 @@ public:
         m_pub_comEstimation->publish(msg);
     }
 
+    // RL 관련 함수들 구현
+    void pub_stairs()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_stairs->publish(msg);
+    }
+
+    void pub_rlTrot()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlTrot->publish(msg);
+    }
+
+    void pub_rlBound()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlBound->publish(msg);
+    }
+
+    void pub_rlPace()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlPace->publish(msg);
+    }
+
+    void pub_rlPronk()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlPronk->publish(msg);
+    }
+
+    void pub_rlTrotVision()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlTrotVision->publish(msg);
+    }
+
+    void pub_rlTrotRun()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlTrotRun->publish(msg);
+    }
+
+    void pub_rlSilent()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlSilent->publish(msg);
+    }
+
+    void pub_rlFrontWalk()
+    {
+        std_msgs::msg::Bool msg = std_msgs::msg::Bool();
+        msg.data = true;
+        m_pub_rlFrontWalk->publish(msg);
+    }
+
+
 private:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_autoStart           ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_stand               ;
@@ -277,13 +333,10 @@ private:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_walk                ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_walkSlow            ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_run                 ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_switchGamepadPort   ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_calibrateImu        ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_staticLock          ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_staticReady         ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_staticGround        ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_recoveryErrorClear  ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_recoveryFlex        ;
+    rclcpp::Publisher<std_msgs::msg::Int8>::SharedPtr m_pub_switchGait          ;
+    rclcpp::Publisher<std_msgs::msg::Int8MultiArray>::SharedPtr m_pub_switchPowerOnOff ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_switchExtJoy        ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_dock                ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_emergency           ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_powerLeg            ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_powerArm            ;
@@ -299,6 +352,16 @@ private:
     rclcpp::Publisher<std_msgs::msg::Char>::SharedPtr m_pub_setFootHeight       ;
     rclcpp::Publisher<std_msgs::msg::Char>::SharedPtr m_pub_setMaxSpeed         ;
     rclcpp::Publisher<std_msgs::msg::Char>::SharedPtr m_pub_comEstimation       ;
+    
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_stairs              ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlTrot              ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlBound             ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlPace              ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlPronk             ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlTrotVision        ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlTrotRun           ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlSilent            ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_rlFrontWalk         ;
 
 };
 

@@ -48,7 +48,7 @@ def generate_launch_description() -> launch.LaunchDescription:
                 ],
                 namespace=LaunchConfiguration("namespace"),
                 remappings=[
-                    ('/joint_states', '/robot_state/joint_states')
+                    ('joint_states', 'joint/joint_states')
                 ],
             ),
             Node(
@@ -58,7 +58,7 @@ def generate_launch_description() -> launch.LaunchDescription:
                 condition=launch.conditions.UnlessCondition(LaunchConfiguration("gui")),
                 namespace=LaunchConfiguration("namespace"),
                 remappings=[
-                    ('/joint_states', '/robot_state/joint_states')
+                    ('joint_states', 'joint/joint_states')
                 ],
             ),
             Node(
@@ -67,6 +67,12 @@ def generate_launch_description() -> launch.LaunchDescription:
                 name="rviz2",
                 output="screen",
                 arguments=["-d" + default_rviz2_path],
+            ),
+            Node(
+                package="rbq_description",
+                executable="robot_odometry_to_tf.py",
+                name="robot_odometry_to_tf",
+                output="screen",
             ),
         ]
     )

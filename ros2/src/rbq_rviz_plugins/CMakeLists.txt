@@ -22,6 +22,7 @@ find_package(rviz_default_plugins REQUIRED)
 find_package(rviz_ogre_vendor REQUIRED)
 find_package(rviz_rendering REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(rbq_msgs REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
     src/rbq_panel.cpp
@@ -39,6 +40,7 @@ ament_target_dependencies(${PROJECT_NAME}
     rviz_ogre_vendor
     rviz_rendering
     std_msgs
+    rbq_msgs
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -73,6 +75,7 @@ ament_export_dependencies(
     rviz_common
     std_msgs
     rclcpp
+    rbq_msgs
 )
 
 ament_package()

@@ -8,6 +8,9 @@
 #endif
 #include <Eigen/Dense>
 
+
+#include "Parameters.hpp"
+
 class StateEstimator;
 
 class RBQ_API {
@@ -1830,6 +1833,55 @@ public:
     };
     Simulator simulator{this};
 
+    struct Parameters {
+
+        Parameters(RBQ_API* parent);
+
+        Eigen::Vector3d imuOffset();
+
+        double totalMass();
+
+        double bodyMass();
+
+        double hipMass();
+
+        double thighMass();
+
+        double calfMass();
+
+        Eigen::Vector3d bodyCoM();
+
+        Eigen::Vector3d hipCoM(const int &leg_id);
+
+        Eigen::Vector3d thighCoM(const int &leg_id);
+
+        Eigen::Vector3d calfCoM(const int &leg_id);
+
+        Eigen::Matrix3d bodyInertia();
+
+        Eigen::Matrix3d hipInertia(const int &leg_id);
+
+        Eigen::Matrix3d thighInertia(const int &leg_id);
+
+        Eigen::Matrix3d calfInertia(const int &leg_id);
+
+        Eigen::Vector3d hipOffset(const int &leg_id);
+
+        Eigen::Vector3d thighOffset(const int &leg_id);
+
+        Eigen::Vector3d calfOffset(const int &leg_id);
+
+        float initialJointPos(const int &joint_id);
+
+        Eigen::Matrix3d actuatorInertia();
+
+    private:
+        RBQ_API* m_parent = nullptr;
+        rbq::Parameters m_data;
+        bool m_dds = true;
+    };
+    Parameters parameters{this};
+
 #if defined(PRIVATE)
     struct Command {
         Command(RBQ_API* parent) : m_parent(parent) {
@@ -1884,8 +1936,9 @@ private:
     SIM_VARIABLE        _getSimInfo() const;
     MOTION_REF          _getMotionRef() const;
 
-    bool m_shm      = true;
-    bool m_shm_ref  = true;
+    bool m_shm          = true;
+    bool m_shm_ref_get  = true;
+    bool m_shm_ref_set  = true;
 
     int m_processId = -1;
 

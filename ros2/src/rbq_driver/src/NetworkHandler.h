@@ -41,6 +41,16 @@ public:
     }
     RBQ_SDK::Motion::LegStateArray_t *legStateArray() const { return m_legStateArray; }
 
+    void setJointStatus(const RBQ_SDK::Motion::JointStatus_t &newJointStatus)
+    {
+        if(nullptr == m_jointStatus) {
+            m_jointStatus = new RBQ_SDK::Motion::JointStatus_t;
+        }
+        memcpy((char *)m_jointStatus, (char *)&newJointStatus, sizeof(RBQ_SDK::Motion::JointStatus_t));
+        Q_EMIT jointStatusChanged();
+    }
+    RBQ_SDK::Motion::JointStatus_t *jointStatus() const { return m_jointStatus; }
+
 private Q_SLOTS:
     void onConnected() { m_connected = true; }
     void onDisconnected() { m_connected = false; }
@@ -54,6 +64,7 @@ private Q_SLOTS:
 Q_SIGNALS:
     void robotStateChanged();
     void legStateArrayChanged();
+    void jointStatusChanged();
     void sendTcpData(const QByteArray &msg);
     void sendUdpData(const QByteArray &msg);
 
@@ -62,6 +73,7 @@ private:
     int m_motionFeedbackFrequency = 100;
     RBQ_SDK::Motion::RobotState_t* m_robotState = nullptr;
     RBQ_SDK::Motion::LegStateArray_t* m_legStateArray = nullptr;
+    RBQ_SDK::Motion::JointStatus_t* m_jointStatus = nullptr;
 };
 
 #endif // NETWORKHANDLER_H

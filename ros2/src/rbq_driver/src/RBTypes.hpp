@@ -262,8 +262,8 @@ public:
 
         int8_t GAIT_ID          = 0;
         bool    IS_FALL         = 0;
-        bool    reserve3;
-        bool    reserve4;
+        int8_t  DOCKING_STAT    = 0;
+        bool    IMU_SUCCESS     = 0;
         bool    reserve5;
         bool    reserve6;
         bool    reserve7;
@@ -278,10 +278,10 @@ public:
         bool    att06Connected  = 0;
         bool    att07Connected  = 0;
 
-        bool    reserve17;
-        bool    reserve18;
-        bool    reserve19;
-        bool    reserve20;
+        uint8_t arm_B_0         = 0;
+        uint8_t arm_B_1         = 0;
+        uint8_t arm_B_2         = 0;
+        uint8_t arm_B_3         = 0;
         bool    reserve21;
         bool    reserve22;
         bool    reserve23;
@@ -375,6 +375,7 @@ public:
         sendbackRobotState              = 3,
         REQ_SENDBACK_DEVICES_STATE      = 4,
         REQ_SENDBACK_LEG_STATE_ARRAY    = 5,
+        REQ_SENDBACK_JOINT_STATUS       = 104,
     };
 
     struct RobotPose_t
@@ -478,6 +479,32 @@ public:
 
         const unsigned char tail1 =  128;
         const unsigned char tail2 =  127;
+    };
+
+    struct JointStatus_t {
+        uint32_t tickWrite = 0;
+        uint32_t tickRead = 0;
+        double time = 0.0;
+        
+        struct JointDetail_t {
+            bool connected = false;
+            char temperature = 0;
+            char motor_temp = 0;
+            MotorStatus_t status;
+            float position_ref = 0.0f;    // Angle Ref
+            float position_enc = 0.0f;    // Angle Enc
+            float velocity = 0.0f;
+            float torque_ref = 0.0f;      // Torque Ref
+            float current = 0.0f;         // Current Sen
+            float kp = 0.0f;              // KP
+            float kd = 0.0f;              // KD
+            int owner = 0;                // Owner ID
+        };
+        
+        std::array<JointDetail_t, 16> joint_details;
+        const unsigned char typeIdentifier = 6; // REQ_SENDBACK_JOINT_STATUS
+        const unsigned char tail1 = 128;
+        const unsigned char tail2 = 127;
     };
 
 }; // Motion

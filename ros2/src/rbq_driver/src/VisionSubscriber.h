@@ -140,72 +140,72 @@ public:
             // 바닥(0~3번) 센서
             if(idx == 0 || idx == 1 || idx == 2 || idx == 3){
                 // RGB subscriber
-                sensor_.sub_rgb = this->create_subscription<sensor_msgs::msg::Image>(
-                    sensor_.name_rgb, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
-                        this->rgbCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_rgb = this->create_subscription<sensor_msgs::msg::Image>(
+                //     sensor_.name_rgb, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
+                //         this->rgbCallback(msg, sensor_id);
+                //     });
                     
-                sensor_.sub_rgb_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
-                    sensor_.name_rgb_compressed, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-                        this->rgbCompressedCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_rgb_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
+                //     sensor_.name_rgb_compressed, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
+                //         this->rgbCompressedCallback(msg, sensor_id);
+                //     });
                 
-                sensor_.sub_rgb_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-                    sensor_.name_rgb_camera_info, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
-                        this->rgbCameraInfoCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_rgb_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
+                //     sensor_.name_rgb_camera_info, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
+                //         this->rgbCameraInfoCallback(msg, sensor_id);
+                //     });
                     
-                // IR subscriber
-                sensor_.sub_ir = this->create_subscription<sensor_msgs::msg::Image>(
-                    sensor_.name_ir, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
-                        this->irCallback(msg, sensor_id);
-                    });
+                // // IR subscriber
+                // sensor_.sub_ir = this->create_subscription<sensor_msgs::msg::Image>(
+                //     sensor_.name_ir, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
+                //         this->irCallback(msg, sensor_id);
+                //     });
 
-                sensor_.sub_ir_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
-                    sensor_.name_ir_compressed, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-                        this->irCompressedCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_ir_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
+                //     sensor_.name_ir_compressed, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
+                //         this->irCompressedCallback(msg, sensor_id);
+                //     });
                 
-                sensor_.sub_ir_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-                    sensor_.name_ir_camera_info, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
-                        this->irCameraInfoCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_ir_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
+                //     sensor_.name_ir_camera_info, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
+                //         this->irCameraInfoCallback(msg, sensor_id);
+                //     });
 
-                // Depth subscriber
-                sensor_.sub_depth = this->create_subscription<sensor_msgs::msg::Image>(
-                    sensor_.name_depth, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
-                        this->depthCallback(msg, sensor_id);
-                    });
+                // // Depth subscriber
+                // sensor_.sub_depth = this->create_subscription<sensor_msgs::msg::Image>(
+                //     sensor_.name_depth, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
+                //         this->depthCallback(msg, sensor_id);
+                //     });
                 
-                sensor_.sub_depth_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
-                    sensor_.name_depth_compressed, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-                        this->depthCompressedCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_depth_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
+                //     sensor_.name_depth_compressed, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
+                //         this->depthCompressedCallback(msg, sensor_id);
+                //     });
 
-                sensor_.sub_depth_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-                    sensor_.name_depth_camera_info, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
-                        this->depthCameraInfoCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_depth_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
+                //     sensor_.name_depth_camera_info, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
+                //         this->depthCameraInfoCallback(msg, sensor_id);
+                //     });
 
             }
 
             // 전후방(4,5번) 센서
             if(idx == 4 || idx == 5) {  
-                // RGB subscriber
-                sensor_.sub_rgb = this->create_subscription<sensor_msgs::msg::Image>(
-                    sensor_.name_rgb, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
-                        this->rgbCallback(msg, sensor_id);
-                    });
+                // // RGB subscriber
+                // sensor_.sub_rgb = this->create_subscription<sensor_msgs::msg::Image>(
+                //     sensor_.name_rgb, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
+                //         this->rgbCallback(msg, sensor_id);
+                //     });
                     
                 sensor_.sub_rgb_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
                     sensor_.name_rgb_compressed, 10,
@@ -219,43 +219,43 @@ public:
                         this->rgbCameraInfoCallback(msg, sensor_id);
                     });
                     
-                // IR subscriber
-                sensor_.sub_ir = this->create_subscription<sensor_msgs::msg::Image>(
-                    sensor_.name_ir, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
-                        this->irCallback(msg, sensor_id);
-                    });
+                // // IR subscriber
+                // sensor_.sub_ir = this->create_subscription<sensor_msgs::msg::Image>(
+                //     sensor_.name_ir, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
+                //         this->irCallback(msg, sensor_id);
+                //     });
 
-                sensor_.sub_ir_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
-                    sensor_.name_ir_compressed, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-                        this->irCompressedCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_ir_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
+                //     sensor_.name_ir_compressed, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
+                //         this->irCompressedCallback(msg, sensor_id);
+                //     });
                 
-                sensor_.sub_ir_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-                    sensor_.name_ir_camera_info, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
-                        this->irCameraInfoCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_ir_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
+                //     sensor_.name_ir_camera_info, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
+                //         this->irCameraInfoCallback(msg, sensor_id);
+                //     });
 
-                // Depth subscriber
-                sensor_.sub_depth = this->create_subscription<sensor_msgs::msg::Image>(
-                    sensor_.name_depth, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
-                        this->depthCallback(msg, sensor_id);
-                    });
+                // // Depth subscriber
+                // sensor_.sub_depth = this->create_subscription<sensor_msgs::msg::Image>(
+                //     sensor_.name_depth, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::Image::SharedPtr msg) {
+                //         this->depthCallback(msg, sensor_id);
+                //     });
                 
-                sensor_.sub_depth_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
-                    sensor_.name_depth_compressed, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-                        this->depthCompressedCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_depth_compressed = this->create_subscription<sensor_msgs::msg::CompressedImage>(
+                //     sensor_.name_depth_compressed, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
+                //         this->depthCompressedCallback(msg, sensor_id);
+                //     });
 
-                sensor_.sub_depth_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
-                    sensor_.name_depth_camera_info, 10,
-                    [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
-                        this->depthCameraInfoCallback(msg, sensor_id);
-                    });
+                // sensor_.sub_depth_camera_info = this->create_subscription<sensor_msgs::msg::CameraInfo>(
+                //     sensor_.name_depth_camera_info, 10,
+                //     [this, sensor_id = sensor_.id](const sensor_msgs::msg::CameraInfo::SharedPtr msg) {
+                //         this->depthCameraInfoCallback(msg, sensor_id);
+                //     });
 
             }
      

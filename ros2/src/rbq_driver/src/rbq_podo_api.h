@@ -171,16 +171,25 @@ enum _QuadWalk_COMMAND_SET_
     QuadWalk_E_STOP                 = 113,
     QuadWalk_TO_AIMING_MODE 		= 114,
     QuadWalk_SYS_ID                 = 115,
-
+    QuadWalk_TO_WALK_SLOW           = 116,
     QuadWalk_TO_HEALTH_CHECK_MODE   = 117,
+
     QuadWalk_TO_DOOR_OPENING_MODE   = 119,
     QuadWalk_CRUISE_VEL_SET         = 120,
+    QuadWalk_VISION_TROT_MODE       = 123,
+    QuadWalk_POLICY_RUN             = 124,
+    QuadWalk_POLICY_CHANGE          = 125,
 
     QuadWalk_WAVE_TO_TARGET_POINT   = 200,
     QuadWalk_DOCKING_SIT_DOWN       = 201,
     QuadWalk_DOCKING_SEQUENCE_START = 202,
+    QuadWalk_DOCKING_RETRY          = 203,
 
-    QuadWalk_SAVE_MASS_CALBRATION   = 500,
+    QuadWalk_LOW_BATTERY_SEQUENCE   = 300,
+
+    QuadWalk_SAVE_MASS_CALBRATION_PARA = 500,
+    QuadWalk_SAVE_ZMP_CALIBRATION_PARA = 501,
+
 };
 
 //-------- WalkReady AL--------
@@ -218,6 +227,44 @@ enum _WALKING_GAIT_TANSITION{
     TO_TROT_V,
     TO_TROT_S, //stairs
     TO_TROT_Q, //Quiet
+};
+
+enum GAIT_STATE : int8_t {
+    FALL_RECOVERY       = -3,
+    FALL_MODE           = -2,
+    CONTROL_OFF         = -1,
+    SITTING             = 0,
+    STANDING            = 1,
+    AIMING              = 2,
+    TROTTING            = 3,
+    TROT_STAIRS         = 4,
+    WAVING              = 5,
+    TROT_RUNNING        = 6,
+    DOOR_OPENING        = 7,
+    ZMP_INITIALIZING    = 8,
+    MANIPULATION        = 9,
+    DOCKING             = 10,
+    DOCKING_SITTING     = 11,
+
+    //RL_STATE
+    RL_TROT             = 30,
+    RL_FRONT_WALK       = 31,
+    RL_HIND_WALK        = 32,
+    RL_LEFT_WALK        = 33,
+    RL_RIGHT_WALK       = 34,
+    RL_BOUND            = 35,
+    RL_PACE             = 36,
+    RL_PRONK            = 37,
+    RL_3LEG_HR          = 38,
+    RL_3LEG_HL          = 39,
+    RL_3LEG_FR          = 40,
+    RL_3LEG_FL          = 41,
+    RL_TROT_VISION      = 42,
+    RL_WHEEL_TROT       = 43,
+    RL_WHEEL_TROT_VISION= 44,
+    RL_TROT_RUN         = 45,
+    RL_SILENT           = 46,
+    RL_END              = 50,
 };
 
 // ------ PDU ----------------

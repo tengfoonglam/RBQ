@@ -29,17 +29,6 @@
         <color rgba="1.0 1.0 1.0 1.0" />
     </material>
 
-
-  <!-- ROOT(IMU) -->
-  <link name="imu_link">
-  </link>
-  <joint name="imu_joint" type="fixed"> 
-    <origin xyz="-0.00665 0 0.0404" rpy="0 0 0" /> 
-    <parent link="imu_link" /> 
-    <child link="trunk" /> 
-  </joint>
-
-
   <!-- Trunk -->
   <link name="trunk">
     <inertial>
@@ -67,6 +56,15 @@
     </visual>
   </link>
 
+  <joint name="imu_joint" type="fixed"> 
+    <origin xyz="0.00665 0 -0.0404" rpy="0 0 0" /> 
+    <parent link="trunk" /> 
+    <child link="imu_link" /> 
+  </joint>
+
+  <!-- IMU -->
+  <link name="imu_link">
+  </link>
 
   <!-- ========== HR ========== -->
   <link name="HR_hip">

@@ -1,18 +1,6 @@
-/*
- * This class is contaning all analytic kinematics functions.
- * this class does not have any member variables (only member funcstions)
- */
-
-#ifndef KINEMATICS_H
-#define KINEMATICS_H
+#pragma once
 
 #include <Eigen/Core>
-#include <Eigen/Dense>
-
-#include "QuadParameters.h"
-#include <iostream>
-
-#include "rcl/Operation.h"
 
 class Kinematics {
 public:
@@ -68,7 +56,6 @@ public:
             else return 2;
         }
         else{
-            std::cout<<"Other_Leg: invalid leg num"<<std::endl;
             return -1;
         }
     }
@@ -79,7 +66,6 @@ public:
         else if(lnum == 2) return 1;
         else if(lnum == 3) return 0;
         else{
-            std::cout<<"Other_Leg: invalid leg num"<<std::endl;
             return -1;
         }
     }
@@ -152,5 +138,3 @@ public:
                 Eigen::Vector3f &W_bd_vel);
 
 };
-
-#endif

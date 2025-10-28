@@ -18,18 +18,10 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ "$SIM_MODE" = true ]; then
-    if [ ! "$EUID" -eq 0 ]; then
-        echo "Run this script with sudo. Exiting..."
-        sleep 10
-        exit 1
-    fi
-else
-    if [ "$EUID" -eq 0 ]; then
-        echo "Do not run this script with sudo. Exiting..."
-        sleep 10
-        exit 1
-    fi
+if [ "$EUID" -eq 0 ]; then
+    echo "Do not run this script with sudo. Exiting..."
+    sleep 10
+    exit 1
 fi
 
 # Check if already running

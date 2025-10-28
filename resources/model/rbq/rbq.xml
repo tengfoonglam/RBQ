@@ -77,10 +77,12 @@
                 mass="16.758"
                 fullinertia="0.163831629266 0.590891341306 0.678714788268 -0.000271071491 0.040352639311 0.000216428332"/>
             <freejoint/>
-            <site name="imu" pos="-0.02557 0 0.04232"/>
             <geom type="mesh" mesh="trunk" material="graygray" class="visual"/>
             <geom type="mesh" mesh="trunk_collision" material="graygray" class="collision"/>
+
             <camera name="track_cam" mode="track" target="base_link" pos="0 -2 1" euler="20 0 0"/>
+
+            <site name="imu" pos="0.00665 0 -0.0404"/>
 
             <body name="BT0_body" pos="0.36462 0 -0.02663" quat="0 -0.1736482 0 0.9848078">
                 <camera name="BT0"

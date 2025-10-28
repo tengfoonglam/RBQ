@@ -94,14 +94,14 @@ int main(int argc, char * argv[])
     }
     if (IS_SIM) {
         host = "127.0.0.1";
-        std::cout<<"ROS Simulation Mode (127.0.0.1)"<<std::endl;
+        std::cout<<"ROS2 Simulation Mode (127.0.0.1)"<<std::endl;
     } else {
         if (isMotionPC()) {
             host = "192.168.0.10";
-            std::cout<<"ROS Robot Mode (192.168.0.10)"<<std::endl;
+            std::cout<<"ROS2 Robot Mode (192.168.0.10)"<<std::endl;
         } else {
             host = "192.168.0.12";
-            std::cout<<"ROS Robot Mode (192.168.0.12)"<<std::endl;
+            std::cout<<"ROS2 Robot Mode (192.168.0.12)"<<std::endl;
         }
     }
 
@@ -155,6 +155,7 @@ int main(int argc, char * argv[])
         rclcpp::shutdown();
         if (thread_vision_subscriber.joinable()) thread_vision_subscriber.join();
     }
+ 
 
     return 0;
 }

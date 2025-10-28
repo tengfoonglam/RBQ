@@ -2,6 +2,7 @@
 
 APP_NAME="rbq_driver"
 SIM_MODE=false
+ROS2_DIR="ros2"
 
 print_help() {
     echo "Usage: bash scripts/start_vision.bash [OPTIONS]"
@@ -18,45 +19,22 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-
-if [ "$SIM_MODE" = true ]; then
-    if [ ! "$EUID" -eq 0 ]; then
-        echo "Run this script with sudo. Exiting..."
-        sleep 10
-        exit 1
-    fi
-else
-    if [ "$EUID" -eq 0 ]; then
-        echo "Do not run this script with sudo. Exiting..."
-        sleep 10
-        exit 1
-    fi
+if [ "$EUID" -eq 0 ]; then
+    echo "Do not run this script with sudo. Exiting..."
+    sleep 10
+    exit 1
 fi
-
 if pgrep -x $APP_NAME > /dev/null; then
     echo "$APP_NAME is already running. Please close it before starting a new instance."
     sleep 10
     exit 1
 fi
 
-function set_terminal_title {
-    echo -ne "\033]0;$1\007"
-}
-set_terminal_title "$APP_NAME"
+cd $ROS2_DIR
+colcon build --symlink-install
+source install/setup.bash
+echo -ne "\033]0;$APP_NAME\007"
 
-cd ros2
-
-if [ -d "build" ] && [ -d "install" ]; then
-    echo "Build and install directories already exist, skipping colcon build..."
-else
-    echo "Building ROS2 packages..."
-    
-    colcon build --symlink-install
-fi
-
-source ./install/setup.bash
-
-# Run loop
 while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then

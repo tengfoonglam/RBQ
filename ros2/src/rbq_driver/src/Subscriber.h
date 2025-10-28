@@ -39,6 +39,8 @@ static Timer cmdHighLevelTimer;
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/char.hpp>
+#include <std_msgs/msg/int8.hpp>
+#include <std_msgs/msg/int8_multi_array.hpp>
 #include <std_msgs/msg/float32_multi_array.hpp>
 #include <sensor_msgs/msg/joy.hpp>
 #include <rbq_msgs/msg/high_level_command.hpp>
@@ -54,104 +56,67 @@ public:
         : Node("rbq_cmd_subscriber")
         , m_robotApiHandler(robotApiHandler) 
     {
+
+        m_sub_switchExtJoy = this->create_subscription<std_msgs::msg::Bool>(
+            "rbq/gamepad/switchExtJoy", 10, std::bind(&Subscriber::callback_switchExtJoy, this, _1));
+
         m_sub_cmd_highLevel = this->create_subscription<rbq_msgs::msg::HighLevelCommand>(
-            "rbq/cmd_highLevel", 10, std::bind(&Subscriber::callback_cmd_highLevel, this, _1));
+            "rbq/motion/cmd_highLevel", 10, std::bind(&Subscriber::callback_cmd_highLevel, this, _1));
 
         m_sub_cmd_navigateTo = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-            "rbq/cmd_navigateTo", 10, std::bind(&Subscriber::callback_cmd_navigateTo, this, _1));
+            "rbq/motion/cmd_navigateTo", 10, std::bind(&Subscriber::callback_cmd_navigateTo, this, _1));
 
         m_sub_autoStart = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/autoStart", 10, std::bind(&Subscriber::callback_autoStart, this, _1));
+            "rbq/motion/autoStart", 10, std::bind(&Subscriber::callback_autoStart, this, _1));
 
         m_sub_canCheck = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/canCheck", 10, std::bind(&Subscriber::callback_canCheck, this, _1));
+            "rbq/motion/canCheck", 10, std::bind(&Subscriber::callback_canCheck, this, _1));
 
         m_sub_findHome = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/findHome", 10, std::bind(&Subscriber::callback_findHome, this, _1));
+            "rbq/motion/findHome", 10, std::bind(&Subscriber::callback_findHome, this, _1));
 
-        m_sub_sit = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/sit", 10, std::bind(&Subscriber::callback_sit, this, _1));
-
-        m_sub_stand = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/stand", 10, std::bind(&Subscriber::callback_stand, this, _1));
-
-        m_sub_walk = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/walk", 10, std::bind(&Subscriber::callback_walk, this, _1));
-
-        m_sub_walkSlow = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/walkSlow", 10, std::bind(&Subscriber::callback_walkSlow, this, _1));
-
-        m_sub_run = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/run", 10, std::bind(&Subscriber::callback_run, this, _1));
-
-        m_sub_switchGamepadPort = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/switchGamepadPort", 10, std::bind(&Subscriber::callback_switchGamepadPort, this, _1));
+        m_sub_switchGait = this->create_subscription<std_msgs::msg::Int8>(
+            "rbq/motion/switchGait", 10, std::bind(&Subscriber::callback_switchGait, this, _1));
 
         m_sub_staticLock = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/staticLock", 10, std::bind(&Subscriber::callback_staticLock, this, _1));
+            "rbq/motion/staticLock", 10, std::bind(&Subscriber::callback_staticLock, this, _1));
 
         m_sub_staticReady = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/staticReady", 10, std::bind(&Subscriber::callback_staticReady, this, _1));
+            "rbq/motion/staticReady", 10, std::bind(&Subscriber::callback_staticReady, this, _1));
 
         m_sub_staticGround = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/staticGround", 10, std::bind(&Subscriber::callback_staticGround, this, _1));
+            "rbq/motion/staticGround", 10, std::bind(&Subscriber::callback_staticGround, this, _1));
 
         m_sub_recoveryErrorClear = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/recoveryErrorClear", 10, std::bind(&Subscriber::callback_recoveryErrorClear, this, _1));
+            "rbq/motion/recoveryErrorClear", 10, std::bind(&Subscriber::callback_recoveryErrorClear, this, _1));
 
         m_sub_recoveryFlex = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/recoveryFlex", 10, std::bind(&Subscriber::callback_recoveryFlex, this, _1));
+            "rbq/motion/recoveryFlex", 10, std::bind(&Subscriber::callback_recoveryFlex, this, _1));
 
         m_sub_emergency = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/emergency", 10, std::bind(&Subscriber::callback_emergency, this, _1));
+            "rbq/motion/emergency", 10, std::bind(&Subscriber::callback_emergency, this, _1));
 
-        m_sub_powerLeg = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerLeg", 10, std::bind(&Subscriber::callback_powerLeg, this, _1));
-
-        m_sub_powerArm = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerArm", 10, std::bind(&Subscriber::callback_powerArm, this, _1));
-
-        m_sub_powerVisionPC = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerVisionPC", 10, std::bind(&Subscriber::callback_powerVisionPC, this, _1));
-
-        m_sub_powerUsbHub = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerUsbHub", 10, std::bind(&Subscriber::callback_powerUsbHub, this, _1));
-
-        m_sub_powerCctv = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerCctv", 10, std::bind(&Subscriber::callback_powerCctv, this, _1));
-
-        m_sub_powerThermal = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerThermal", 10, std::bind(&Subscriber::callback_powerThermal, this, _1));
-
-        m_sub_powerLidar = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerLidar", 10, std::bind(&Subscriber::callback_powerLidar, this, _1));
-
-        m_sub_powerExt52V = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerExt52V", 10, std::bind(&Subscriber::callback_powerExt52V, this, _1));
-
-        m_sub_powerIrLEDs = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerIrLEDs", 10, std::bind(&Subscriber::callback_powerIrLEDs, this, _1));
-
-        m_sub_powerComm = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/powerComm", 10, std::bind(&Subscriber::callback_powerComm, this, _1));
-
-        m_sub_calibrateImu = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/calibrateImu", 10, std::bind(&Subscriber::callback_calibrateImu, this, _1));
+        m_sub_switchPowerOnOff = this->create_subscription<std_msgs::msg::Int8MultiArray>(
+            "rbq/powerControl/switchPowerOnOff", 10, std::bind(&Subscriber::callback_switchPowerOnOff, this, _1));
 
         m_sub_comEstimationCompensation = this->create_subscription<std_msgs::msg::Char>(
-            "rbq/comEstimationCompensation", 10, std::bind(&Subscriber::callback_comEstimationCompensation, this, _1));
+            "rbq/stateEstimation/comEstimationCompensation", 10, std::bind(&Subscriber::callback_comEstimationCompensation, this, _1));
 
         m_sub_setBodyHeight = this->create_subscription<std_msgs::msg::Char>(
-            "rbq/setBodyHeight", 10, std::bind(&Subscriber::callback_setBodyHeight, this, _1));
+            "rbq/motion/setBodyHeight", 10, std::bind(&Subscriber::callback_setBodyHeight, this, _1));
 
         m_sub_setFootHeight = this->create_subscription<std_msgs::msg::Char>(
-            "rbq/setFootHeight", 10, std::bind(&Subscriber::callback_setFootHeight, this, _1));
+            "rbq/motion/setFootHeight", 10, std::bind(&Subscriber::callback_setFootHeight, this, _1));
 
         m_sub_setMaxSpeed = this->create_subscription<std_msgs::msg::Char>(
-            "rbq/setMaxSpeed", 10, std::bind(&Subscriber::callback_setMaxSpeed, this, _1));
+            "rbq/motion/setMaxSpeed", 10, std::bind(&Subscriber::callback_setMaxSpeed, this, _1));
 
         m_sub_setPanTiltZoom = this->create_subscription<std_msgs::msg::Float32MultiArray>(
-            "rbq/setPanTiltZoom", 10, std::bind(&Subscriber::callback_setPanTiltZoom, this, _1));
+            "rbq/ptzCamera/setPanTiltZoom", 10, std::bind(&Subscriber::callback_setPanTiltZoom, this, _1));
+        
+        m_sub_docking = this->create_subscription<std_msgs::msg::Bool>(
+            "rbq/motion/docking", 10, std::bind(&Subscriber::callback_docking, this, _1));
+            
     }
 
 private:
@@ -207,44 +172,9 @@ private:
         }
     }
 
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_sit;
-    void callback_sit(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        if(_confirm.get()->data) {
-            m_robotApiHandler->motionDynamicGround();
-        }
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_stand;
-    void callback_stand(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        if(_confirm.get()->data) {
-            m_robotApiHandler->motionDynamicReady();
-        }
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_walk;
-    void callback_walk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        if(_confirm.get()->data) {
-            m_robotApiHandler->motionDynamicWalk();
-        }
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_walkSlow;
-    void callback_walkSlow(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        if(_confirm.get()->data) {
-            m_robotApiHandler->motionDynamicWalkSlow();
-        }
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_run;
-    void callback_run(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        if(_confirm.get()->data) {
-            m_robotApiHandler->motionDynamicRun();
-        }
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_switchGamepadPort;
-    void callback_switchGamepadPort(const std_msgs::msg::Bool::SharedPtr _secondChannel) const {
-        m_robotApiHandler->switchSecondaryGamepad(_secondChannel.get()->data);
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_switchExtJoy;
+    void callback_switchExtJoy(const std_msgs::msg::Bool::SharedPtr _extJoy) const {
+        m_robotApiHandler->switchExternalJoystick(_extJoy.get()->data);
     }
 
     rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_staticLock;
@@ -289,60 +219,12 @@ private:
         }
     }
 
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerLeg;
-    void callback_powerLeg(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerLegs(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerArm;
-    void callback_powerArm(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerArm(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerVisionPC;
-    void callback_powerVisionPC(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerVisionPC(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerUsbHub;
-    void callback_powerUsbHub(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerUsbHub(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerCctv;
-    void callback_powerCctv(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerCctv(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerThermal;
-    void callback_powerThermal(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerThermal(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerLidar;
-    void callback_powerLidar(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerLidar(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerExt52V;
-    void callback_powerExt52V(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerExt52V(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerIrLEDs;
-    void callback_powerIrLEDs(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerIrLEDs(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_powerComm;
-    void callback_powerComm(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        m_robotApiHandler->switchPowerComm(_confirm.get()->data);
-    }
-
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_calibrateImu;
-    void callback_calibrateImu(const std_msgs::msg::Bool::SharedPtr _confirm) const {
-        if(_confirm.get()->data) {
-            m_robotApiHandler->calibrateAccelerometer();
+    rclcpp::Subscription<std_msgs::msg::Int8MultiArray>::SharedPtr m_sub_switchPowerOnOff;
+    void callback_switchPowerOnOff(const std_msgs::msg::Int8MultiArray::SharedPtr _data) const {
+        if(_data->data.size() >= 2) {
+            PDU_PORT_IDs_e pdu_port_id = static_cast<PDU_PORT_IDs_e>(_data->data[0]);
+            bool status = static_cast<bool>(_data->data[1]);
+            m_robotApiHandler->powerControl(pdu_port_id, status);
         }
     }
 
@@ -370,6 +252,168 @@ private:
     void callback_setPanTiltZoom(const std_msgs::msg::Float32MultiArray::SharedPtr _ptz) const {
         if(_ptz.get()->data.size() >= 3) {
             m_robotApiHandler->setPanTiltZoom(_ptz.get()->data[0], _ptz.get()->data[1], _ptz.get()->data[2]);
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_docking;
+    void callback_docking(const std_msgs::msg::Bool::SharedPtr _docking) const {
+        if (_docking->data) {
+            m_robotApiHandler->docking();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Int8>::SharedPtr m_sub_switchGait;
+    void callback_switchGait(const std_msgs::msg::Int8::SharedPtr gait_id) const {
+        if(m_robotApiHandler != nullptr) {
+            m_robotApiHandler->switchGait(gait_id.get()->data);
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_sit;
+    void callback_sit(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionDynamicGround();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_stand;
+    void callback_stand(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionDynamicReady();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_walk;
+    void callback_walk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionDynamicWalk();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_walkSlow;
+    void callback_walkSlow(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionDynamicWalkSlow();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_run;
+    void callback_run(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionDynamicRun();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_stairs;
+    void callback_stairs(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionDynamicWalkStairs();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_trot;
+    void callback_rl_trot(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLTrot();
+        }
+    }
+
+    // RL 관련 콜백 함수들
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_bound;
+    void callback_rl_bound(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLBound();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_pace;
+    void callback_rl_pace(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLPace();
+        }
+    }
+    
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_pronk;
+    void callback_rl_pronk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLPronk();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_3leg_hr;
+    void callback_rl_3leg_hr(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRL3LegHR();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_3leg_hl;
+    void callback_rl_3leg_hl(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRL3LegHL();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_3leg_fr;
+    void callback_rl_3leg_fr(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRL3LegFR();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_3leg_fl;
+    void callback_rl_3leg_fl(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRL3LegFL();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_trot_vision;
+    void callback_rl_trot_vision(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLTrotVision();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_trot_run;
+    void callback_rl_trot_run(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLTrotRun();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_silent;
+    void callback_rl_silent(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLSilent();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_front_walk;
+    void callback_rl_front_walk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLFrontWalk();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_hind_walk;
+    void callback_rl_hind_walk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLHindWalk();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_left_walk;
+    void callback_rl_left_walk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLLeftWalk();
+        }
+    }
+
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_right_walk;
+    void callback_rl_right_walk(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLRightWalk();
         }
     }
 

@@ -18,7 +18,7 @@ class OdometryToTF(Node):
         # Odometry 토픽 구독
         self.odom_subscription = self.create_subscription(
             Odometry,
-            '/rbq/odometry',
+            '/rbq/stateEstimation/odometry',
             self.odom_callback,
             10
         )
@@ -38,9 +38,9 @@ class OdometryToTF(Node):
     
     def odom_callback(self, msg):
         # quaternion 값 검증
-        qx = -msg.pose.pose.orientation.z
-        qy = -msg.pose.pose.orientation.y
-        qz = -msg.pose.pose.orientation.x
+        qx = msg.pose.pose.orientation.x
+        qy = msg.pose.pose.orientation.y
+        qz = msg.pose.pose.orientation.z
         qw = msg.pose.pose.orientation.w
         
         # 유효하지 않은 quaternion이면 기본값 사용
@@ -50,8 +50,8 @@ class OdometryToTF(Node):
         
         t = TransformStamped()
         t.header.stamp = self.get_clock().now().to_msg()
-        t.header.frame_id = 'map'
-        t.child_frame_id = 'imu_link'
+        t.header.frame_id = 'local_world'
+        t.child_frame_id = 'trunk'
 
         # 위치 값도 검증
         t.transform.translation.x = msg.pose.pose.position.x if not math.isnan(msg.pose.pose.position.x) else 0.0
@@ -67,7 +67,7 @@ class OdometryToTF(Node):
         self.tf_broadcaster.sendTransform(t)
         
         # 디버그 정보 (선택사항)
-        self.get_logger().debug(f'Published TF: map -> imu_link')
+        self.get_logger().debug(f'Published TF: local_world -> trunk')
 
 
 def main(args=None):
