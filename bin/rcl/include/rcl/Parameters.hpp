@@ -20,6 +20,7 @@ private:
  std::array<float, 3> bd2hip_ = { };
  float roll2pitch_ = 0.0f;
  float thigh_length_ = 0.0f;
+ float calf_length_ = 0.0f;
  float total_mass_ = 0.0f;
  float body_mass_ = 0.0f;
  float hip_mass_ = 0.0f;
@@ -66,6 +67,7 @@ public:
     const std::array<float, 3>& bd2hip,
     float roll2pitch,
     float thigh_length,
+    float calf_length,
     float total_mass,
     float body_mass,
     float hip_mass,
@@ -107,6 +109,7 @@ public:
     bd2hip_(bd2hip),
     roll2pitch_(roll2pitch),
     thigh_length_(thigh_length),
+    calf_length_(calf_length),
     total_mass_(total_mass),
     body_mass_(body_mass),
     hip_mass_(hip_mass),
@@ -159,6 +162,9 @@ public:
   float thigh_length() const { return this->thigh_length_; }
   float& thigh_length() { return this->thigh_length_; }
   void thigh_length(float _val_) { this->thigh_length_ = _val_; }
+  float calf_length() const { return this->calf_length_; }
+  float& calf_length() { return this->calf_length_; }
+  void calf_length(float _val_) { this->calf_length_ = _val_; }
   float total_mass() const { return this->total_mass_; }
   float& total_mass() { return this->total_mass_; }
   void total_mass(float _val_) { this->total_mass_ = _val_; }
@@ -283,6 +289,7 @@ public:
       bd2hip_ == _other.bd2hip_ &&
       roll2pitch_ == _other.roll2pitch_ &&
       thigh_length_ == _other.thigh_length_ &&
+      calf_length_ == _other.calf_length_ &&
       total_mass_ == _other.total_mass_ &&
       body_mass_ == _other.body_mass_ &&
       hip_mass_ == _other.hip_mass_ &&
@@ -350,64 +357,65 @@ template <> constexpr bool TopicTraits<::rbq::Parameters>::isKeyless()
 }
 
 #ifdef DDSCXX_HAS_TYPE_DISCOVERY
-template<> constexpr unsigned int TopicTraits<::rbq::Parameters>::type_map_blob_sz() { return 2154; }
+template<> constexpr unsigned int TopicTraits<::rbq::Parameters>::type_map_blob_sz() { return 2202; }
 template<> constexpr unsigned int TopicTraits<::rbq::Parameters>::type_info_blob_sz() { return 100; }
 template<> inline const uint8_t * TopicTraits<::rbq::Parameters>::type_map_blob() {
   static const uint8_t blob[] = {
- 0x0e,  0x03,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0xf1,  0xb6,  0x4d,  0x68,  0xe4,  0xfc,  0x09,  0xf6, 
- 0xd2,  0x42,  0xa0,  0x62,  0x48,  0x6c,  0x7b,  0x00,  0xf6,  0x02,  0x00,  0x00,  0xf1,  0x51,  0x01,  0x00, 
- 0x01,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0xe6,  0x02,  0x00,  0x00,  0x29,  0x00,  0x00,  0x00, 
+ 0x1e,  0x03,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0xf1,  0xb9,  0x55,  0xd2,  0x17,  0xee,  0x38,  0x75, 
+ 0xba,  0x30,  0xb4,  0x0c,  0x10,  0x00,  0xfa,  0x00,  0x06,  0x03,  0x00,  0x00,  0xf1,  0x51,  0x01,  0x00, 
+ 0x01,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0xf6,  0x02,  0x00,  0x00,  0x2a,  0x00,  0x00,  0x00, 
  0x16,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x47,  0x17,  0xbe,  0xfc,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
  0x03,  0x09,  0x62,  0xdd,  0x6e,  0xae,  0x00,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x02,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0xed,  0xeb,  0x7f,  0x7c,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x03,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0xea,  0x8d,  0x0b,  0xa7,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x4d,  0x16,  0x4c,  0x16,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x05,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x45,  0xdc,  0xbb,  0x71,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x06,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xfe,  0xa1,  0x80,  0x46,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x07,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x21,  0x81,  0x1c,  0xe0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x08,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x6c,  0xff,  0x44,  0xd1,  0x00,  0x16,  0x00,  0x00,  0x00,  0x09,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xbe,  0xaf,  0x83,  0xe4,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x05,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x4d,  0x16,  0x4c,  0x16,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x06,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x45,  0xdc,  0xbb,  0x71,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x07,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xfe,  0xa1,  0x80,  0x46,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x08,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x21,  0x81,  0x1c,  0xe0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x09,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x6c,  0xff,  0x44,  0xd1,  0x00,  0x16,  0x00,  0x00,  0x00,  0x0a,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x9d,  0x71, 
- 0xb2,  0x38,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3, 
+ 0xb2,  0x38,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3, 
  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0xd5,  0x47,  0x36,  0xf2,  0x00,  0x00, 
- 0x16,  0x00,  0x00,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00, 
+ 0x16,  0x00,  0x00,  0x00,  0x0c,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x36,  0x35,  0xfd,  0x05,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
- 0x0c,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
- 0x03,  0x09,  0x16,  0xef,  0xb3,  0x20,  0x00,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x0d,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xe7,  0xf3,  0x26,  0xa7,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x0e,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xa6,  0x88,  0x67,  0xb0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x0f,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xe4,  0x50,  0xaf,  0x56,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x10,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xd4,  0x9d,  0xec,  0x45,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x11,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xe4,  0x8f,  0xaa,  0x96,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x12,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x6a,  0xf5,  0x78,  0x2e,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x13,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x82,  0xf9,  0x99,  0x05,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x14,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x74,  0xdd,  0x55,  0x68,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x15,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x9d,  0xbd,  0x35,  0xf0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xee,  0x0e,  0xdd,  0x3d,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x7a,  0xfd,  0x6b,  0x9f,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x8d,  0xec,  0x87,  0xd9,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x19,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x3f,  0x58,  0xce,  0x3c,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1a,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xb4,  0x1a,  0x58,  0xd2,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x5f,  0x14,  0x5e,  0xd9,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1c,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xe5,  0x05,  0x84,  0x20,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1d,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xaf,  0xa8,  0x7d,  0x83,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1e,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xf0,  0x58,  0xa2,  0xde,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1f,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x28,  0x11,  0xbd,  0xed,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x20,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x58,  0xbd,  0x7e,  0x3d,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x21,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x40,  0x5a,  0x8c,  0x8b,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x7a,  0xe4,  0x82,  0x46,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xfa,  0x27,  0xf2,  0xec,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0xf0,  0x6f,  0x9f,  0x0a,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x25,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x04,  0x8b,  0xdc,  0x43,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x26,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x3a,  0xa4,  0xb6,  0xb0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x27,  0x00,  0x00,  0x00, 
- 0x01,  0x00,  0x09,  0x1d,  0x50,  0x90,  0x85,  0x00,  0x16,  0x00,  0x00,  0x00,  0x28,  0x00,  0x00,  0x00, 
+ 0x0d,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
+ 0x03,  0x09,  0x16,  0xef,  0xb3,  0x20,  0x00,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x0e,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xe7,  0xf3,  0x26,  0xa7,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x0f,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xa6,  0x88,  0x67,  0xb0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x10,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xe4,  0x50,  0xaf,  0x56,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x11,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xd4,  0x9d,  0xec,  0x45,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x12,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xe4,  0x8f,  0xaa,  0x96,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x13,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x6a,  0xf5,  0x78,  0x2e,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x14,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x82,  0xf9,  0x99,  0x05,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x15,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x74,  0xdd,  0x55,  0x68,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x9d,  0xbd,  0x35,  0xf0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xee,  0x0e,  0xdd,  0x3d,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x7a,  0xfd,  0x6b,  0x9f,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x19,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x8d,  0xec,  0x87,  0xd9,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1a,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x3f,  0x58,  0xce,  0x3c,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xb4,  0x1a,  0x58,  0xd2,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1c,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x5f,  0x14,  0x5e,  0xd9,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1d,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xe5,  0x05,  0x84,  0x20,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1e,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xaf,  0xa8,  0x7d,  0x83,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x1f,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xf0,  0x58,  0xa2,  0xde,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x20,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x28,  0x11,  0xbd,  0xed,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x21,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x58,  0xbd,  0x7e,  0x3d,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x40,  0x5a,  0x8c,  0x8b,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x7a,  0xe4,  0x82,  0x46,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xfa,  0x27,  0xf2,  0xec,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x25,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0xf0,  0x6f,  0x9f,  0x0a,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x26,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x04,  0x8b,  0xdc,  0x43,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x27,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x3a,  0xa4,  0xb6,  0xb0,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x28,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x1d,  0x50,  0x90,  0x85,  0x00,  0x16,  0x00,  0x00,  0x00,  0x29,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x22,  0x96, 
- 0xb1,  0x25,  0x00,  0x00,  0x29,  0x05,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0xf2,  0xe4,  0xfb,  0x5a, 
- 0x5e,  0x94,  0xbf,  0xec,  0xe9,  0x99,  0x47,  0x3e,  0xfc,  0xdb,  0x92,  0x00,  0x11,  0x05,  0x00,  0x00, 
+ 0xb1,  0x25,  0x00,  0x00,  0x49,  0x05,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0xf2,  0xc6,  0x79,  0x1a, 
+ 0xee,  0xee,  0xd1,  0xb9,  0xec,  0x15,  0x11,  0xe7,  0x71,  0x85,  0xcd,  0x00,  0x31,  0x05,  0x00,  0x00, 
  0xf2,  0x51,  0x01,  0x00,  0x18,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x10,  0x00,  0x00,  0x00, 
  0x72,  0x62,  0x71,  0x3a,  0x3a,  0x50,  0x61,  0x72,  0x61,  0x6d,  0x65,  0x74,  0x65,  0x72,  0x73,  0x00, 
- 0xed,  0x04,  0x00,  0x00,  0x29,  0x00,  0x00,  0x00,  0x21,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00, 
+ 0x0d,  0x05,  0x00,  0x00,  0x2a,  0x00,  0x00,  0x00,  0x21,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x00,  0x00, 
  0x07,  0x00,  0x00,  0x00,  0x62,  0x64,  0x32,  0x69,  0x6d,  0x75,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00, 
  0x21,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00, 
@@ -416,89 +424,91 @@ template<> inline const uint8_t * TopicTraits<::rbq::Parameters>::type_map_blob(
  0x01,  0x00,  0x09,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x72,  0x6f,  0x6c,  0x6c,  0x32,  0x70,  0x69,  0x74, 
  0x63,  0x68,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00,  0x03,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x0d,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x6c,  0x65, 
- 0x6e,  0x67,  0x74,  0x68,  0x00,  0x00,  0x00,  0x00,  0x19,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
+ 0x6e,  0x67,  0x74,  0x68,  0x00,  0x00,  0x00,  0x00,  0x1a,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
+ 0x01,  0x00,  0x09,  0x00,  0x0c,  0x00,  0x00,  0x00,  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x6c,  0x65,  0x6e, 
+ 0x67,  0x74,  0x68,  0x00,  0x00,  0x00,  0x00,  0x00,  0x19,  0x00,  0x00,  0x00,  0x05,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x74,  0x6f,  0x74,  0x61,  0x6c,  0x5f,  0x6d,  0x61, 
- 0x73,  0x73,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x05,  0x00,  0x00,  0x00, 
+ 0x73,  0x73,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x06,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79,  0x5f,  0x6d,  0x61,  0x73, 
- 0x73,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x06,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x73,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x07,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x09,  0x00,  0x00,  0x00,  0x68,  0x69,  0x70,  0x5f,  0x6d,  0x61,  0x73,  0x73,  0x00,  0x00,  0x00,  0x00, 
- 0x19,  0x00,  0x00,  0x00,  0x07,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0b,  0x00,  0x00,  0x00, 
+ 0x19,  0x00,  0x00,  0x00,  0x08,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0b,  0x00,  0x00,  0x00, 
  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x6d,  0x61,  0x73,  0x73,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00, 
- 0x18,  0x00,  0x00,  0x00,  0x08,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00, 
+ 0x18,  0x00,  0x00,  0x00,  0x09,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00, 
  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x6d,  0x61,  0x73,  0x73,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00, 
- 0x09,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
+ 0x0a,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
  0x03,  0x09,  0x00,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79,  0x5f,  0x63,  0x6f,  0x6d, 
- 0x00,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3, 
+ 0x00,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3, 
  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x00,  0x00,  0x08,  0x00,  0x00,  0x00, 
  0x68,  0x69,  0x70,  0x5f,  0x63,  0x6f,  0x6d,  0x00,  0x00,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00, 
- 0x0b,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
+ 0x0c,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00, 
  0x03,  0x09,  0x00,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x63,  0x6f, 
- 0x6d,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00,  0x0c,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3, 
+ 0x6d,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00,  0x0d,  0x00,  0x00,  0x00,  0x01,  0x00,  0x90,  0xf3, 
  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x00,  0x00,  0x09,  0x00,  0x00,  0x00, 
  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x63,  0x6f,  0x6d,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00, 
- 0x0d,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79, 
- 0x5f,  0x49,  0x78,  0x78,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x0e,  0x00,  0x00,  0x00, 
+ 0x0e,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79, 
+ 0x5f,  0x49,  0x78,  0x78,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x0f,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79,  0x5f,  0x49,  0x79,  0x79, 
- 0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x0f,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x10,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79,  0x5f,  0x49,  0x7a,  0x7a,  0x00,  0x00,  0x00,  0x00, 
- 0x17,  0x00,  0x00,  0x00,  0x10,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00, 
+ 0x17,  0x00,  0x00,  0x00,  0x11,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00, 
  0x62,  0x6f,  0x64,  0x79,  0x5f,  0x49,  0x78,  0x79,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00, 
- 0x11,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79, 
- 0x5f,  0x49,  0x79,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x12,  0x00,  0x00,  0x00, 
+ 0x12,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79, 
+ 0x5f,  0x49,  0x79,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x13,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x62,  0x6f,  0x64,  0x79,  0x5f,  0x49,  0x7a,  0x78, 
- 0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x13,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x14,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x08,  0x00,  0x00,  0x00,  0x68,  0x69,  0x70,  0x5f,  0x49,  0x78,  0x78,  0x00,  0x00,  0x00,  0x00,  0x00, 
- 0x16,  0x00,  0x00,  0x00,  0x14,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00, 
+ 0x16,  0x00,  0x00,  0x00,  0x15,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00, 
  0x68,  0x69,  0x70,  0x5f,  0x49,  0x79,  0x79,  0x00,  0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
- 0x15,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00,  0x68,  0x69,  0x70,  0x5f, 
- 0x49,  0x7a,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
+ 0x16,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00,  0x68,  0x69,  0x70,  0x5f, 
+ 0x49,  0x7a,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00,  0x68,  0x69,  0x70,  0x5f,  0x49,  0x78,  0x79,  0x00, 
- 0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x08,  0x00,  0x00,  0x00,  0x68,  0x69,  0x70,  0x5f,  0x49,  0x79,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x00, 
- 0x16,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00, 
+ 0x16,  0x00,  0x00,  0x00,  0x19,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00, 
  0x68,  0x69,  0x70,  0x5f,  0x49,  0x7a,  0x78,  0x00,  0x00,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00, 
- 0x19,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67, 
- 0x68,  0x5f,  0x49,  0x78,  0x78,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x1a,  0x00,  0x00,  0x00, 
+ 0x1a,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67, 
+ 0x68,  0x5f,  0x49,  0x78,  0x78,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x49,  0x79, 
- 0x79,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x79,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x1c,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x49,  0x7a,  0x7a,  0x00,  0x00,  0x00, 
- 0x18,  0x00,  0x00,  0x00,  0x1c,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00, 
+ 0x18,  0x00,  0x00,  0x00,  0x1d,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00, 
  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x49,  0x78,  0x79,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00, 
- 0x1d,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67, 
- 0x68,  0x5f,  0x49,  0x79,  0x7a,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x1e,  0x00,  0x00,  0x00, 
+ 0x1e,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67, 
+ 0x68,  0x5f,  0x49,  0x79,  0x7a,  0x00,  0x00,  0x00,  0x18,  0x00,  0x00,  0x00,  0x1f,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x0a,  0x00,  0x00,  0x00,  0x74,  0x68,  0x69,  0x67,  0x68,  0x5f,  0x49,  0x7a, 
- 0x78,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x1f,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x78,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x20,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x09,  0x00,  0x00,  0x00,  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x49,  0x78,  0x78,  0x00,  0x00,  0x00,  0x00, 
- 0x17,  0x00,  0x00,  0x00,  0x20,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00, 
+ 0x17,  0x00,  0x00,  0x00,  0x21,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00, 
  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x49,  0x79,  0x79,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00, 
- 0x21,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x63,  0x61,  0x6c,  0x66, 
- 0x5f,  0x49,  0x7a,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00, 
+ 0x22,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x63,  0x61,  0x6c,  0x66, 
+ 0x5f,  0x49,  0x7a,  0x7a,  0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00,  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x49,  0x78,  0x79, 
- 0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x23,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
+ 0x00,  0x00,  0x00,  0x00,  0x17,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00, 
  0x09,  0x00,  0x00,  0x00,  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x49,  0x79,  0x7a,  0x00,  0x00,  0x00,  0x00, 
- 0x17,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00, 
+ 0x17,  0x00,  0x00,  0x00,  0x25,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x09,  0x00,  0x00,  0x00, 
  0x63,  0x61,  0x6c,  0x66,  0x5f,  0x49,  0x7a,  0x78,  0x00,  0x00,  0x00,  0x00,  0x19,  0x00,  0x00,  0x00, 
- 0x25,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x69,  0x6e,  0x69,  0x74, 
+ 0x26,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x0b,  0x00,  0x00,  0x00,  0x69,  0x6e,  0x69,  0x74, 
  0x5f,  0x61,  0x6e,  0x67,  0x6c,  0x65,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x16,  0x00,  0x00,  0x00, 
- 0x26,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00,  0x49,  0x5f,  0x72,  0x6f, 
- 0x74,  0x6f,  0x72,  0x00,  0x00,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00,  0x27,  0x00,  0x00,  0x00, 
+ 0x27,  0x00,  0x00,  0x00,  0x01,  0x00,  0x09,  0x00,  0x08,  0x00,  0x00,  0x00,  0x49,  0x5f,  0x72,  0x6f, 
+ 0x74,  0x6f,  0x72,  0x00,  0x00,  0x00,  0x00,  0x00,  0x1b,  0x00,  0x00,  0x00,  0x28,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x09,  0x00,  0x0d,  0x00,  0x00,  0x00,  0x49,  0x5f,  0x72,  0x6f,  0x74,  0x6f,  0x72,  0x5f, 
- 0x6b,  0x6e,  0x65,  0x65,  0x00,  0x00,  0x00,  0x00,  0x25,  0x00,  0x00,  0x00,  0x28,  0x00,  0x00,  0x00, 
+ 0x6b,  0x6e,  0x65,  0x65,  0x00,  0x00,  0x00,  0x00,  0x25,  0x00,  0x00,  0x00,  0x29,  0x00,  0x00,  0x00, 
  0x01,  0x00,  0x90,  0xf3,  0x01,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0x03,  0x09,  0x00,  0x00, 
  0x0b,  0x00,  0x00,  0x00,  0x67,  0x65,  0x61,  0x72,  0x5f,  0x72,  0x61,  0x74,  0x69,  0x6f,  0x00,  0x00, 
- 0x00,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0xf2,  0xe4,  0xfb,  0x5a, 
- 0x5e,  0x94,  0xbf,  0xec,  0xe9,  0x99,  0x47,  0x3e,  0xfc,  0xdb,  0x92,  0xf1,  0xb6,  0x4d,  0x68,  0xe4, 
- 0xfc,  0x09,  0xf6,  0xd2,  0x42,  0xa0,  0x62,  0x48,  0x6c,  0x7b, };
+ 0x00,  0x00,  0x00,  0x00,  0x22,  0x00,  0x00,  0x00,  0x01,  0x00,  0x00,  0x00,  0xf2,  0xc6,  0x79,  0x1a, 
+ 0xee,  0xee,  0xd1,  0xb9,  0xec,  0x15,  0x11,  0xe7,  0x71,  0x85,  0xcd,  0xf1,  0xb9,  0x55,  0xd2,  0x17, 
+ 0xee,  0x38,  0x75,  0xba,  0x30,  0xb4,  0x0c,  0x10,  0x00,  0xfa, };
   return blob;
 }
 template<> inline const uint8_t * TopicTraits<::rbq::Parameters>::type_info_blob() {
   static const uint8_t blob[] = {
  0x60,  0x00,  0x00,  0x00,  0x01,  0x10,  0x00,  0x40,  0x28,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00, 
- 0x14,  0x00,  0x00,  0x00,  0xf1,  0xb6,  0x4d,  0x68,  0xe4,  0xfc,  0x09,  0xf6,  0xd2,  0x42,  0xa0,  0x62, 
- 0x48,  0x6c,  0x7b,  0x00,  0xfa,  0x02,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
+ 0x14,  0x00,  0x00,  0x00,  0xf1,  0xb9,  0x55,  0xd2,  0x17,  0xee,  0x38,  0x75,  0xba,  0x30,  0xb4,  0x0c, 
+ 0x10,  0x00,  0xfa,  0x00,  0x0a,  0x03,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
  0x00,  0x00,  0x00,  0x00,  0x02,  0x10,  0x00,  0x40,  0x28,  0x00,  0x00,  0x00,  0x24,  0x00,  0x00,  0x00, 
- 0x14,  0x00,  0x00,  0x00,  0xf2,  0xe4,  0xfb,  0x5a,  0x5e,  0x94,  0xbf,  0xec,  0xe9,  0x99,  0x47,  0x3e, 
- 0xfc,  0xdb,  0x92,  0x00,  0x15,  0x05,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
+ 0x14,  0x00,  0x00,  0x00,  0xf2,  0xc6,  0x79,  0x1a,  0xee,  0xee,  0xd1,  0xb9,  0xec,  0x15,  0x11,  0xe7, 
+ 0x71,  0x85,  0xcd,  0x00,  0x35,  0x05,  0x00,  0x00,  0x00,  0x00,  0x00,  0x00,  0x04,  0x00,  0x00,  0x00, 
  0x00,  0x00,  0x00,  0x00, };
   return blob;
 }
@@ -586,7 +596,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       case 4:
       if (!streamer.start_member(*prop))
         return false;
-      if (!write(streamer, instance.total_mass()))
+      if (!write(streamer, instance.calf_length()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -594,7 +604,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       case 5:
       if (!streamer.start_member(*prop))
         return false;
-      if (!write(streamer, instance.body_mass()))
+      if (!write(streamer, instance.total_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -602,7 +612,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!write(streamer, instance.hip_mass()))
+      if (!write(streamer, instance.body_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -610,7 +620,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       case 7:
       if (!streamer.start_member(*prop))
         return false;
-      if (!write(streamer, instance.thigh_mass()))
+      if (!write(streamer, instance.hip_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -618,12 +628,20 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       case 8:
       if (!streamer.start_member(*prop))
         return false;
-      if (!write(streamer, instance.calf_mass()))
+      if (!write(streamer, instance.thigh_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
       break;
       case 9:
+      if (!streamer.start_member(*prop))
+        return false;
+      if (!write(streamer, instance.calf_mass()))
+        return false;
+      if (!streamer.finish_member(*prop))
+        return false;
+      break;
+      case 10:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -635,7 +653,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 10:
+      case 11:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -647,7 +665,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 11:
+      case 12:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -659,7 +677,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 12:
+      case 13:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -671,7 +689,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 13:
+      case 14:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.body_Ixx()))
@@ -679,7 +697,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 14:
+      case 15:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.body_Iyy()))
@@ -687,7 +705,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 15:
+      case 16:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.body_Izz()))
@@ -695,7 +713,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 16:
+      case 17:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.body_Ixy()))
@@ -703,7 +721,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 17:
+      case 18:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.body_Iyz()))
@@ -711,7 +729,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 18:
+      case 19:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.body_Izx()))
@@ -719,7 +737,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 19:
+      case 20:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.hip_Ixx()))
@@ -727,7 +745,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 20:
+      case 21:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.hip_Iyy()))
@@ -735,7 +753,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 21:
+      case 22:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.hip_Izz()))
@@ -743,7 +761,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 22:
+      case 23:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.hip_Ixy()))
@@ -751,7 +769,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 23:
+      case 24:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.hip_Iyz()))
@@ -759,7 +777,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 24:
+      case 25:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.hip_Izx()))
@@ -767,7 +785,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 25:
+      case 26:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.thigh_Ixx()))
@@ -775,7 +793,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 26:
+      case 27:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.thigh_Iyy()))
@@ -783,7 +801,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 27:
+      case 28:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.thigh_Izz()))
@@ -791,7 +809,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 28:
+      case 29:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.thigh_Ixy()))
@@ -799,7 +817,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 29:
+      case 30:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.thigh_Iyz()))
@@ -807,7 +825,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 30:
+      case 31:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.thigh_Izx()))
@@ -815,7 +833,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 31:
+      case 32:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.calf_Ixx()))
@@ -823,7 +841,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 32:
+      case 33:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.calf_Iyy()))
@@ -831,7 +849,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 33:
+      case 34:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.calf_Izz()))
@@ -839,7 +857,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 34:
+      case 35:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.calf_Ixy()))
@@ -847,7 +865,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 35:
+      case 36:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.calf_Iyz()))
@@ -855,7 +873,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 36:
+      case 37:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.calf_Izx()))
@@ -863,7 +881,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 37:
+      case 38:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.init_angle()))
@@ -871,7 +889,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 38:
+      case 39:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.I_rotor()))
@@ -879,7 +897,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 39:
+      case 40:
       if (!streamer.start_member(*prop))
         return false;
       if (!write(streamer, instance.I_rotor_knee()))
@@ -887,7 +905,7 @@ bool write(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 40:
+      case 41:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -963,7 +981,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       case 4:
       if (!streamer.start_member(*prop))
         return false;
-      if (!read(streamer, instance.total_mass()))
+      if (!read(streamer, instance.calf_length()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -971,7 +989,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       case 5:
       if (!streamer.start_member(*prop))
         return false;
-      if (!read(streamer, instance.body_mass()))
+      if (!read(streamer, instance.total_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -979,7 +997,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!read(streamer, instance.hip_mass()))
+      if (!read(streamer, instance.body_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -987,7 +1005,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       case 7:
       if (!streamer.start_member(*prop))
         return false;
-      if (!read(streamer, instance.thigh_mass()))
+      if (!read(streamer, instance.hip_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -995,12 +1013,20 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       case 8:
       if (!streamer.start_member(*prop))
         return false;
-      if (!read(streamer, instance.calf_mass()))
+      if (!read(streamer, instance.thigh_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
       break;
       case 9:
+      if (!streamer.start_member(*prop))
+        return false;
+      if (!read(streamer, instance.calf_mass()))
+        return false;
+      if (!streamer.finish_member(*prop))
+        return false;
+      break;
+      case 10:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1012,7 +1038,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 10:
+      case 11:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1024,7 +1050,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 11:
+      case 12:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1036,7 +1062,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 12:
+      case 13:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1048,7 +1074,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 13:
+      case 14:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.body_Ixx()))
@@ -1056,7 +1082,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 14:
+      case 15:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.body_Iyy()))
@@ -1064,7 +1090,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 15:
+      case 16:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.body_Izz()))
@@ -1072,7 +1098,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 16:
+      case 17:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.body_Ixy()))
@@ -1080,7 +1106,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 17:
+      case 18:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.body_Iyz()))
@@ -1088,7 +1114,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 18:
+      case 19:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.body_Izx()))
@@ -1096,7 +1122,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 19:
+      case 20:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.hip_Ixx()))
@@ -1104,7 +1130,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 20:
+      case 21:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.hip_Iyy()))
@@ -1112,7 +1138,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 21:
+      case 22:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.hip_Izz()))
@@ -1120,7 +1146,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 22:
+      case 23:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.hip_Ixy()))
@@ -1128,7 +1154,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 23:
+      case 24:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.hip_Iyz()))
@@ -1136,7 +1162,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 24:
+      case 25:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.hip_Izx()))
@@ -1144,7 +1170,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 25:
+      case 26:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.thigh_Ixx()))
@@ -1152,7 +1178,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 26:
+      case 27:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.thigh_Iyy()))
@@ -1160,7 +1186,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 27:
+      case 28:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.thigh_Izz()))
@@ -1168,7 +1194,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 28:
+      case 29:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.thigh_Ixy()))
@@ -1176,7 +1202,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 29:
+      case 30:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.thigh_Iyz()))
@@ -1184,7 +1210,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 30:
+      case 31:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.thigh_Izx()))
@@ -1192,7 +1218,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 31:
+      case 32:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.calf_Ixx()))
@@ -1200,7 +1226,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 32:
+      case 33:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.calf_Iyy()))
@@ -1208,7 +1234,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 33:
+      case 34:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.calf_Izz()))
@@ -1216,7 +1242,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 34:
+      case 35:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.calf_Ixy()))
@@ -1224,7 +1250,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 35:
+      case 36:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.calf_Iyz()))
@@ -1232,7 +1258,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 36:
+      case 37:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.calf_Izx()))
@@ -1240,7 +1266,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 37:
+      case 38:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.init_angle()))
@@ -1248,7 +1274,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 38:
+      case 39:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.I_rotor()))
@@ -1256,7 +1282,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 39:
+      case 40:
       if (!streamer.start_member(*prop))
         return false;
       if (!read(streamer, instance.I_rotor_knee()))
@@ -1264,7 +1290,7 @@ bool read(T& streamer, ::rbq::Parameters& instance, entity_properties_t *props) 
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 40:
+      case 41:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1340,7 +1366,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       case 4:
       if (!streamer.start_member(*prop))
         return false;
-      if (!move(streamer, instance.total_mass()))
+      if (!move(streamer, instance.calf_length()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1348,7 +1374,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       case 5:
       if (!streamer.start_member(*prop))
         return false;
-      if (!move(streamer, instance.body_mass()))
+      if (!move(streamer, instance.total_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1356,7 +1382,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!move(streamer, instance.hip_mass()))
+      if (!move(streamer, instance.body_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1364,7 +1390,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       case 7:
       if (!streamer.start_member(*prop))
         return false;
-      if (!move(streamer, instance.thigh_mass()))
+      if (!move(streamer, instance.hip_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1372,12 +1398,20 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       case 8:
       if (!streamer.start_member(*prop))
         return false;
-      if (!move(streamer, instance.calf_mass()))
+      if (!move(streamer, instance.thigh_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
       break;
       case 9:
+      if (!streamer.start_member(*prop))
+        return false;
+      if (!move(streamer, instance.calf_mass()))
+        return false;
+      if (!streamer.finish_member(*prop))
+        return false;
+      break;
+      case 10:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1389,7 +1423,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 10:
+      case 11:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1401,7 +1435,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 11:
+      case 12:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1413,7 +1447,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 12:
+      case 13:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1425,7 +1459,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 13:
+      case 14:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.body_Ixx()))
@@ -1433,7 +1467,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 14:
+      case 15:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.body_Iyy()))
@@ -1441,7 +1475,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 15:
+      case 16:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.body_Izz()))
@@ -1449,7 +1483,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 16:
+      case 17:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.body_Ixy()))
@@ -1457,7 +1491,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 17:
+      case 18:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.body_Iyz()))
@@ -1465,7 +1499,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 18:
+      case 19:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.body_Izx()))
@@ -1473,7 +1507,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 19:
+      case 20:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.hip_Ixx()))
@@ -1481,7 +1515,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 20:
+      case 21:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.hip_Iyy()))
@@ -1489,7 +1523,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 21:
+      case 22:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.hip_Izz()))
@@ -1497,7 +1531,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 22:
+      case 23:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.hip_Ixy()))
@@ -1505,7 +1539,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 23:
+      case 24:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.hip_Iyz()))
@@ -1513,7 +1547,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 24:
+      case 25:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.hip_Izx()))
@@ -1521,7 +1555,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 25:
+      case 26:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.thigh_Ixx()))
@@ -1529,7 +1563,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 26:
+      case 27:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.thigh_Iyy()))
@@ -1537,7 +1571,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 27:
+      case 28:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.thigh_Izz()))
@@ -1545,7 +1579,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 28:
+      case 29:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.thigh_Ixy()))
@@ -1553,7 +1587,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 29:
+      case 30:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.thigh_Iyz()))
@@ -1561,7 +1595,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 30:
+      case 31:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.thigh_Izx()))
@@ -1569,7 +1603,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 31:
+      case 32:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.calf_Ixx()))
@@ -1577,7 +1611,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 32:
+      case 33:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.calf_Iyy()))
@@ -1585,7 +1619,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 33:
+      case 34:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.calf_Izz()))
@@ -1593,7 +1627,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 34:
+      case 35:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.calf_Ixy()))
@@ -1601,7 +1635,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 35:
+      case 36:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.calf_Iyz()))
@@ -1609,7 +1643,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 36:
+      case 37:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.calf_Izx()))
@@ -1617,7 +1651,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 37:
+      case 38:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.init_angle()))
@@ -1625,7 +1659,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 38:
+      case 39:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.I_rotor()))
@@ -1633,7 +1667,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 39:
+      case 40:
       if (!streamer.start_member(*prop))
         return false;
       if (!move(streamer, instance.I_rotor_knee()))
@@ -1641,7 +1675,7 @@ bool move(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *p
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 40:
+      case 41:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1717,7 +1751,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       case 4:
       if (!streamer.start_member(*prop))
         return false;
-      if (!max(streamer, instance.total_mass()))
+      if (!max(streamer, instance.calf_length()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1725,7 +1759,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       case 5:
       if (!streamer.start_member(*prop))
         return false;
-      if (!max(streamer, instance.body_mass()))
+      if (!max(streamer, instance.total_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1733,7 +1767,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       case 6:
       if (!streamer.start_member(*prop))
         return false;
-      if (!max(streamer, instance.hip_mass()))
+      if (!max(streamer, instance.body_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1741,7 +1775,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       case 7:
       if (!streamer.start_member(*prop))
         return false;
-      if (!max(streamer, instance.thigh_mass()))
+      if (!max(streamer, instance.hip_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
@@ -1749,12 +1783,20 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       case 8:
       if (!streamer.start_member(*prop))
         return false;
-      if (!max(streamer, instance.calf_mass()))
+      if (!max(streamer, instance.thigh_mass()))
         return false;
       if (!streamer.finish_member(*prop))
         return false;
       break;
       case 9:
+      if (!streamer.start_member(*prop))
+        return false;
+      if (!max(streamer, instance.calf_mass()))
+        return false;
+      if (!streamer.finish_member(*prop))
+        return false;
+      break;
+      case 10:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1766,7 +1808,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 10:
+      case 11:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1778,7 +1820,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 11:
+      case 12:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1790,7 +1832,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 12:
+      case 13:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))
@@ -1802,7 +1844,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 13:
+      case 14:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.body_Ixx()))
@@ -1810,7 +1852,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 14:
+      case 15:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.body_Iyy()))
@@ -1818,7 +1860,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 15:
+      case 16:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.body_Izz()))
@@ -1826,7 +1868,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 16:
+      case 17:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.body_Ixy()))
@@ -1834,7 +1876,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 17:
+      case 18:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.body_Iyz()))
@@ -1842,7 +1884,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 18:
+      case 19:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.body_Izx()))
@@ -1850,7 +1892,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 19:
+      case 20:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.hip_Ixx()))
@@ -1858,7 +1900,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 20:
+      case 21:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.hip_Iyy()))
@@ -1866,7 +1908,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 21:
+      case 22:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.hip_Izz()))
@@ -1874,7 +1916,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 22:
+      case 23:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.hip_Ixy()))
@@ -1882,7 +1924,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 23:
+      case 24:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.hip_Iyz()))
@@ -1890,7 +1932,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 24:
+      case 25:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.hip_Izx()))
@@ -1898,7 +1940,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 25:
+      case 26:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.thigh_Ixx()))
@@ -1906,7 +1948,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 26:
+      case 27:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.thigh_Iyy()))
@@ -1914,7 +1956,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 27:
+      case 28:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.thigh_Izz()))
@@ -1922,7 +1964,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 28:
+      case 29:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.thigh_Ixy()))
@@ -1930,7 +1972,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 29:
+      case 30:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.thigh_Iyz()))
@@ -1938,7 +1980,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 30:
+      case 31:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.thigh_Izx()))
@@ -1946,7 +1988,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 31:
+      case 32:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.calf_Ixx()))
@@ -1954,7 +1996,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 32:
+      case 33:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.calf_Iyy()))
@@ -1962,7 +2004,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 33:
+      case 34:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.calf_Izz()))
@@ -1970,7 +2012,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 34:
+      case 35:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.calf_Ixy()))
@@ -1978,7 +2020,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 35:
+      case 36:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.calf_Iyz()))
@@ -1986,7 +2028,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 36:
+      case 37:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.calf_Izx()))
@@ -1994,7 +2036,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 37:
+      case 38:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.init_angle()))
@@ -2002,7 +2044,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 38:
+      case 39:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.I_rotor()))
@@ -2010,7 +2052,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 39:
+      case 40:
       if (!streamer.start_member(*prop))
         return false;
       if (!max(streamer, instance.I_rotor_knee()))
@@ -2018,7 +2060,7 @@ bool max(T& streamer, const ::rbq::Parameters& instance, entity_properties_t *pr
       if (!streamer.finish_member(*prop))
         return false;
       break;
-      case 40:
+      case 41:
       if (!streamer.start_member(*prop))
         return false;
       if (!streamer.start_consecutive(true, true))

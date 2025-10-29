@@ -62,6 +62,17 @@
         <material name="charcoal" rgba="0.3 0.3 0.3 1.0"/>
         <material name="darker_gray" rgba="0.2 0.2 0.2 1.0"/>
 
+        <material name="trunk_material" texture="trunk_texture"/>
+        <texture name="trunk_texture" type="2d" file="../meshes/rbq/trunk_skin.png" />
+        <material name="hip_material" texture="hip_texture"/>
+        <texture name="hip_texture" type="2d" file="../meshes/rbq/hip_skin.png" />
+        <material name="thigh_left_material" texture="thigh_left_texture"/>
+        <texture name="thigh_left_texture" type="2d" file="../meshes/rbq/thigh_left_skin.png" />
+        <material name="thigh_right_material" texture="thigh_right_texture"/>
+        <texture name="thigh_right_texture" type="2d" file="../meshes/rbq/thigh_right_skin.png" />
+        <material name="calf_material" texture="calf_texture"/>
+        <texture name="calf_texture" type="2d" file="../meshes/rbq/calf_skin.png" />
+
         <mesh name="trunk" file="../meshes/rbq/trunk.obj" scale="1 1 1"/>
         <mesh name="trunk_collision" file="../meshes/rbq/trunk_collision.obj" scale="1 1 1"/>
         <mesh name="hip2" file="../meshes/rbq/hip2.obj" scale="1 1 1"/>
@@ -77,7 +88,7 @@
                 mass="16.758"
                 fullinertia="0.163831629266 0.590891341306 0.678714788268 -0.000271071491 0.040352639311 0.000216428332"/>
             <freejoint/>
-            <geom type="mesh" mesh="trunk" material="graygray" class="visual"/>
+            <geom type="mesh" mesh="trunk" material="trunk_material" class="visual"/>
             <geom type="mesh" mesh="trunk_collision" material="graygray" class="collision"/>
 
             <camera name="track_cam" mode="track" target="base_link" pos="0 -2 1" euler="20 0 0"/>
@@ -144,13 +155,13 @@
                 <inertial pos="0.027522 -0.01681 -0.00187" mass="3.669344"
                     fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 -0.000029676183 0.000087952172"/>
                 <joint name="joint0_HRR" class="right_abduction"/>
-                <geom type="mesh" mesh="hip3" material="gray" euler="0 0 3.141592" class="visual"/>
+                <geom type="mesh" mesh="hip3" material="hip_material" euler="0 0 3.141592" class="visual"/>
 
                 <body name="RR_thigh" pos="0 -0.10285 0" euler="0 0 0">
                     <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014"
                         fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
                     <joint name="joint1_HRP" class="hip"/>
-                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_right_material" class="visual"/>
                     <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
                     <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
 
@@ -158,7 +169,7 @@
                         <inertial pos="0.008988 0.000072 -0.14911" mass="0.4520"
                             fullinertia="0.00214256 0.00216568 0.0000616440919 0.000000075939 0.0000230368745 0.000009344688"/>
                         <joint name="joint2_HRK" class="knee"/>
-                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="mesh" mesh="calf" material="calf_material" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
                         <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
 
@@ -176,13 +187,13 @@
                 <inertial pos="0.027522 0.01681 -0.00187" mass="3.669344"
                     fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 -0.000029676183 -0.000087952172"/>
                 <joint name="joint3_HLR" class="left_abduction"/>
-                <geom type="mesh" mesh="hip2" material="gray" euler="0 0 -3.141592" class="visual"/>
+                <geom type="mesh" mesh="hip2" material="hip_material" euler="0 0 -3.141592" class="visual"/>
 
                 <body name="RL_thigh" pos="0 0.10285 0">
                     <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014"
                         fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
                     <joint name="joint4_HLP" class="hip"/>
-                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_left_material" class="visual"/>
                     <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
                     <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
 
@@ -190,7 +201,7 @@
                         <inertial pos="0.008988 -0.000072 -0.14911" mass="0.4520"
                             fullinertia="0.00214256 0.00216568 0.0000616440919 -0.000000075939 0.0000230368745 -0.000009344688"/>
                         <joint name="joint5_HLK" class="knee"/>
-                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="mesh" mesh="calf" material="calf_material" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
                         <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
 
@@ -208,13 +219,13 @@
                 <inertial pos="-0.027522 -0.01681 -0.00187" mass="3.669344"
                     fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 0.000029676183 0.000087952172"/>
                 <joint name="joint6_FRR" class="right_abduction"/>
-                <geom type="mesh" mesh="hip2" material="gray" euler="0 0 0" class="visual"/>
+                <geom type="mesh" mesh="hip2" material="hip_material" euler="0 0 0" class="visual"/>
 
                 <body name="FR_thigh" pos="0 -0.10285 0" euler="0 0 0">
                     <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014"
                         fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
                     <joint name="joint7_FRP" class="hip"/>
-                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_right_material" class="visual"/>
                     <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
                     <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
 
@@ -222,7 +233,7 @@
                         <inertial pos="0.008988 0.000072 -0.14911" mass="0.4520"
                             fullinertia="0.00214256 0.00216568 0.0000616440919 0.000000075939 0.0000230368745 0.000009344688"/>
                         <joint name="joint8_FRK" class="knee"/>
-                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="mesh" mesh="calf" material="calf_material" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
                         <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
 
@@ -240,13 +251,13 @@
                 <inertial pos="-0.027522 0.01681 -0.00187" mass="3.669344"
                     fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 0.000029676183 -0.000087952172"/>
                 <joint name="joint9_FLR" class="left_abduction"/>
-                <geom type="mesh" mesh="hip3" material="gray" euler="0 0 0" class="visual"/>
+                <geom type="mesh" mesh="hip3" material="hip_material" euler="0 0 0" class="visual"/>
 
                 <body name="FL_thigh" pos="0 0.10285 0">
                     <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014"
                         fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
                     <joint name="joint10_FLP" class="hip"/>
-                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_left_material" class="visual"/>
                     <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
                     <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
 
@@ -254,7 +265,7 @@
                         <inertial pos="0.008988 -0.000072 -0.14911" mass="0.4520"
                             fullinertia="0.00214256 0.00216568 0.0000616440919 -0.000000075939 0.0000230368745 -0.000009344688"/>
                         <joint name="joint11_FLK" class="knee"/>
-                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="mesh" mesh="calf" material="calf_material" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
                         <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
 

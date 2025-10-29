@@ -10,6 +10,7 @@
 
 
 #include "Parameters.hpp"
+#include "rcl/dds/Template.hpp"
 
 class StateEstimator;
 
@@ -1835,7 +1836,9 @@ public:
 
     struct Parameters {
 
-        Parameters(RBQ_API* parent);
+        Parameters(RBQ_API *parent) {}
+
+        void initialize();
 
         Eigen::Vector3d imuOffset();
 
@@ -1871,6 +1874,8 @@ public:
 
         Eigen::Vector3d calfOffset(const int &leg_id);
 
+        Eigen::Vector3d footOffset(const int &leg_id);
+
         float initialJointPos(const int &joint_id);
 
         Eigen::Matrix3d actuatorInertia();
@@ -1878,6 +1883,8 @@ public:
     private:
         RBQ_API* m_parent = nullptr;
         rbq::Parameters m_data;
+        // std::shared_ptr<rbqdds::Subscriber<rbq::Parameters>> m_parametersSub = nullptr;
+        // rbqdds::Subscriber<rbq::Parameters>* m_parametersSub = nullptr;
         bool m_dds = true;
     };
     Parameters parameters{this};

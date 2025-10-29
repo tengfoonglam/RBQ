@@ -88,8 +88,6 @@ public:
                                     const Eigen::Matrix3f &body_rot,
                                     const Eigen::Vector3f &joint_ang);
 
-    static Eigen::Vector3f getHipPosition(int lnum);
-
     static Eigen::Vector3f getHipPosition(int lnum,
                                           const Eigen::Matrix3f &body_rot);
 
