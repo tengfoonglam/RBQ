@@ -40,9 +40,3 @@ RUN bash $SCRIPTS_DIR/rbdl.bash
 # JSON
 COPY $SCRIPTS_DIR/install/json.bash $SCRIPTS_DIR/json.bash
 RUN bash $SCRIPTS_DIR/json.bash
-
-# Qt
-COPY $SCRIPTS_DIR/install/download_qt.bash $SCRIPTS_DIR/download_qt.bash
-RUN bash $SCRIPTS_DIR/download_qt.bash
-COPY $SCRIPTS_DIR/install/qt.bash $SCRIPTS_DIR/qt.bash
-RUN bash $SCRIPTS_DIR/qt.bash

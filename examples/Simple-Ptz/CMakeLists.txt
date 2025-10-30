@@ -16,8 +16,6 @@ target_link_libraries(${PROJECT_NAME}
     rt
     Eigen3::Eigen
     ${RCL_LIBRARY}
-    Qt5::Core
-    Qt5::Network
     ${RBDL_LIBRARY}
     onnxruntime::onnxruntime
     CycloneDDS-CXX::ddscxx

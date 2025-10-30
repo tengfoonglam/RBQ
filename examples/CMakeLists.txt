@@ -12,14 +12,6 @@ set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,--gc-sections -s")
 find_package(Eigen3 REQUIRED)
 find_package(RCL REQUIRED)
 find_package(onnxruntime REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS
-    Core
-    Widgets
-    Svg
-    Concurrent
-    Multimedia
-    Network
-)
 find_package(RBDL REQUIRED)
 find_package(CycloneDDS REQUIRED)
 find_package(CycloneDDS-CXX REQUIRED)
