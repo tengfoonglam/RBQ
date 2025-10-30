@@ -8,9 +8,8 @@
 #endif
 #include <Eigen/Dense>
 
+#include "dds/Parameters.hpp"
 
-#include "Parameters.hpp"
-#include "rcl/dds/Template.hpp"
 
 class StateEstimator;
 
@@ -1086,7 +1085,9 @@ public:
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
 
+#if defined(PRIVATE)
         MOTION_REF m_motionRef;
+#endif
     };
     Joint joint{this};
 
@@ -1883,8 +1884,6 @@ public:
     private:
         RBQ_API* m_parent = nullptr;
         rbq::Parameters m_data;
-        // std::shared_ptr<rbqdds::Subscriber<rbq::Parameters>> m_parametersSub = nullptr;
-        // rbqdds::Subscriber<rbq::Parameters>* m_parametersSub = nullptr;
         bool m_dds = true;
     };
     Parameters parameters{this};

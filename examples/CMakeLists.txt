@@ -21,6 +21,8 @@ find_package(Qt5 REQUIRED COMPONENTS
     Network
 )
 find_package(RBDL REQUIRED)
+find_package(CycloneDDS REQUIRED)
+find_package(CycloneDDS-CXX REQUIRED)
 
 add_subdirectory(Simple-command)
 add_subdirectory(Simple-motion)

@@ -20,6 +20,8 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::Network
     ${RBDL_LIBRARY}
     onnxruntime::onnxruntime
+    CycloneDDS-CXX::ddscxx
+    CycloneDDS::ddsc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

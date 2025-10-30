@@ -9,11 +9,8 @@
 #include <ctime>
 #include <Eigen/Dense>
 
-// #include <onnxruntime_cxx_api.h>
-
 #include "rcl/Api.h"
 #include "rcl/Thread.h"
-#include "rcl/Parameters.h"
 #include "JointControl.h"
 
 constexpr float kR2D = 57.295779513f;
@@ -73,11 +70,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    Parameters params;
-    if (params.Initialize("hw_configs/QuadParameter.ini")) {
-        std::cerr << "Failed to initialize parameters.\n";
-        return 1;
-    }
+    // Parameters params;
+    // if (params.Initialize("hw_configs/QuadParameter.ini")) {
+    //     std::cerr << "Failed to initialize parameters.\n";
+    //     return 1;
+    // }
 
     try {
         RBQ_API::instance().initialize(22, true);
@@ -216,8 +213,8 @@ void goToMotionReady() {
     g_jointController->setAllOwners();
 
     for (int i = 0; i < kMaxJoint; ++i) {
-        RBQ_API::instance().joint.setGainKp(i, 200.0f);
-        RBQ_API::instance().joint.setGainKd(i, 2.5f);
+        RBQ_API::instance().joint.setGainKpRef(i, 200.0f);
+        RBQ_API::instance().joint.setGainKdRef(i, 2.5f);
     }
     usleep(500 * 1000);
 
@@ -251,8 +248,8 @@ void goToMotionGround() {
     g_jointController->setAllOwners();
 
     for (int i = 0; i < kMaxJoint; ++i) {
-        RBQ_API::instance().joint.setGainKp(i, 200.0f);
-        RBQ_API::instance().joint.setGainKd(i, 2.5f);
+        RBQ_API::instance().joint.setGainKpRef(i, 200.0f);
+        RBQ_API::instance().joint.setGainKdRef(i, 2.5f);
     }
 
     float motionTime = 2400.0f;
