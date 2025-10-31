@@ -33,10 +33,6 @@ RUN bash $SCRIPTS_DIR/dds.bash
 COPY $SCRIPTS_DIR/install/onnx.bash $SCRIPTS_DIR/onnx.bash
 RUN bash $SCRIPTS_DIR/onnx.bash
 
-# RBDL
-COPY $SCRIPTS_DIR/install/rbdl.bash $SCRIPTS_DIR/rbdl.bash
-RUN bash $SCRIPTS_DIR/rbdl.bash
-
 # JSON
 COPY $SCRIPTS_DIR/install/json.bash $SCRIPTS_DIR/json.bash
 RUN bash $SCRIPTS_DIR/json.bash

@@ -13,5 +13,4 @@ bash scripts/ex/install/cmake.bash
 bash scripts/ex/install/eigen.bash
 bash scripts/ex/install/dds.bash
 bash scripts/ex/install/onnx.bash
-bash scripts/ex/install/rbdl.bash
 bash scripts/ex/install/json.bash

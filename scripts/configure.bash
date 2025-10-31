@@ -23,10 +23,6 @@ export JSON_DIR="$LIBS_DIR/json"
 export ONNX_VERSION="v1.17.1"
 export ONNX_DIR="$LIBS_DIR/onnx"
 
-# RBDL
-export RBDL_VERSION="v3.3.1"
-export RBDL_DIR="$LIBS_DIR/rbdl"
-
 # dds
 export DDS_VERSION="0.10.5"
 export DDS_DIR="$LIBS_DIR/dds"

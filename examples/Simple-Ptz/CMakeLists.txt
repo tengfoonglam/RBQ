@@ -16,7 +16,6 @@ target_link_libraries(${PROJECT_NAME}
     rt
     Eigen3::Eigen
     ${RCL_LIBRARY}
-    ${RBDL_LIBRARY}
     onnxruntime::onnxruntime
     CycloneDDS-CXX::ddscxx
     CycloneDDS::ddsc
@@ -24,7 +23,6 @@ target_link_libraries(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${RCL_INCLUDE_DIR}
-    ${RBDL_INCLUDE_DIR}
 )
 
 install(TARGETS ${PROJECT_NAME}

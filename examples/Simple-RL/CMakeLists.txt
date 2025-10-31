@@ -24,13 +24,11 @@ target_link_libraries(${PROJECT_NAME}
     ${RCL_LIBRARY}
     Qt5::Core
     Qt5::Network
-    ${RBDL_LIBRARY}
     onnxruntime::onnxruntime
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${RCL_INCLUDE_DIR}
-    ${RBQ_INCLUDE_DIR}
 )
 
 install(TARGETS ${PROJECT_NAME}
