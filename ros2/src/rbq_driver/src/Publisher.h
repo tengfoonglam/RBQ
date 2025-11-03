@@ -170,6 +170,7 @@ private:
             jointStatus_msg.velocity.push_back(jointStatus->joint_details[i].velocity);
             jointStatus_msg.torque_ref.push_back(jointStatus->joint_details[i].torque_ref);
             jointStatus_msg.current.push_back(jointStatus->joint_details[i].current);
+            
             jointStatus_msg.kp.push_back(jointStatus->joint_details[i].kp);
             jointStatus_msg.kd.push_back(jointStatus->joint_details[i].kd);
             jointStatus_msg.owner.push_back(jointStatus->joint_details[i].owner);
@@ -329,16 +330,18 @@ private:
          
          RBQ_SDK::Motion::LegStateArray_t* legStateArray_ = m_robotApiHandler->legStateArray();
          if(legStateArray_ != nullptr) {
-             foreach (RBQ_SDK::Motion::LegState_t leg_state, legStateArray_->leg_states) {
-                 rbq_msgs::msg::FootState foot_state;
-                 foot_state.foot_position_rt_body.x = leg_state.foot_position_rt_body.at(0);
-                 foot_state.foot_position_rt_body.y = leg_state.foot_position_rt_body.at(1);
-                 foot_state.foot_position_rt_body.z = leg_state.foot_position_rt_body.at(2);
-                 foot_state.foot_velocity_rt_body.x = leg_state.foot_velocity_rt_body.at(0);
-                 foot_state.foot_velocity_rt_body.y = leg_state.foot_velocity_rt_body.at(1);
-                 foot_state.foot_velocity_rt_body.z = leg_state.foot_velocity_rt_body.at(2);
-                 foot_state.contact = leg_state.contact;
-                 footStates_msg.foot_states.push_back(foot_state);
+             for(int i = 0; i < 4; i++) {
+                 geometry_msgs::msg::Point pos, vel;
+                 pos.x = legStateArray_->leg_states[i].foot_position_rt_body.at(0);
+                 pos.y = legStateArray_->leg_states[i].foot_position_rt_body.at(1);
+                 pos.z = legStateArray_->leg_states[i].foot_position_rt_body.at(2);
+                 vel.x = legStateArray_->leg_states[i].foot_velocity_rt_body.at(0);
+                 vel.y = legStateArray_->leg_states[i].foot_velocity_rt_body.at(1);
+                 vel.z = legStateArray_->leg_states[i].foot_velocity_rt_body.at(2);
+                 
+                 footStates_msg.foot_position_rt_body.push_back(pos);
+                 footStates_msg.foot_velocity_rt_body.push_back(vel);
+                 footStates_msg.contact.push_back(legStateArray_->leg_states[i].contact);
              }
          }
          m_publisher_footStates->publish(footStates_msg);

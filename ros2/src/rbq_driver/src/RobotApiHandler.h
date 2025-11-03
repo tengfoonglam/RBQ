@@ -3,6 +3,7 @@
 #include "RBTypes.hpp"
 #include "rbq_podo_api.h"
 #include "ipc.h"
+#include <sensor_msgs/msg/joy.hpp>
 
 class RobotApiHandler
 {
@@ -16,6 +17,8 @@ public:
     RBQ_SDK::Motion::JointStatus_t *jointStatus();
 
     void setHighLevelCommand(const RBQ_SDK::HighLevelCmd_t &_cmd);
+
+    void setJoystickCommand(const sensor_msgs::msg::Joy::SharedPtr joy) const;
 
     void startMotionProgram(const bool &_start, const int &_id);
 
@@ -135,7 +138,7 @@ public:
 
     void comEstimationCompensation(const int &stage = 0);
 
-    void switchExternalJoystick(const bool &_external = false);
+    void switchControlMode(const bool &_external = false);
 
     void powerControl(const int &gait_id, const bool &status);
 
@@ -161,7 +164,7 @@ private:
 
     /// Interface for turning on and off devices powered by PDU in the robot
     /// arg: state_ = false --> turn off
-    void switchPowerOnOff(const PDU_PORT_IDs_e &pdu_port_id, const bool state);
+    void setPortState(const PDU_PORT_IDs_e &pdu_port_id, const bool state);
 
 private:
     // Motion Parameters in Percents %

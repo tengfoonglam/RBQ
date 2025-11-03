@@ -1943,8 +1943,8 @@ private:
     MOTION_REF          _getMotionRef() const;
 
     bool m_shm          = true;
-    bool m_shm_ref_get  = true;
-    bool m_shm_ref_set  = true;
+    bool m_shm_ref_get  = false;
+    bool m_shm_ref_set  = false;
 
     int m_processId = -1;
 

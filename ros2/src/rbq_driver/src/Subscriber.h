@@ -57,11 +57,14 @@ public:
         , m_robotApiHandler(robotApiHandler) 
     {
 
-        m_sub_switchExtJoy = this->create_subscription<std_msgs::msg::Bool>(
-            "rbq/gamepad/switchExtJoy", 10, std::bind(&Subscriber::callback_switchExtJoy, this, _1));
+        m_sub_switchControlMode = this->create_subscription<std_msgs::msg::Bool>(
+            "rbq/motion/switchControlMode", 10, std::bind(&Subscriber::callback_switchControlMode, this, _1));
 
         m_sub_cmd_highLevel = this->create_subscription<rbq_msgs::msg::HighLevelCommand>(
             "rbq/motion/cmd_highLevel", 10, std::bind(&Subscriber::callback_cmd_highLevel, this, _1));
+
+        m_sub_cmd_joystick = this->create_subscription<sensor_msgs::msg::Joy>(
+            "joy", 10, std::bind(&Subscriber::callback_cmd_joystick, this, _1));
 
         m_sub_cmd_navigateTo = this->create_subscription<geometry_msgs::msg::PoseStamped>(
             "rbq/motion/cmd_navigateTo", 10, std::bind(&Subscriber::callback_cmd_navigateTo, this, _1));
@@ -96,8 +99,8 @@ public:
         m_sub_emergency = this->create_subscription<std_msgs::msg::Bool>(
             "rbq/motion/emergency", 10, std::bind(&Subscriber::callback_emergency, this, _1));
 
-        m_sub_switchPowerOnOff = this->create_subscription<std_msgs::msg::Int8MultiArray>(
-            "rbq/powerControl/switchPowerOnOff", 10, std::bind(&Subscriber::callback_switchPowerOnOff, this, _1));
+        m_sub_setPortState = this->create_subscription<std_msgs::msg::Int8MultiArray>(
+            "rbq/powerControl/setPortState", 10, std::bind(&Subscriber::callback_setPortState, this, _1));
 
         m_sub_comEstimationCompensation = this->create_subscription<std_msgs::msg::Char>(
             "rbq/stateEstimation/comEstimationCompensation", 10, std::bind(&Subscriber::callback_comEstimationCompensation, this, _1));
@@ -172,9 +175,9 @@ private:
         }
     }
 
-    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_switchExtJoy;
-    void callback_switchExtJoy(const std_msgs::msg::Bool::SharedPtr _extJoy) const {
-        m_robotApiHandler->switchExternalJoystick(_extJoy.get()->data);
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_switchControlMode;
+    void callback_switchControlMode(const std_msgs::msg::Bool::SharedPtr _highLevel) const {
+        m_robotApiHandler->switchControlMode(_highLevel.get()->data);
     }
 
     rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_staticLock;
@@ -219,8 +222,8 @@ private:
         }
     }
 
-    rclcpp::Subscription<std_msgs::msg::Int8MultiArray>::SharedPtr m_sub_switchPowerOnOff;
-    void callback_switchPowerOnOff(const std_msgs::msg::Int8MultiArray::SharedPtr _data) const {
+    rclcpp::Subscription<std_msgs::msg::Int8MultiArray>::SharedPtr m_sub_setPortState;
+    void callback_setPortState(const std_msgs::msg::Int8MultiArray::SharedPtr _data) const {
         if(_data->data.size() >= 2) {
             PDU_PORT_IDs_e pdu_port_id = static_cast<PDU_PORT_IDs_e>(_data->data[0]);
             bool status = static_cast<bool>(_data->data[1]);
@@ -266,6 +269,14 @@ private:
     void callback_switchGait(const std_msgs::msg::Int8::SharedPtr gait_id) const {
         if(m_robotApiHandler != nullptr) {
             m_robotApiHandler->switchGait(gait_id.get()->data);
+        }
+    }
+
+    rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr m_sub_cmd_joystick;
+    void callback_cmd_joystick(const sensor_msgs::msg::Joy::SharedPtr joy) const
+    {
+        if(m_robotApiHandler != nullptr) {
+            m_robotApiHandler->setJoystickCommand(joy);
         }
     }
 

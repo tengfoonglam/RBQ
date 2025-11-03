@@ -33,7 +33,6 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
     "msg/HighLevelCommand.msg"
     "msg/BatteryState.msg"
-    "msg/FootState.msg"
     "msg/FootStates.msg"
     "msg/RobotStatus.msg"
     "msg/JointStatus.msg"

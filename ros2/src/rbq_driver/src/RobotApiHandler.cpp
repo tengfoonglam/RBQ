@@ -75,6 +75,29 @@ void RobotApiHandler::setHighLevelCommand(const RBQ_SDK::HighLevelCmd_t &_cmd)
     }
 }
 
+void RobotApiHandler::setJoystickCommand(const sensor_msgs::msg::Joy::SharedPtr joy) const
+{
+    qDebug() << "RobotApiHandler::setJoystickCommand()";
+    if (network != nullptr) {
+    
+    JoystickCmd_t joystick;
+    joystick.axisLeftX = joy->axes[0];
+    joystick.axisLeftY = joy->axes[1];
+    joystick.axisRightX = joy->axes[2];
+    joystick.axisRightY = joy->axes[3];
+    joystick.triggerLeft = joy->axes[4];
+    joystick.triggerRight = joy->axes[5];
+    for(int i=0; i<16; i++) {
+        joystick.buttons[i] = joy->buttons[i];
+    }
+    
+    QByteArray sendData = QByteArray::fromRawData((const char *) (&joystick),
+                                                      sizeof(JoystickCmd_t));
+    network->sendUDP(sendData);
+    }
+
+}
+
 void RobotApiHandler::setUserCommand(const USER_COMMAND &usrCmd)
 {
     qDebug() << "RobotApiHandler::setUserCommand()";
@@ -503,9 +526,9 @@ void RobotApiHandler::eStop()
     setUserCommand(cmd);
 }
 
-void RobotApiHandler::switchExternalJoystick(const bool &_external)
+void RobotApiHandler::switchControlMode(const bool &_external)
 {
-    qDebug() << "RobotApiHandler::switchExternalJoystick() " << _external;
+    qDebug() << "RobotApiHandler::switchControlMode() " << _external;
     USER_COMMAND cmd;
     cmd.COMMAND_TARGET = FindProgramNumberByName("Motion");
     cmd.USER_COMMAND = DAEMON_EXT_JOYSTICK_ONOFF;

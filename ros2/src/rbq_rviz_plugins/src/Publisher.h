@@ -36,21 +36,21 @@ public:
         m_pub_walk                 = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/walk",                 10);
         m_pub_walkSlow             = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/walkSlow",             10);
         m_pub_run                  = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/run",                  10);
-        m_pub_switchGait          = this->create_publisher<std_msgs::msg::Int8>("rbq/motion/switchGait",              10);
-        m_pub_switchPowerOnOff     = this->create_publisher<std_msgs::msg::Int8MultiArray>("rbq/powerControl/switchPowerOnOff", 10);
-        m_pub_switchExtJoy         = this->create_publisher<std_msgs::msg::Bool>("rbq/gamepad/switchExtJoy",           10);
+        m_pub_switchGait           = this->create_publisher<std_msgs::msg::Int8>("rbq/motion/switchGait",           10);
+        m_pub_setPortState         = this->create_publisher<std_msgs::msg::Int8MultiArray>("rbq/powerControl/setPortState", 10);
+        m_pub_switchControlMode         = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/switchControlMode",        10);
         m_pub_dock                 = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/docking",              10);
         m_pub_emergency            = this->create_publisher<std_msgs::msg::Bool>("rbq/motion/emergency",            10);
-        m_pub_powerLeg             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Leg",             10);
-        m_pub_powerArm             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Arm",             10);
-        m_pub_powerVisionPC        = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/VisionPC",        10);
-        m_pub_powerUsbHub          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/UsbHub",          10);
-        m_pub_powerCctv            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Cctv",            10);
-        m_pub_powerThermal         = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Thermal",         10);
-        m_pub_powerLidar           = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Lidar",           10);
-        m_pub_powerExt52V          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Ext52V",          10);
-        m_pub_powerIrLEDs          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/IrLEDs",          10);
-        m_pub_powerComm            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Comm",            10);
+        m_pub_powerLeg             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Leg",            10);
+        m_pub_powerArm             = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Arm",            10);
+        m_pub_powerVisionPC        = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/VisionPC",       10);
+        m_pub_powerUsbHub          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/UsbHub",         10);
+        m_pub_powerCctv            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Cctv",           10);
+        m_pub_powerThermal         = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Thermal",        10);
+        m_pub_powerLidar           = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Lidar",          10);
+        m_pub_powerExt52V          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Ext52V",         10);
+        m_pub_powerIrLEDs          = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/IrLEDs",         10);
+        m_pub_powerComm            = this->create_publisher<std_msgs::msg::Bool>("rbq/powerControl/Comm",           10);
         m_pub_setBodyHeight        = this->create_publisher<std_msgs::msg::Char>("rbq/motion/setBodyHeight",        10);
         m_pub_setFootHeight        = this->create_publisher<std_msgs::msg::Char>("rbq/motion/setFootHeight",        10);
         m_pub_setMaxSpeed          = this->create_publisher<std_msgs::msg::Char>("rbq/motion/setMaxSpeed",          10);
@@ -130,20 +130,20 @@ public:
         m_pub_switchGait->publish(msg);
     }
 
-    void pub_switchPowerOnOff(const int &port_id, const bool &powerON)
+    void pub_setPortState(const int &port_id, const bool &powerON)
     {
         std_msgs::msg::Int8MultiArray msg = std_msgs::msg::Int8MultiArray();
         msg.data.resize(2);
         msg.data[0] = port_id;
         msg.data[1] = powerON ? 1 : 0;
-        m_pub_switchPowerOnOff->publish(msg);
+        m_pub_setPortState->publish(msg);
     }
 
-    void pub_switchExtJoy(const bool &extJoy)
+    void pub_switchControlMode(const bool &extJoy)
     {
         std_msgs::msg::Bool msg = std_msgs::msg::Bool();
         msg.data = extJoy;
-        m_pub_switchExtJoy->publish(msg);
+        m_pub_switchControlMode->publish(msg);
     }
 
     void pub_dock()
@@ -334,8 +334,8 @@ private:
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_walkSlow            ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_run                 ;
     rclcpp::Publisher<std_msgs::msg::Int8>::SharedPtr m_pub_switchGait          ;
-    rclcpp::Publisher<std_msgs::msg::Int8MultiArray>::SharedPtr m_pub_switchPowerOnOff ;
-    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_switchExtJoy        ;
+    rclcpp::Publisher<std_msgs::msg::Int8MultiArray>::SharedPtr m_pub_setPortState ;
+    rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_switchControlMode        ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_dock                ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_emergency           ;
     rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr m_pub_powerLeg            ;

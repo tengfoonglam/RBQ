@@ -89,10 +89,6 @@ public:
             sensor_.setEnabled(name_prepend + name, (Vision_IPC::Sensors_e)idx);
 
             if(idx == 0 || idx == 1 || idx == 2 || idx == 3) {
-                sensor_.setEnabledRGB(this);
-                sensor_.setEnabledRGBCompressed(this);
-                sensor_.setEnabledRGBCameraInfo(this);
-
                 sensor_.setEnabledIR(this);                
                 sensor_.setEnabledIRCompressed(this);
                 sensor_.setEnabledIRCameraInfo(this);
@@ -116,22 +112,6 @@ public:
                 sensor_.setEnabledDepthCameraInfo(this);
             }
 
-            m_sensors.push_back(sensor_);
-        }
-        // Left
-        {
-            std::string name = "sensor_left";
-            VisionSensor_t sensor_;
-            sensor_.setEnabled(name_prepend + name, Vision_IPC::Sensors_e::Left);
-            sensor_.setEnabledRGB(this);
-            m_sensors.push_back(sensor_);
-        }
-        // Right
-        {
-            std::string name = "sensor_right";
-            VisionSensor_t sensor_;
-            sensor_.setEnabled(name_prepend + name, Vision_IPC::Sensors_e::Right);
-            sensor_.setEnabledRGB(this);
             m_sensors.push_back(sensor_);
         }
 
@@ -251,17 +231,6 @@ private:
                 //필요 카메라 이미지 주석 해제
 
                 if(sensor_.id == Vision_IPC::Sensors_e::Bottom0){
-                    // RGB 관련
-                    if(sensor_.getSubCountRgb()) {
-                        publishRGB(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
-                    if(sensor_.getSubCountRGBCompressed()) {
-                        publishRGBCompressed(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
                     // IR 관련
                     if(sensor_.getSubCountIR()) {
                         publishIR(sensor_.id);
@@ -276,22 +245,15 @@ private:
                     // Depth 관련
                     if(sensor_.getSubCountDepth()) {
                         publishDepth(sensor_.id);
+                        publishDepthCameraInfo(sensor_.id);
+                    }
+                    if(sensor_.getSubCountDepthCompressed()) {
+                        publishDepthCompressed(sensor_.id);
                         publishDepthCameraInfo(sensor_.id);
                     }
                 }
 
                 if(sensor_.id == Vision_IPC::Sensors_e::Bottom1){
-                    // RGB 관련
-                    if(sensor_.getSubCountRgb()) {
-                        publishRGB(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
-                    if(sensor_.getSubCountRGBCompressed()) {
-                        publishRGBCompressed(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
                     // IR 관련
                     if(sensor_.getSubCountIR()) {
                         publishIR(sensor_.id);
@@ -306,22 +268,15 @@ private:
                     // Depth 관련
                     if(sensor_.getSubCountDepth()) {
                         publishDepth(sensor_.id);
+                        publishDepthCameraInfo(sensor_.id);
+                    }
+                    if(sensor_.getSubCountDepthCompressed()) {
+                        publishDepthCompressed(sensor_.id);
                         publishDepthCameraInfo(sensor_.id);
                     }
                 }
 
                 if(sensor_.id == Vision_IPC::Sensors_e::Bottom2){
-                    // RGB 관련
-                    if(sensor_.getSubCountRgb()) {
-                        publishRGB(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
-                    if(sensor_.getSubCountRGBCompressed()) {
-                        publishRGBCompressed(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
                     // IR 관련
                     if(sensor_.getSubCountIR()) {
                         publishIR(sensor_.id);
@@ -338,20 +293,13 @@ private:
                         publishDepth(sensor_.id);
                         publishDepthCameraInfo(sensor_.id);
                     }
+                    if(sensor_.getSubCountDepthCompressed()) {
+                        publishDepthCompressed(sensor_.id);
+                        publishDepthCameraInfo(sensor_.id);
+                    }
                 }
 
                 if(sensor_.id == Vision_IPC::Sensors_e::Bottom3){
-                    // RGB 관련
-                    if(sensor_.getSubCountRgb()) {
-                        publishRGB(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
-                    if(sensor_.getSubCountRGBCompressed()) {
-                        publishRGBCompressed(sensor_.id);
-                        publishRGBCameraInfo(sensor_.id);
-                    }
-                    
                     // IR 관련
                     if(sensor_.getSubCountIR()) {
                         publishIR(sensor_.id);

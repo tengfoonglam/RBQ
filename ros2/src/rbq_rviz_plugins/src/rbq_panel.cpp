@@ -25,7 +25,7 @@ RbqPanel::RbqPanel(QWidget * parent)
     : Panel(parent)
 {
     // ExtJoy 상태 초기화 (OFF)
-    extJoy_state_ = false;
+    highLevel_state_ = false;
     
     // Create the control button and its tooltip
 
@@ -130,7 +130,7 @@ RbqPanel::RbqPanel(QWidget * parent)
     bt_rlTrotRun         ->setStyleSheet(defaultGaitStyle);
     bt_rlSilent          ->setStyleSheet(defaultGaitStyle);
     bt_rlFrontWalk       ->setStyleSheet(defaultGaitStyle);
-    bt_extJoy            ->setText( "Ext\nJoy"           );
+    bt_extJoy            ->setText( "HighLevel\nControl"           );
     bt_powerLeg          ->setText( "Leg"         );
     bt_powerArm          ->setText( "Arm"         );
     bt_powerVisionPC     ->setText( "VisionPC"    );
@@ -589,17 +589,17 @@ void RbqPanel::emergency         () { publisher->pub_emergency         (); }
 void RbqPanel::extJoyToggle()
 {
     // 현재 상태를 반대로 토글
-    extJoy_state_ = !extJoy_state_;
+    highLevel_state_ = !highLevel_state_;
     
-    qDebug() << "ExtJoy Toggle - New state:" << extJoy_state_ << "Publishing:" << extJoy_state_;
+    qDebug() << "Control Mode Toggle - New state:" << highLevel_state_ << "Publishing:" << highLevel_state_;
     
     // 새로운 상태로 메시지 발행
-    publisher->pub_switchExtJoy(extJoy_state_);
+    publisher->pub_switchControlMode(highLevel_state_);
     
     // 버튼 상태와 색상 업데이트
-    bt_extJoy->setChecked(extJoy_state_);
+    bt_extJoy->setChecked(highLevel_state_);
     
-    if (extJoy_state_) {
+    if (highLevel_state_) {
         // 활성화된 경우 - 녹색
         bt_extJoy->setStyleSheet("QPushButton { background-color: #90EE90; color: #2d5016; font-weight: bold; border: 2px solid #7CCD7C; border-radius: 5px; padding: 8px; } QPushButton:hover { background-color: #7CCD7C; } QPushButton:pressed { background-color: #6BB86B; }");
     } else {
@@ -607,16 +607,16 @@ void RbqPanel::extJoyToggle()
         bt_extJoy->setStyleSheet("QPushButton { background-color: #f0f0f0; color: #333333; font-weight: bold; border: 2px solid #cccccc; border-radius: 5px; padding: 8px; } QPushButton:hover { background-color: #e0e0e0; } QPushButton:pressed { background-color: #d0d0d0; }");
     }
 }
-void RbqPanel::powerLeg          (const bool &powerON) { publisher->pub_switchPowerOnOff(0x00, powerON); }
-void RbqPanel::powerArm          (const bool &powerON) { publisher->pub_switchPowerOnOff(0x01, powerON); }
-void RbqPanel::powerVisionPC     (const bool &powerON) { publisher->pub_switchPowerOnOff(0x10, powerON); }
-void RbqPanel::powerUsbHub       (const bool &powerON) { publisher->pub_switchPowerOnOff(0x21, powerON); }
-void RbqPanel::powerCctv         (const bool &powerON) { publisher->pub_switchPowerOnOff(0x13, powerON); }
-void RbqPanel::powerThermal      (const bool &powerON) { publisher->pub_switchPowerOnOff(0x14, powerON); }
-void RbqPanel::powerLidar        (const bool &powerON) { publisher->pub_switchPowerOnOff(0x12, powerON); }
-void RbqPanel::powerExt52V       (const bool &powerON) { publisher->pub_switchPowerOnOff(0x02, powerON); }
-void RbqPanel::powerIrLEDs       (const bool &powerON) { publisher->pub_switchPowerOnOff(0x15, powerON); }
-void RbqPanel::powerComm         (const bool &powerON) { publisher->pub_switchPowerOnOff(0x11, powerON); }
+void RbqPanel::powerLeg          (const bool &powerON) { publisher->pub_setPortState(0x00, powerON); }
+void RbqPanel::powerArm          (const bool &powerON) { publisher->pub_setPortState(0x01, powerON); }
+void RbqPanel::powerVisionPC     (const bool &powerON) { publisher->pub_setPortState(0x10, powerON); }
+void RbqPanel::powerUsbHub       (const bool &powerON) { publisher->pub_setPortState(0x21, powerON); }
+void RbqPanel::powerCctv         (const bool &powerON) { publisher->pub_setPortState(0x13, powerON); }
+void RbqPanel::powerThermal      (const bool &powerON) { publisher->pub_setPortState(0x14, powerON); }
+void RbqPanel::powerLidar        (const bool &powerON) { publisher->pub_setPortState(0x12, powerON); }
+void RbqPanel::powerExt52V       (const bool &powerON) { publisher->pub_setPortState(0x02, powerON); }
+void RbqPanel::powerIrLEDs       (const bool &powerON) { publisher->pub_setPortState(0x15, powerON); }
+void RbqPanel::powerComm         (const bool &powerON) { publisher->pub_setPortState(0x11, powerON); }
 void RbqPanel::setBodyHeight     (const int  &height ) { publisher->pub_setBodyHeight     (height ); }
 void RbqPanel::setFootHeight     (const int  &height ) { publisher->pub_setFootHeight     (height ); }
 void RbqPanel::setMaxSpeed       (const int  &speed  ) { publisher->pub_setMaxSpeed       (speed  ); }
@@ -1048,7 +1048,7 @@ void RbqPanel::updateExtJoyButtonColor(bool extJoyConnected)
     if (!bt_extJoy) return;
     
     // 외부 상태에 따라 내부 상태 업데이트
-    extJoy_state_ = extJoyConnected;
+    highLevel_state_ = extJoyConnected;
     
     // 토픽에서 받은 상태에 따라 버튼 색상 업데이트
     if (extJoyConnected) {

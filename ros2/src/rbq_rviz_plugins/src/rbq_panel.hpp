@@ -259,8 +259,8 @@ private:
     } robot_data_;
     
     
-    // ExtJoy 상태 변수
-    bool extJoy_state_;
+    // HighLevel 상태 변수
+    bool highLevel_state_;
     
     // Batch update function
     void batchUpdateTables();

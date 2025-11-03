@@ -113,6 +113,20 @@ struct HighLevelCmd_t {
     }
 };
 
+struct JoystickCmd_t
+{
+    float axisLeftX = 0.0f;
+    float axisLeftY = 0.0f;
+
+    float axisRightX = 0.0f;
+    float axisRightY = 0.0f;
+
+    float triggerLeft = 0.0f;
+    float triggerRight = 0.0f;
+
+    unsigned char buttons[16] = {0,};
+};
+
 struct Request_t {
     const unsigned char head1 =  255;
     const unsigned char head2 =  254;
