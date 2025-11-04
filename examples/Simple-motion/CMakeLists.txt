@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(Simple-motion LANGUAGES CXX)
 
-add_executable(${PROJECT_NAME} main.cpp JointControl.h)
+add_executable(${PROJECT_NAME} main.cpp)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     BUILD_WITH_INSTALL_RPATH TRUE

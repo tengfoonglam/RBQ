@@ -21,9 +21,24 @@ void CatchSignals(const int signal) {
     };
 }
 
+void printUsage()
+{
+    std::cout << "\n -- Click:" << std::endl;
+    std::cout << "\t 1 --> Sit" << std::endl;
+    std::cout << "\t 2 --> Stance" << std::endl;
+    std::cout << "\t 3 --> Walk" << std::endl;
+    std::cout << "\t 4 --> Stairs" << std::endl;
+    std::cout << "\t 5 --> Running" << std::endl;
+    std::cout << "\t q --> Quit" << std::endl;
+}
+
 int main(int argc, char *argv[])
 {
-    std::cout << "Starting " << APP_NAME << "..." << std::endl;
+    std::cout << "\n\tStarting " << APP_NAME << "..." << std::endl;
+    std::cout << "\n\t" << APP_NAME << " usage:" << std::endl;
+    std::cout << "\n\t   ./" << APP_NAME << std::endl;
+    std::cout << "\n\tThis example connects to the robot and sends "
+                 "\n\t   simple motion commands based on keyboard input." << std::endl;
 
     signal(SIGTERM, CatchSignals);
     signal(SIGINT,  CatchSignals);
@@ -39,12 +54,7 @@ int main(int argc, char *argv[])
 
     RBQ_API::instance().initialize(21, true);
 
-    std::cout << "Press q for exit" << std::endl;
-    std::cout << "Press 1 for Sit" << std::endl;
-    std::cout << "Press 2 for Stance" << std::endl;
-    std::cout << "Press 3 for Walk" << std::endl;
-    std::cout << "Press 4 for Stairs" << std::endl;
-    std::cout << "Press 5 for Running" << std::endl;
+    printUsage();
 
     while(__IS_WORKING)
     {
@@ -58,22 +68,27 @@ int main(int argc, char *argv[])
             case '1':
                 std::cout << "Sit command received." << std::endl;
                 RBQ_API::instance().motion.sit();
+                printUsage();
                 break;
             case '2':
                 std::cout << "Stance command received." << std::endl;
                 RBQ_API::instance().motion.stand();
+                printUsage();
                 break;
             case '3':
                 std::cout << "Walk command received." << std::endl;
                 RBQ_API::instance().motion.walk();
+                printUsage();
                 break;
             case '4':
                 std::cout << "Stairs command received." << std::endl;
                 RBQ_API::instance().motion.stairs();
+                printUsage();
                 break;
             case '5':
                 std::cout << "Running command received." << std::endl;
                 RBQ_API::instance().motion.run();
+                printUsage();
                 break;
                 // case 'w':
                 //     joyCommandUpdated = true;

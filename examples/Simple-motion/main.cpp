@@ -11,14 +11,13 @@
 
 #include "rcl/Api.h"
 #include "rcl/Thread.h"
-#include "JointControl.h"
+#include "rcl/JointControl.h"
 
 constexpr float kR2D = 57.295779513f;
 constexpr float kD2R = 0.0174532925f;
 constexpr long kControlPeriodUs = kControlPeriodMs * 1000;
 
 JointTable g_jointTable;
-// std::unique_ptr<RBQ_API> RBQ_API::instance();
 std::unique_ptr<JointController> g_jointController;
 
 int g_jointJogNo = 0;
@@ -70,17 +69,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Parameters params;
-    // if (params.Initialize("hw_configs/QuadParameter.ini")) {
-    //     std::cerr << "Failed to initialize parameters.\n";
-    //     return 1;
-    // }
-
     try {
         RBQ_API::instance().initialize(22, true);
-        g_jointController = std::make_unique<JointController>(&RBQ_API::instance(), kMaxJoint);
-        g_jointController->syncReferenceToRobot();
         RBQ_API::instance().stateEstimation.startEstimation();
+        g_jointController = std::make_unique<JointController>(kMaxJoint);
+        g_jointController->syncReferenceToRobot();
     } catch (const std::exception& e) {
         std::cerr << "Initialization failed: " << e.what() << "\n";
         cleanupResources();

@@ -6,16 +6,13 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <vector>
 
 #include "rcl/Api.h"
 
-// Constants
 constexpr int kMaxJoint = 12;
 constexpr int kMaxLeg = 4;
 constexpr int kControlPeriodMs = 2;
 
-// Enumerations
 enum class ErrorCode {
     Ok = 0,
     GoalTimeInvalid,
@@ -34,7 +31,6 @@ enum class MoveCommandMode {
     Relative
 };
 
-// Joint position presets
 struct JointTable {
     float ready[kMaxJoint] = {};
     float ground[kMaxJoint] = {};
@@ -120,10 +116,9 @@ private:
 
 class JointController {
 public:
-    JointController(RBQ_API* api, int joint_count)
-        : m_api(api), m_jointCount(joint_count) {
-
-        if (!m_api) throw std::invalid_argument("RBQ_API pointer is null.");
+    JointController(int joint_count)
+        : m_jointCount(joint_count)
+    {
         if (joint_count <= 0 || joint_count > kMaxJoint)
             throw std::out_of_range("Invalid joint count.");
 
@@ -136,12 +131,12 @@ public:
     JointController(const JointController&) = delete;
     JointController& operator=(const JointController&) = delete;
     JointController(JointController&&) = default;
-    JointController& operator=(JointController&&) = default;
+    JointController& operator=(JointController&&) = delete;
 
     double getAngle(int idx) const { return m_joints[idx]->getCurrentAngle(); }
     void setAngle(int idx, double angle) { m_joints[idx]->setCurrentAngle(angle); }
 
-    void setOwner(int idx) { m_api->joint.setMotionOwner(idx); }
+    void setOwner(int idx) { RBQ_API::instance().joint.setMotionOwner(idx); }
     void setAllOwners() {
         for (int i = 0; i < m_jointCount; ++i)
             setOwner(i);
@@ -172,28 +167,28 @@ public:
 
     void syncReferenceToRobot(int idx) {
         float ref;
-        m_api->joint.getPosRef(idx, ref);
-        m_api->joint.setPosRef(idx, ref);
+        RBQ_API::instance().joint.getPosRef(idx, ref);
+        RBQ_API::instance().joint.setPosRef(idx, ref);
         m_joints[idx]->setMoving(false);
         m_joints[idx]->setCurrentAngle(ref);
     }
 
     void syncPositionToRobot(int idx) {
         float pos;
-        m_api->joint.getPos(idx, pos);
-        m_api->joint.setPosRef(idx, pos);
+        RBQ_API::instance().joint.getPos(idx, pos);
+        RBQ_API::instance().joint.setPosRef(idx, pos);
         m_joints[idx]->setMoving(false);
         m_joints[idx]->setCurrentAngle(pos);
     }
 
     void sendReferencesToRobot() {
         for (int i = 0; i < m_jointCount; ++i)
-            m_api->joint.setPosRef(i, m_joints[i]->getCurrentAngle());
+            RBQ_API::instance().joint.setPosRef(i, m_joints[i]->getCurrentAngle());
+        RBQ_API::instance().joint.setAllJointRef();
     }
 
 private:
     const int m_jointCount;
-    RBQ_API* m_api;
     std::array<std::unique_ptr<Joint>, kMaxJoint> m_joints;
 };
 
