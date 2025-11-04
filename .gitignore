@@ -59,7 +59,6 @@ Save_Data/*.txt
 keys/
 log/
 plot/*.log
-*build*
 static_bin*
 *.log
 *.hex
