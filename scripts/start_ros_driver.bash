@@ -30,6 +30,10 @@ if pgrep -x $APP_NAME > /dev/null; then
     exit 1
 fi
 
+source /opt/ros/humble/setup.bash
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export CYCLONEDDS_URI=file://$PWD/configs/cyclonedds_ros2.xml
+
 cd $ROS2_DIR
 colcon build --symlink-install
 source install/setup.bash

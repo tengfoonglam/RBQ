@@ -7,6 +7,7 @@ REMOTE_SCRIPTS_DIR="$REMOTE_HOME_DIR/scripts"
 REMOTE_RESOURCES_DIR="$REMOTE_HOME_DIR/resources"
 REMOTE_RBQ_WS_DIR="$REMOTE_HOME_DIR/.."
 REMOTE_ROS2_SRC_DIR="$REMOTE_HOME_DIR/ros2/src"
+REMOTE_CONFIGS_DIR="$REMOTE_HOME_DIR/configs"
 BINARY_DIR="bin"
 SCRIPTS_DIR="scripts"
 RESOURCES_MEDIAMTX_DIR="resources/mediamtx"
@@ -53,6 +54,7 @@ BINARIES_TO_DEPLOY=()
 SCRIPTS_TO_DEPLOY=()
 RESOURCES_TO_DEPLOY=()
 ROS2_SRC_TO_DEPLOY=()
+CONFIGS_TO_DEPLOY=()
 
 if [ ${#SELECTED_BINARIES[@]} -eq 0 ]; then
     BINARIES_TO_DEPLOY=("${BINARIES[@]}")
@@ -79,6 +81,8 @@ if [ ${#SELECTED_BINARIES[@]} -eq 0 ]; then
         echo -e "\e[31mError: No files to deploy.\e[0m"
         exit 1
     fi
+    CONFIGS_TO_DEPLOY+=("configs/cyclonedds_ros2.xml")
+    echo "  - Added configs/cyclonedds_ros2.xml for deployment"
 else
     for FILE in "${SELECTED_BINARIES[@]}"; do
         if [ -f "$BINARY_DIR/$FILE" ]; then
@@ -125,6 +129,13 @@ fi
 if ! rsync -avz --progress -e "$SSH_AUTH" "${RESOURCES_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_RESOURCES_DIR/"; then
     echo -e "\e[31mError: Resources/mediamtx file transfer failed.\e[0m"
     exit 1
+fi
+if [ ${#CONFIGS_TO_DEPLOY[@]} -gt 0 ]; then
+    echo "Deploying ${CONFIGS_TO_DEPLOY[@]} to $REMOTE_DEVICE:$REMOTE_CONFIGS_DIR..."
+    if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_CONFIGS_DIR[@]} && rsync" -e "$SSH_AUTH" "${CONFIGS_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_CONFIGS_DIR/"; then
+        echo -e "\e[31mError: ${CONFIGS_TO_DEPLOY[@]} file transfer failed.\e[0m"
+        exit 1
+    fi
 fi
 
 echo -e "\e[32mDeployment complete.\e[0m"
