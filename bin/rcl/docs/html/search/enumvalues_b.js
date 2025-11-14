@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['panel_5f12v_375',['Panel_12V',['../group__PowerControlAPI.html#ggaeab58ba566a6a4dc3b0e74c44fa4406fab43fb2d063046e296929c4f05faaca50',1,'RBQ_API::PowerControl']]]
+  ['manipulation_425',['MANIPULATION',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2a64adcc495830d711e09dbd1faff581b4',1,'RBQ_API::Status']]]
 ];

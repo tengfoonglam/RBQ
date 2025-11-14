@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['waving_399',['WAVING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaacae8c7c418c52d3e190d5e566a2184d0',1,'RBQ_API::Status']]],
-  ['world_400',['World',['../group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6',1,'RBQ_API::StateEstimation']]]
+  ['userpc_5f12v_453',['UserPc_12V',['../group__PowerControlAPI.html#gga4edab5d25b650cec5606af9bb0b6535fa51e8e2393901996c11f94a97c0e14b15',1,'RBQ_API::Power']]]
 ];

@@ -52,7 +52,9 @@ if [ ! -d "$ROS2_DIR" ]; then
         python3-colcon-common-extensions \
         python3-rospkg \
         python3-rosdep \
-        ros-$ROS2_VERSION-diagnostic-updater
+        ros-$ROS2_VERSION-diagnostic-updater \
+        ros-$ROS2_VERSION-rmw-cyclonedds-cpp \
+        ros-$ROS2_VERSION-compressed-image-transport
 
     # ROS environment setup
     if [ -f "$ROS2_SETUP" ]; then

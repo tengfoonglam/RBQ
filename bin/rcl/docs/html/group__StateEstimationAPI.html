@@ -162,11 +162,13 @@ Functions</h2></td></tr>
 <li><b>Body_rpy</b>: Origin at body center. Orientation matches the global frame.</li>
 </ul>
 <p>Example: </p><div class="fragment"><div class="line"><span class="comment">// Start state estimation</span></div>
-<div class="line">api-&gt;stateEstimation.startEstimation();</div>
+<div class="line">RBQ_API::instance().stateEstimation.<a class="code" href="group__StateEstimationAPI.html#ga9cb4e66e8a2dd69e8e6b92b821af27d1">startEstimation</a>();</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Get body position in world frame</span></div>
 <div class="line">Eigen::Vector3f body_pos;</div>
-<div class="line">api-&gt;stateEstimation.getBodyPos(<a class="code" href="group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6">RBQ_API::StateEstimation::Frame::World</a>, body_pos);</div>
+<div class="line">RBQ_API::instance().stateEstimation.<a class="code" href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">getBodyPos</a>(<a class="code" href="group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6">RBQ_API::StateEstimation::Frame::World</a>, body_pos);</div>
+<div class="ttc" id="agroup__StateEstimationAPI_html_ga9cb4e66e8a2dd69e8e6b92b821af27d1"><div class="ttname"><a href="group__StateEstimationAPI.html#ga9cb4e66e8a2dd69e8e6b92b821af27d1">RBQ_API::StateEstimation::startEstimation</a></div><div class="ttdeci">int startEstimation()</div><div class="ttdoc">Starts the state estimation process.</div></div>
+<div class="ttc" id="agroup__StateEstimationAPI_html_gaa5696da0cd4571cfe5501c5d3aec2dd8"><div class="ttname"><a href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">RBQ_API::StateEstimation::getBodyPos</a></div><div class="ttdeci">int getBodyPos(const Frame _frame, Eigen::Vector3f &amp;body_pos_)</div><div class="ttdoc">Returns the position of the robot's body center.</div></div>
 <div class="ttc" id="agroup__StateEstimationAPI_html_gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6"><div class="ttname"><a href="group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6">RBQ_API::StateEstimation::Frame::World</a></div><div class="ttdeci">@ World</div></div>
 </div><!-- fragment --> <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga535e056b1024010f03813b713169f1cf"></a>

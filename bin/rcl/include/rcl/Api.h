@@ -194,6 +194,18 @@ public:
          */
         void parametersUpdate(const uint8_t &bodyHeight, const uint8_t &speed, const uint8_t &footHeight);
 
+         /**
+         * @ingroup MotionAPI
+         * @brief Calibrates the Center of Mass (CoM) offset used during walking.
+         *
+         * Searches for the CoM position along the robot's forward/backward axis (X-axis only)
+         * to improve walking stability.
+         *
+         * Prerequisite:
+         * - Call stand() first so the robot is in the standing gait (gait_id: STANDING = 1).
+         *
+         * @see stand()
+         */
         void zmpCalibrate();
 
         void lockAllJoint();
@@ -203,7 +215,75 @@ public:
             float &vel_x, float &vel_y, float &omega_z,
             float &delta_body_h, float &delta_foot_h, float &delta_max_speed,
             int &gait_id, bool &gaitTransition);
-
+            
+        /**
+         * @ingroup MotionAPI
+         * @brief High-level command for robot control whose meaning and valid ranges depend on the gait.
+         *
+         * Behavior and ranges vary by gait_id (see RBQ_API::Status::GAIT_IDs). If @p gaitTransition is true,
+         * the controller first transitions to @p gait_id and then applies this command in that gait.
+         * Any parameter not listed with a range for a given gait is ignored in that gait.
+         *
+         * Units:
+         * - Angles: radians; angular rates: rad/s; lengths: meters; linear speeds: m/s.
+         * - Degree-based ranges are shown with rad equivalents in parentheses.
+         *
+         * Gait-specific behavior:
+         * - STANDING (id: 1): Adjust body posture with roll, pitch, yaw (ZYX). Yaw twists the body about the vertical axis.
+         *   delta_body_h sets the body height offset from default.
+         *   Ranges: roll [-25°, 25°] (±0.436 rad), pitch [-20°, 20°] (±0.349 rad), yaw [-25°, 25°] (±0.436 rad),
+         *           delta_body_h [-0.15, 0.05] m.
+         *
+         * - TROTTING (id: 3): Set body-frame speeds vel_x (forward), vel_y (lateral), omega_z (yaw rate).
+         *   delta_body_h adjusts body height offset; delta_foot_h sets swing foot lift; pitch sets body pitch angle.
+         *   Ranges: vel_x [-1.0, 1.2] m/s, vel_y [-0.4, 0.4] m/s, omega_z [-75°, 75°]/s (±1.309 rad/s),
+         *           delta_body_h [-0.15, 0.05] m, delta_foot_h [-0.06, 0.04] m.
+         *
+         * - TROT_STAIRS (id: 4): Forward/lateral/rotational speeds for stairs navigation.
+         *   The robot should remain aligned with the stair direction.
+         *   Ranges: vel_x [-0.5, 0.5] m/s, vel_y [-0.2, 0.2] m/s, omega_z [-15°, 15°]/s (±0.262 rad/s).
+         *
+         * - WAVING (id: 5): Slow movement control using vel_x, vel_y, omega_z.
+         *   Ranges: vel_x [-0.3, 0.3] m/s, vel_y [-0.2, 0.2] m/s, omega_z [-20°, 20°]/s (±0.349 rad/s).
+         *
+         * - TROT_RUNNING (id: 6): High-speed locomotion for flat or mildly sloped terrain.
+         *   Ranges: vel_x [-1.0, 1.8] m/s, vel_y [-0.6, 0.6] m/s, omega_z [-75°, 75°]/s (±1.309 rad/s).
+         *
+         * - RL_TROT (id: 30): Reinforcement-learning trot with enhanced speed control.
+         *   Ranges: vel_x [-1.5, 2.0] m/s, vel_y [-1.0, 1.0] m/s, omega_z [-1.8, 1.8] rad/s.
+         *
+         * - RL_TROT_VISION (id: 42): RL trot with vision integration.
+         *   Ranges: vel_x [-1.5, 2.0] m/s, vel_y [-1.0, 1.0] m/s, omega_z [-1.8, 1.8] rad/s.
+         *
+         * Notes:
+         * - Values outside the listed ranges may be ignored or saturated by the controller.
+         * - Parameters not mentioned for a gait are ignored in that gait.
+         *
+         * Example:
+         * @code
+         * // Transition to TROTTING, then command forward 0.6 m/s with small yaw rate
+         * RBQ_API &api = RBQ_API::instance();
+         * api.motion.setHighLevelCMD(
+         *   0.0f, 0.0f, 0.0f,   // roll, pitch, yaw
+         *   0.6f, 0.0f, 0.5f,   // vel_x, vel_y, omega_z (rad/s)
+         *   0.00f, 0.02f, 0.0f, // delta_body_h, delta_foot_h, delta_max_speed
+         *   static_cast<int>(RBQ_API::Status::GAIT_IDs::TROTTING), true);
+         * @endcode
+         *
+         * @param roll Roll command [rad]. Used in STANDING.
+         * @param pitch Pitch command [rad]. Used in STANDING; also used in TROTTING to set body pitch.
+         * @param yaw Yaw command [rad]. Used in STANDING (twist).
+         * @param vel_x Forward speed [m/s]. Used in locomotion gaits as listed above.
+         * @param vel_y Lateral speed [m/s]. Used in locomotion gaits as listed above.
+         * @param omega_z Yaw rate [rad/s]. Used in locomotion gaits as listed above.
+         * @param delta_body_h Body height offset from default [m]. Used in STANDING, TROTTING.
+         * @param delta_foot_h Swing foot lift offset [m]. Used in TROTTING.
+         * @param delta_max_speed Max speed delta (unused unless specified for a gait).
+         * @param gait_id Target gait (see RBQ_API::Status::GAIT_IDs).
+         * @param gaitTransition If true, transition to gait_id first, then apply the command.
+         *
+         * @return Returns 1 if the command was sent successfully.
+         */
         int setHighLevelCMD(
             const float &roll,
             const float &pitch,
@@ -228,7 +308,7 @@ public:
     };
     Motion motion{this};
 
-    struct PowerControl {
+    struct Power {
         /**
          * @defgroup PowerControlAPI Power Control API
          * @brief API for managing the robot's internal and external power ports.
@@ -261,7 +341,7 @@ public:
             Audio_5V    = 0x21   ///< 5V USB power for audio (internal)
         };
 
-        PowerControl(RBQ_API* parent) : m_parent(parent) {}
+        Power(RBQ_API* parent) : m_parent(parent) {}
 
         /**
          * @ingroup PowerControlAPI
@@ -271,7 +351,7 @@ public:
          * @param _on_off Power state: true for ON, false for OFF.
          * @return Returns 1 if command was sent successfully.
          */
-        int setPower(const unsigned char _port_num, const bool _on_off);
+        int setPort(const unsigned char _port_num, const bool _on_off);
 
         /**
          * @ingroup PowerControlAPI
@@ -286,13 +366,13 @@ public:
          * Example:
          * @code
          * // Turn off 48V power to the leg actuators
-         * api->powerControl.setPower(RBQ_API::PowerControl::Port::Leg_48V, 0);
+         * RBQ_API::instance().powerControl.setPort(RBQ_API::Power::Port::Leg_48V, 0);
          * @endcode
          *
          * @see setPower(const unsigned char, const bool)
          */
-        int setPower(const Port _port_name, const bool _on_off){
-            return setPower(static_cast<int>(_port_name), _on_off);
+        int setPort(const Port _port_name, const bool _on_off){
+            return setPort(static_cast<int>(_port_name), _on_off);
         }
 
         /**
@@ -302,35 +382,143 @@ public:
          * This overload allows checking power status using the Port enum for better readability.
          *
          * @param _port_name The port to check (as Port enum).
-         * @param _on_off Reference to receive the current power state (true = on, false = off).
-         * @return Result of the power state query.
+         * @param result Result of the power state query.
+         * @return return power state (true = on, false = off).
          *
          * Example:
          * @code
          * // check 48V power on/off status of leg actuators
-         * bool on_off;
-         * api->powerControl.getPowerState(RBQ_API::PowerControl::Port::Leg_48V, on_off);
+         * bool result;
+         * bool on_off = RBQ_API::instance().powerControl.getPortState(RBQ_API::Power::Port::Leg_48V, result);
          * @endcode
          *
-         * @see getPowerState(const unsigned char, bool&)
          */
-        int getPowerState(const Port _port_name, bool &_on_off);
+        bool getPortState(const Port _port_name, int &result);
 
         /**
          * @ingroup PowerControlAPI
-         * @brief Retrieves the current battery voltage.
-         *
-         * @param out_battery_voltage_ Reference to store the measured battery voltage (in volts).
-         * @return Returns 1 if the voltage was successfully retrieved.
+         * @brief Convenience overload without result parameter.
+         * See getPortState(const Port, int&).
          */
-        int getBatteryVoltage(float &out_battery_voltage_);
+        bool getPortState(const Port _port_name){
+            int dummy;
+            return getPortState(_port_name, dummy);
+        }
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Returns the bus voltage [V] of a 48V output port.
+         *
+         * Supported ports:
+         * - Port::Leg_48V   → 48V leg actuator bus
+         * - Port::AddOn_48V → 48V add-on device bus (top side)
+         * - Port::Ext_48V   → 48V external bus (top side)
+         *
+         * Other ports are not supported by this query and return 0.0f.
+         *
+         * @param _port_name Port to query.
+         * @param result Reserved parameter (ignored in public SDK).
+         * @return Port voltage in volts. Returns 0.0f for unsupported ports.
+         */
+        float getPortVoltage(const Port _port_name, int result);
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Convenience overload that returns only the measured voltage.
+         * Equivalent to getPortVoltage(_port_name, result) with an unused result.
+         */
+        float getPortVoltage(const Port _port_name){
+            int dummy;
+            return getPortVoltage(_port_name, dummy);
+        }
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Returns the output current [A] drawn from a 48V output port.
+         *
+         * Supported ports:
+         * - Port::Leg_48V   → 48V leg actuator bus
+         * - Port::AddOn_48V → 48V add-on device bus (top side)
+         * - Port::Ext_48V   → 48V external bus (top side)
+         *
+         * Other ports are not supported by this query and return 0.0f.
+         *
+         * @param _port_name Port to query.
+         * @param result Reserved parameter (ignored in public SDK).
+         * @return Output current in amperes. Returns 0.0f for unsupported ports.
+         */
+        float getPortCurrent(const Port _port_name, int result);
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Convenience overload that returns only the measured current.
+         * Equivalent to getPortCurrent(_port_name, result) with an unused result.
+         */
+        float getPortCurrent(const Port _port_name){
+            int dummy;
+            return getPortCurrent(_port_name, dummy);
+        }
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Returns the current battery pack voltage [V].
+         *
+         * @param result Reference to store the call result (1 on success, -1 if data is unavailable).
+         * @return Battery voltage in volts.
+         */
+        float getBatteryVoltage(int &result);
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Convenience overload that returns only the battery voltage.
+         */
+        float getBatteryVoltage(){
+            int dummy;
+            return getBatteryVoltage(dummy);
+        }
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Returns the charging current [A] when the robot is charging.
+         *
+         * @param result Reference to store the call result (1 on success, -1 if data is unavailable).
+         * @return Charging current in amperes.
+         */
+        float getChargingCurrent(int &result);
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Convenience overload that returns only the charging current.
+         */
+        float getChargingCurrent(){
+            int dummy;
+            return getChargingCurrent(dummy);
+        }
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Returns the battery load current [A] currently drawn by the system.
+         *
+         * @param result Reference to store the call result (1 on success, -1 if data is unavailable).
+         * @return Load current in amperes.
+         */
+        float getBatteryLoadCurrent(int &result);
+
+        /**
+         * @ingroup PowerControlAPI
+         * @brief Convenience overload that returns only the battery load current.
+         */
+        float getBatteryLoadCurrent(){
+            int dummy;
+            return getBatteryLoadCurrent(dummy);
+        }
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
 
         void pdu_power_control(unsigned char _index, unsigned char _onoff);
     };
-    PowerControl powerControl{this};
+    Power power{this};
 
     struct Status {
         /**
@@ -353,6 +541,7 @@ public:
             CAN_CHECK,       ///< CAN communication check (1 = success, 0 = failure)
             FIND_HOME,       ///< Encoder homing status (1 = success, 0 = failure)
             CON_START,       ///< Motor control enabled (1 = enabled, 0 = not enabled)
+            IS_STANDING,     ///< Robot is Pysically in Standing posture (1 = standing, 0 = not standing)
             GAIT_ID,         ///< Current gait mode identifier (returns value defined GAIT_STATE enum)
             DOCKING_STATE,   ///< Docking process status (returns value defined in DOCKING_STATE enum)
             IS_FALL,         ///< Fall detection status (1 = robot has fallen, 0 = normal)
@@ -365,7 +554,7 @@ public:
          *
          * These values are used as return values for the GAIT_ID status query.
          */
-        enum GAIT_STATE : int8_t {
+        enum GAIT_IDs : int8_t {
             FALL_RECOVERY       = -3, ///< value = -3
             FALL_MODE           = -2, ///< value = -2
             CONTROL_OFF         = -1, ///< value = -1
@@ -406,7 +595,7 @@ public:
          * This enum defines the possible stages and error states in the robot's docking procedure.
          * These values are used as return values for the DOCKING_STATE status query.
          */
-        enum DOCKING_STATE : int8_t {
+        enum DOCKING_STATEs : int8_t {
             DOCKING_MAX_FAIL_CNT_REACHED        = -6, ///< Max retry count (10) reached. Docking aborted.
             DOCKING_MARKER_POS_INVALID_ROTATION = -5, ///< Marker rotation angle > ±40°. Docking aborted.
             DOCKING_MARKER_POS_INVALID_TOO_FAR  = -4, ///< Marker too far (> 5m). Docking aborted.
@@ -427,21 +616,82 @@ public:
         /**
          * @brief Retrieves the specified status flag.
          *
-         * @param _stat The desired status type to query.
-         * @param status_ returned status value.
+         * @param _req_stat The desired status type to query.
+         * @param result of query success = 1, data null-ptr = -1
          *
-         * @return Result of the getStatusWord query success = 1.
+         * @return return status value
          *
          * Example:
          * @code
          * // Check if leg motor controller enabled
-         * int control_status;
-         * api->status.getStatusWord(RBQ_API::Status::STAT::CON_START, control_status);
+         * int result;
+         * int control_status = RBQ_API::instance().status.getStatusWord(RBQ_API::Status::STAT::CON_START, result);
          * @endcode
          * 
          * @ingroup StatusAPI
          */
-        int getStatusWord(const STAT &_stat, int &status_);
+        int getStatusWord(const STAT &_req_stat, int &result);
+
+        /**
+         * @ingroup StatusAPI
+         * @brief Convenience overload that returns only the current STAT.
+         */
+        int getStatusWord(const STAT &_req_stat){
+            int dummy;
+            return getStatusWord(_req_stat, dummy);
+        }
+
+        int setStatusWord(const STAT &_stat, const int &_status);
+
+        /**
+         * @ingroup StatusAPI
+         * @brief Returns whether the robot is physically docked to the charging station.
+         *
+         * This flag indicates a successful mechanical/connector engagement with the charger.
+         * (It does not guarantee active charging; see DOCKING_STATE for charging status.)
+         *
+         * @param result Reference to store call result (1 = success, -1 = data unavailable).
+         * @return true if the robot is physically docked, false otherwise.
+         */
+        bool getIsDocked(int &result);
+
+        /**
+         * @ingroup StatusAPI
+         * @brief Convenience overload that returns only the docked state.
+         * See getIsDocked(int&).
+         */
+        bool getIsDocked(){
+            int dummy;
+            return getIsDocked(dummy);
+        }
+
+        /**
+         * @ingroup StatusAPI
+         * @brief Returns whether the EMO (emergency stop) push switch is pressed.
+         *
+         * Behavior:
+         * - When EMO is pressed, the robot immediately switches to FALL_MODE (gait_id: -2).
+         *   All joint commands are disabled; only joint damping control remains active.
+         * - While EMO remains pressed, CON_START (see STAT::CON_START) is forced to 0,
+         *   so no motion command will execute.
+         * - Even after the EMO switch is released, the robot's gait stays in FALL_MODE (-2)
+         *   until it is explicitly recovered by the controller.
+         *
+         * @param result Reference to store call result (1 = success, -1 = data unavailable).
+         * @return true if the EMO push switch is pressed, false otherwise.
+         */
+        bool getIsEmoPushed(int &result);
+
+        /**
+         * @ingroup StatusAPI
+         * @brief Convenience overload that returns only the EMO pressed state.
+         * See getIsEmoPushed(int&).
+         */
+        // N.O. type E-STOP switch 0: not pushed, 1: pushed
+        bool getIsEmoPushed(){
+            int dummy;
+            return getIsEmoPushed(dummy);
+        }
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
@@ -747,205 +997,390 @@ public:
             return setGainKdRef(static_cast<int>(_jointId), _set_kd, dummy);
         }
 
-        /**
+         /**
          * @brief Returns the current joint position in radians.
          *
-         * This function retrieves the measured joint angle for the specified joint.
-         * The value is obtained from the sensor and expressed in radians.
+         * Retrieves the measured joint angle for the specified joint.
+         * The returned value is valid only when result == 1.
          *
-         * @param _jointId The ID of the joint (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_pos_rad_ Reference variable that will be filled with the measured joint position (in radians).
-         *
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Joint position [rad].
          *
          * @ingroup JointControlAPI
          */
-        int getPos(const int &_jointId, float &joint_pos_rad_);
+        float getPos(const int &_jointId, int &result);
 
         /**
-         * @brief Overload using JointID.
-         * @see getPos(const int&, float&)
+         * @brief Convenience overload that returns only the joint position.
+         * Use getPos(const int&, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getPos(const JointID _jointId, float &joint_pos_rad_){
-            return getPos(static_cast<int>(_jointId), joint_pos_rad_);
+        float getPos(const int &_jointId){
+            int dummy;
+            return getPos(_jointId, dummy);
         }
 
         /**
+         * @brief Overload using JointID.
+         * @see getPos(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getPos(const JointID _jointId, int &result){
+            return getPos(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the joint position.
+         * Use getPos(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getPos(const JointID _jointId){
+            int dummy;
+            return getPos(static_cast<int>(_jointId), dummy);
+        }
+
+         /**
          * @brief Returns the current joint velocity in radians per second.
          *
-         * This function retrieves the measured joint angular velocity for the specified joint.
-         * The value is obtained from the sensor and expressed in radians per second (rad/s).
+         * Retrieves the measured joint angular velocity for the specified joint.
+         * The returned value is valid only when result == 1.
          *
-         * @param _jointId The ID of the joint (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_vel_rad_per_sec_ Reference variable that will be filled with the measured joint velocity (in rad/s).
-         *
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Joint velocity [rad/s].
          *
          * @ingroup JointControlAPI
          */
-        int getVel(const int &_jointId, float &joint_vel_rad_per_sec_);
+        float getVel(const int &_jointId, int &result);
 
         /**
-         * @brief Overload using JointID.
-         * @see getVel(const int&, float&)
+         * @brief Convenience overload that returns only the joint velocity.
+         * Use getVel(const int&, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getVel(const JointID _jointId, float &joint_vel_rad_per_sec_){
-            return getVel(static_cast<int>(_jointId), joint_vel_rad_per_sec_);
+        float getVel(const int &_jointId){
+            int dummy;
+            return getVel(_jointId, dummy);
         }
 
         /**
+         * @brief Overload using JointID.
+         * @see getVel(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getVel(const JointID _jointId, int &result){
+            return getVel(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the joint velocity.
+         * Use getVel(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getVel(const JointID _jointId){
+            int dummy;
+            return getVel(static_cast<int>(_jointId), dummy);
+        }
+
+         /**
          * @brief Returns the current joint torque in Newton-meters (Nm).
          *
-         * This function retrieves the measured torque value applied to the specified joint.
-         * The value is obtained from the sensor and expressed in Newton-meters.
+         * Retrieves the measured torque applied to the specified joint.
+         * The returned value is valid only when result == 1.
          *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_torque_ Reference variable that will be filled with the measured joint torque (in Nm).
-         *
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Joint torque [Nm].
          * @ingroup JointControlAPI
          */
-        int getTorque(const int &_jointId, float &joint_torque_);
+        float getTorque(const int &_jointId, int &result);
 
         /**
-         * @brief Overload using JointID.
-         * @see getTorque(const int&, float&)
+         * @brief Convenience overload that returns only the joint torque.
+         * Use getTorque(const int&, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getTorque(const JointID _jointId, float &joint_torque_){
-            return getTorque(static_cast<int>(_jointId), joint_torque_);
+        float getTorque(const int &_jointId){
+            int dummy;
+            return getTorque(_jointId, dummy);
         }
 
         /**
-         * @brief Retrieves the joint position gain (Kp).
-         *
-         * This function calculates and returns the current joint position gain value in Nm/rad for the specified joint.
-         * It applies a resolution of 17.62734 Nm/rad for roll/pitch (IDs: 0, 1, 3, 4, 6, 7, 9, 10) joints and 25.55443 Nm/rad for knee joints (IDs: 2, 5, 8, 11).
-         *
-         * @param joint_kp_ Reference parameter to receive the gain value in Nm/rad.
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         *
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
-         * @ingroup JointControlAPI
-         */
-        int getGainKp(const int &_jointId, float &joint_kp_);
-
-        /**
          * @brief Overload using JointID.
-         * @see getGainKp(const int&, float&)
+         * @see getTorque(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getGainKp(const JointID _jointId, float &joint_kp_){
-            return getGainKp(static_cast<int>(_jointId), joint_kp_);
+        float getTorque(const JointID _jointId, int &result){
+            return getTorque(static_cast<int>(_jointId), result);
         }
 
         /**
-         * @brief Retrieves the joint damping gain (Kd).
-         *
-         * This function calculates and returns the current joint damping gain value in Nm*s/rad for the specified joint.
-         * It uses a resolution of 0.035255 Nm*s/rad for roll/pitch joints (IDs: 0, 1, 3, 4, 6, 7, 9, 10) and 0.051109 Nm*s/rad for knee joints (IDs: 2, 5, 8, 11).
-         *
-         * @param joint_kd_ Reference parameter to receive the damping gain value in Nm*s/rad.
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         *
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @brief Convenience overload using JointID that returns only the joint torque.
+         * Use getTorque(const JointID, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getGainKd(const int &_jointId, float &joint_kd_);
+        float getTorque(const JointID _jointId){
+            int dummy;
+            return getTorque(static_cast<int>(_jointId), dummy);
+        }
+
+         /**
+         * @brief Returns the current joint position gain (Kp) in Nm/rad.
+         *
+         * Applies resolution:
+         * - Roll/Pitch joints (0,1,3,4,6,7,9,10): 17.62734 Nm/rad
+         * - Knee joints (2,5,8,11):               25.55443 Nm/rad
+         *
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Kp [Nm/rad].
+         * @ingroup JointControlAPI
+         */
+        float getGainKp(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only Kp.
+         * Use getGainKp(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKp(const int &_jointId){
+            int dummy;
+            return getGainKp(_jointId, dummy);
+        }
+
+        /**
+         * @brief Overload using JointID.
+         * @see getGainKp(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getGainKp(const JointID _jointId, int &result){
+            return getGainKp(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only Kp.
+         * Use getGainKp(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKp(const JointID _jointId){
+            int dummy;
+            return getGainKp(static_cast<int>(_jointId), dummy);
+        }
+
+         /**
+         * @brief Returns the current joint damping gain (Kd) in Nm*s/rad.
+         *
+         * Applies resolution:
+         * - Roll/Pitch joints (0,1,3,4,6,7,9,10): 0.035255 Nm*s/rad
+         * - Knee joints (2,5,8,11):               0.051109 Nm*s/rad
+         *
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Kd [Nm*s/rad].
+         * @ingroup JointControlAPI
+         */
+        float getGainKd(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only Kd.
+         * Use getGainKd(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKd(const int &_jointId){
+            int dummy;
+            return getGainKd(_jointId, dummy);
+        }
 
         /**
          * @brief Overload using JointID.
          * @see getGainKd(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getGainKd(const JointID _jointId, float &joint_kd_){
-            return getGainKd(static_cast<int>(_jointId), joint_kd_);
+        float getGainKd(const JointID _jointId, int &result){
+            return getGainKd(static_cast<int>(_jointId), result);
         }
 
         /**
-         * @brief Returns the current position reference of the specified joint.
-         *
-         * Retrieves the position reference (in radians) set for the joint by the system process.
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_pos_ref_ Reference to store the position reference (in radians).
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @brief Convenience overload using JointID that returns only Kd.
+         * Use getGainKd(const JointID, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getPosRef(const int &_jointId, float &joint_pos_ref_);
+        float getGainKd(const JointID _jointId){
+            int dummy;
+            return getGainKd(static_cast<int>(_jointId), dummy);
+        }
+
+         /**
+         * @brief Returns the current position reference for the specified joint.
+         *
+         * Retrieves the position reference (setpoint) in radians.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Position reference [rad].
+         * @ingroup JointControlAPI
+         */
+        float getPosRef(const int &_jointId, int &result);
 
         /**
-         * @brief Overload using JointID.
-         * @see getPosRef(const int&, float&)
+         * @brief Convenience overload that returns only the position reference.
+         * Use getPosRef(const int&, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getPosRef(const JointID _jointId, float &joint_pos_rad_){
-            return getPosRef(static_cast<int>(_jointId), joint_pos_rad_);
+        float getPosRef(const int &_jointId){
+            int dummy;
+            return getPosRef(_jointId, dummy);
         }
 
         /**
-         * @brief Returns the current torque reference of the specified joint.
-         *
-         * Retrieves the torque reference (in Newton-meters) set for the joint by the system process.
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_torque_ref_ Reference to store the torque reference (in Nm).
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
-         * @ingroup JointControlAPI
-         */
-        int getTorqueRef(const int &_jointId, float &joint_torque_ref_);
-
-        /**
          * @brief Overload using JointID.
-         * @see getTorqueRef(const int&, float&)
+         * @see getPosRef(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getTorqueRef(const JointID _jointId, float &joint_torque_){
-            return getTorqueRef(static_cast<int>(_jointId), joint_torque_);
+        float getPosRef(const JointID &_jointId, int &result){
+            return getPosRef(static_cast<int>(_jointId), result);
         }
 
         /**
-         * @brief Returns the current position gain (Kp) reference of the specified joint.
-         *
-         * Retrieves the position gain reference (Kp, in Nm/rad) set for the joint by the system process.
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_kp_ref_ Reference to store the Kp reference (in Nm/rad).
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @brief Convenience overload using JointID that returns only the position reference.
+         * Use getPosRef(const JointID, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getGainKpRef(const int &_jointId, float &joint_kp_ref_);
+        float getPosRef(const JointID &_jointId){
+            int dummy;
+            return getPosRef(_jointId, dummy);
+        }
+
+         /**
+         * @brief Returns the current torque reference for the specified joint.
+         *
+         * Retrieves the torque setpoint in Newton-meters.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Torque reference [Nm].
+         * @ingroup JointControlAPI
+         */
+        float getTorqueRef(const int &_jointId, int &result);
 
         /**
-         * @brief Overload using JointID.
-         * @see getGainKpRef(const int&, float&)
+         * @brief Convenience overload that returns only the torque reference.
+         * Use getTorqueRef(const int&, int&) to check the result code.
          * @ingroup JointControlAPI
          */
-        int getGainKpRef(const JointID _jointId, float &joint_kp_ref_){
-            return getGainKpRef(static_cast<int>(_jointId), joint_kp_ref_);
+        float getTorqueRef(const int &_jointId){
+            int dummy;
+            return getTorqueRef(_jointId, dummy);
         }
 
         /**
-         * @brief Returns the current damping gain (Kd) reference of the specified joint.
-         *
-         * Retrieves the damping gain reference (Kd, in Nm*s/rad) set for the joint by the system process.
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param joint_kd_ref_ Reference to store the Kd reference (in Nm*s/rad).
-         * @return 1 : success, -1 : fail to access data, -2 : joint ID is out of range.
+         * @brief Overload using JointID.
+         * @see getTorqueRef(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getGainKdRef(const int &_jointId, float &joint_kd_ref_);
+        float getTorqueRef(const JointID &_jointId, int &result){
+            return getTorqueRef(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the torque reference.
+         * Use getTorqueRef(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getTorqueRef(const JointID &_jointId){
+            int dummy;
+            return getTorqueRef(_jointId, dummy);
+        }
+
+         /**
+         * @brief Returns the current position gain (Kp) reference for the specified joint.
+         *
+         * Retrieves the Kp setpoint in Nm/rad.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Kp reference [Nm/rad].
+         * @ingroup JointControlAPI
+         */
+        float getGainKpRef(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the Kp reference.
+         * Use getGainKpRef(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKpRef(const int &_jointId){
+            int dummy;
+            return getGainKpRef(_jointId, dummy);
+        }
 
         /**
          * @brief Overload using JointID.
-         * @see getGainKdRef(const int&, float&)
+         * @see getGainKpRef(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getGainKdRef(const JointID _jointId, float &joint_kd_ref_){
-            return getGainKdRef(static_cast<int>(_jointId), joint_kd_ref_);
+        float getGainKpRef(const JointID &_jointId, int &result){
+            return getGainKpRef(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the Kp reference.
+         * Use getGainKpRef(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKpRef(const JointID &_jointId){
+            int dummy;
+            return getGainKpRef(_jointId, dummy);
+        }
+
+         /**
+         * @brief Returns the current damping gain (Kd) reference for the specified joint.
+         *
+         * Retrieves the Kd setpoint in Nm*s/rad.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Kd reference [Nm*s/rad].
+         * @ingroup JointControlAPI
+         */
+        float getGainKdRef(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the Kd reference.
+         * Use getGainKdRef(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKdRef(const int &_jointId){
+            int dummy;
+            return getGainKdRef(_jointId, dummy);
+        }
+
+        /**
+         * @brief Overload using JointID.
+         * @see getGainKdRef(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getGainKdRef(const JointID &_jointId, int &result){
+            return getGainKdRef(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the Kd reference.
+         * Use getGainKdRef(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getGainKdRef(const JointID &_jointId){
+            int dummy;
+            return getGainKdRef(_jointId, dummy);
         }
 
         /**
@@ -974,89 +1409,44 @@ public:
         }
 
         /**
-         * @brief Returns the connection status of the specified joint.
-         *
-         * Retrieves whether the joint is currently connected.
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param connection_status_ Reference to store the connection status (true if connected).
-         * @return 1 on success.
-         * @ingroup JointControlAPI
-         */
-        int getConnectionStatus(const int &_jointId, bool &connection_status_);
-
-        /**
-         * @brief Overload using JointID.
-         * @see getConnectionStatus(const int&, bool&)
-         * @ingroup JointControlAPI
-         */
-        int getConnectionStatus(const JointID _jointId, bool &connection_status_){
-            return getConnectionStatus(static_cast<int>(_jointId), connection_status_);
-        }
-
-        /**
-         * @brief Returns the homing status of the specified joint.
-         *
-         * Retrieves whether the joint has found home position.
-         * homing process is included in Autostart sequence.
-         * before finding home position robot need to be put on the flat ground. (see Operation Manual)
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param homming_status_ Reference to store the homing status (true if homed).
-         * @return 1 on success.
-         * @ingroup JointControlAPI
-         */
-        int getHomingStatus(const int &_jointId, bool &homming_status_);
-
-        /**
-         * @brief Overload using JointID.
-         * @see getHomingStatus(const int&, bool&)
-         * @ingroup JointControlAPI
-         */
-        int getHomingStatus(const JointID _jointId, bool &homming_status_){
-            return getHomingStatus(static_cast<int>(_jointId), homming_status_);
-        }
-
-        /**
-         * @brief Returns the run status of the specified joint.
-         *
-         * Retrieves whether the joint is currently running (motor enabled).
-         *
-         * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param run_status_ Reference to store the run status (true if running).
-         * @return 1 on success.
-         * @ingroup JointControlAPI
-         */
-        int getRunStatus(const int &_jointId, bool &run_status_);
-
-        /**
-         * @brief Overload using JointID.
-         * @see getRunStatus(const int&, bool&)
-         * @ingroup JointControlAPI
-         */
-        int getRunStatus(const JointID _jointId, bool &run_status_){
-            return getRunStatus(static_cast<int>(_jointId), run_status_);
-        }
-
-        /**
          * @brief Returns the motor temperature of the specified joint.
          *
          * Retrieves the current temperature of the joint's motor (in degrees Celsius).
          *
          * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param motor_temp_ Reference to store the motor temperature (°C).
-         * @return 1 on success.
+         * @param result, Reference to store result (1 : success, -1 : data pointer fail, -2 : out of joint range).
+         * @return motor temperature (°C).
          * @ingroup JointControlAPI
          */
-        int getMotorTemperature(const int &_jointId, int &motor_temp_);
+        int getMotorTemperature(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the motor temperature.
+         * Use getMotorTemperature(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        int getMotorTemperature(const int &_jointId){
+            int dummy;
+            return getMotorTemperature(_jointId, dummy);
+        }
 
         /**
          * @brief Overload using JointID.
-         * @see getMotorTemperature(const int&, float&)
+         * @see getMotorTemperature(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getMotorTemperature(const JointID _jointId, int &motor_temp_){
-            return getMotorTemperature(static_cast<int>(_jointId), motor_temp_);
+        int getMotorTemperature(const JointID _jointId, int &result){
+            return getMotorTemperature(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the motor temperature.
+         * Use getMotorTemperature(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        int getMotorTemperature(const JointID _jointId){
+            int dummy;
+            return getMotorTemperature(static_cast<int>(_jointId), dummy);
         }
 
         /**
@@ -1065,20 +1455,272 @@ public:
          * Retrieves the current temperature of the joint's control board (in degrees Celsius).
          *
          * @param _jointId The joint ID (valid range: 0 to 11, wheel: 12 to 15).
-         * @param borad_temp_ Reference to store the board temperature (°C).
-         * @return 1 on success.
+         * @param result, Reference to store result (1 : success, -1 : data pointer fail, -2 : out of joint range).
+         * @return board temperature (°C).
          * @ingroup JointControlAPI
          */
-        int getBoardTemperature(const int &_jointId, int &borad_temp_);
+        int getBoardTemperature(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the board temperature.
+         * Use getBoardTemperature(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        int getBoardTemperature(const int &_jointId){
+            int dummy;
+            return getBoardTemperature(_jointId, dummy);
+        }
 
         /**
          * @brief Overload using JointID.
-         * @see getBoardTemperature(const int&, float&)
+         * @see getBoardTemperature(const int&, int&)
          * @ingroup JointControlAPI
          */
-        int getBoardTemperature(const JointID _jointId, int &borad_temp_){
-            return getMotorTemperature(static_cast<int>(_jointId), borad_temp_);
+        int getBoardTemperature(const JointID _jointId, int &result){
+            return getBoardTemperature(static_cast<int>(_jointId), result);
         }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the board temperature.
+         * Use getBoardTemperature(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        int getBoardTemperature(const JointID _jointId){
+            int dummy;
+            return getBoardTemperature(static_cast<int>(_jointId), dummy);
+        }
+
+        /**
+         * @brief Returns the raw motor position (shaft encoder) in radians.
+         *
+         * Retrieves the motor-side position (before transmission) for the specified joint.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Motor position [rad].
+         * @ingroup JointControlAPI
+         */
+        float getMotorPos(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the motor position.
+         * Use getMotorPos(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getMotorPos(const int &_jointId){
+            int dummy;
+            return getMotorPos(_jointId, dummy);
+        }
+
+        /**
+         * @brief Overload using JointID.
+         * @see getMotorPos(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getMotorPos(const JointID _jointId, int &result){
+            return getMotorPos(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the motor position.
+         * Use getMotorPos(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getMotorPos(const JointID _jointId){
+            int dummy;
+            return getMotorPos(static_cast<int>(_jointId), dummy);
+        }
+
+        /**
+         * @brief Returns the raw motor angular velocity in radians per second.
+         *
+         * Retrieves the motor-side angular velocity for the specified joint.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Motor angular velocity [rad/s].
+         * @ingroup JointControlAPI
+         */
+        float getMotorVel(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the motor angular velocity.
+         * Use getMotorVel(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getMotorVel(const int &_jointId){
+            int dummy;
+            return getMotorVel(_jointId, dummy);
+        }
+
+        /**
+         * @brief Overload using JointID.
+         * @see getMotorVel(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getMotorVel(const JointID _jointId, int &result){
+            return getMotorVel(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the motor angular velocity.
+         * Use getMotorVel(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getMotorVel(const JointID _jointId){
+            int dummy;
+            return getMotorVel(static_cast<int>(_jointId), dummy);
+        }
+
+        /**
+         * @brief Returns the motor current in amperes.
+         *
+         * Retrieves the instantaneous motor current for the specified joint.
+         * The returned value is valid only when result == 1.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Motor current [A].
+         * @ingroup JointControlAPI
+         */
+        float getMotorCur(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the motor current.
+         * Use getMotorCur(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getMotorCur(const int &_jointId){
+            int dummy;
+            return getMotorCur(_jointId, dummy);
+        }
+
+        /**
+         * @brief Overload using JointID.
+         * @see getMotorCur(const int&, int&)
+         * @ingroup JointControlAPI
+         */
+        float getMotorCur(const JointID _jointId, int &result){
+            return getMotorCur(static_cast<int>(_jointId), result);
+        }
+
+        /**
+         * @brief Convenience overload using JointID that returns only the motor current.
+         * Use getMotorCur(const JointID, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        float getMotorCur(const JointID _jointId){
+            int dummy;
+            return getMotorCur(static_cast<int>(_jointId), dummy);
+        }
+
+        /**
+         * @brief Returns the motor communication (link) state of the specified joint.
+         *
+         * Reads the communication status flag of the motor controller.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param result Set to 1 on success, -1 if data is unavailable, -2 if joint ID is out of range.
+         * @return Communication state (0 = disconnected, 1 = connected). Returns -100 on invalid request.
+         * @ingroup JointControlAPI
+         */
+        int getMotorCommunicationState(const int &_jointId, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the motor communication state.
+         * Use getMotorCommunicationState(const int&, int&) to check the result code.
+         * @ingroup JointControlAPI
+         */
+        int getMotorCommunicationState(const int &_jointId){
+            int dummy;
+            return getMotorCommunicationState(_jointId, dummy);
+        }
+
+        /**
+         * @brief Sets the motor communication state of the specified joint.
+         *
+         * Forces the communication state flag for diagnostics or recovery procedures.
+         *
+         * @param _jointId Joint ID (valid: 0–11, wheel: 12–15).
+         * @param _set_comm_stat Target state (true = connected, false = disconnected).
+         * @return 1 on success; -2 if _jointId is out of range.
+         * @ingroup JointControlAPI
+         */
+        int setMotorCommunicationState(const int &_jointId, const bool &_set_comm_stat);
+
+
+        enum class mSTATs{
+            CAN,        ///< CAN Communication Connection Check (only update once after robot turned on)
+            FET,	 	///< FET ON
+            RUN,		///< joint is currently running (motor enabled)
+            INIT,       ///< Init Process Passed
+            CALIB,      ///< Retrieves whether the joint has found home position
+            JAM,		///< JAM Error
+            CUR,		///< Over Current Error
+            BIG,		///< Big Position Error
+            INP,        ///< Big Input Error
+            FLT,		///< FET Driver Fault Error
+            TMP,        ///< Temperature Error
+            PS1,		///< Position Limit Error (Lower)
+            PS2,		///< Position Limit Error (Upper)
+        };
+
+        /**
+         * @brief Returns one motor status flag/value for the specified joint.
+         *
+         * Reads a low-level motor status field for a given joint. Valid for leg joints and, if present,
+         * wheel joints. The returned value is typically 0/1 for boolean flags.
+         *
+         * Status mapping (see mSTATs):
+         * - CAN   → communication link state (connect)
+         * - FET   → power stage enable
+         * - RUN   → motor run (enabled)
+         * - INIT  → initialization done
+         * - CALIB → homing completed
+         * - JAM   → jam error
+         * - CUR   → over-current error
+         * - BIG   → big position error
+         * - INP   → big input error
+         * - FLT   → driver fault
+         * - TMP   → over-temperature
+         * - PS1   → lower position limit error
+         * - PS2   → upper position limit error
+         *
+         * @param _jointId Joint index (legs: 0–11; wheels: 12–15 if available).
+         * @param _req_stat Status field to query.
+         * @param result Set to 1 on success; -1 if data is unavailable; -2 if joint ID is out of range.
+         * @return Status value as int (usually 0 or 1). Returns -100 if _req_stat is invalid.
+         *
+         * Example:
+         * @code
+         * int result;
+         * int run = RBQ_API::instance().joint.getMotorStatus(0, RBQ_API::Joint::mSTATs::RUN, result);
+         * if (result == 1 && run == 1) { // joint 0 is running }
+         * @endcode
+         *
+         * @ingroup JointControlAPI
+         */
+        int getMotorStatus(const int &_jointId, const mSTATs &_req_stat, int &result);
+
+        /**
+         * @brief Convenience overload that returns only the status value.
+         *
+         * Equivalent to getMotorStatus(_jointId, _req_stat, result) with an unused result.
+         * Use the three-argument overload to check success/failure codes.
+         *
+         * @param _jointId Joint index (legs: 0–11; wheels: 12–15 if available).
+         * @param _req_stat Status field to query.
+         * @return Status value as int (usually 0 or 1). Returns -100 if the request is invalid.
+         *
+         * @ingroup JointControlAPI
+         */
+        int getMotorStatus(const int &_jointId, const mSTATs &_req_stat){
+            int dummy;
+            return getMotorStatus(_jointId, _req_stat, dummy);
+        }
+
 
 
 
@@ -1123,6 +1765,13 @@ public:
          */
         int getQuaternion(Eigen::Quaternion<float> &out_imu_);
 
+        Eigen::Quaternion<float> getQuaternion(int &result_);
+
+        inline Eigen::Quaternion<float> getQuaternion() {
+            int dummy;
+            return getQuaternion(dummy);
+        }
+
         /**
          * @brief Returns the IMU orientation as roll, pitch, and yaw angles (in radians).
          *
@@ -1138,6 +1787,13 @@ public:
          * @ingroup IMUSensorAPI
          */
         int getRPY(Eigen::Matrix<float, 3, 1> &out_rpy_);
+
+        Eigen::Matrix<float,3,1> getRPY(int &result);
+
+        inline Eigen::Matrix<float,3,1> getRPY() {
+            int dummy;
+            return getRPY(dummy);
+        }
 
         /**
          * @brief Returns the IMU angular velocity (gyroscope) in rad/s.
@@ -1158,6 +1814,13 @@ public:
          */
         int getGyro(Eigen::Matrix<float, 3, 1> &out_gyro_);
 
+        Eigen::Matrix<float,3,1> getGyro(int &result);
+
+        inline Eigen::Matrix<float,3,1> getGyro() {
+            int dummy;
+            return getGyro(dummy);
+        }
+
         /**
          * @brief Returns the IMU linear acceleration in m/s².
          *
@@ -1177,6 +1840,13 @@ public:
          */
         int getAcc(Eigen::Matrix<float, 3, 1> &out_acc_);
 
+        Eigen::Matrix<float,3,1> getAcc(int &result);
+
+        inline Eigen::Matrix<float,3,1> getAcc() {
+            int dummy;
+            return getAcc(dummy);
+        }
+
         int InitializeImu();
 
         /**
@@ -1184,11 +1854,16 @@ public:
          *
          * Retrieves whether the IMU sensor is currently connected.
          *
-         * @param connection_status_ Reference to store the connection status (true if connected).
-         * @return 1 on success, -1 if shared memory is not accessible.
+         * @param result, Reference to store the return result. 1 on success, -1 if shared memory is not accessible.
+         * @return return connection status (true if connected).
          * @ingroup IMUSensorAPI
          */
-        int getConnectionStatus(bool &connection_status_);
+        bool getConnectionStatus(int &result);
+
+        inline bool getConnectionStatus() {
+            int dummy;
+            return getConnectionStatus(dummy);
+        }
 
     private:
         RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
@@ -1332,11 +2007,11 @@ public:
          * Example:
          * @code
          * // Start state estimation
-         * api->stateEstimation.startEstimation();
+         * RBQ_API::instance().stateEstimation.startEstimation();
          *
          * // Get body position in world frame
          * Eigen::Vector3f body_pos;
-         * api->stateEstimation.getBodyPos(RBQ_API::StateEstimation::Frame::World, body_pos);
+         * RBQ_API::instance().stateEstimation.getBodyPos(RBQ_API::StateEstimation::Frame::World, body_pos);
          * @endcode
          */
 
@@ -1614,10 +2289,10 @@ public:
          * @code
          * // Get current PTZ state
          * float pan, tilt, zoom;
-         * api->ptzCamera.getPanTiltZoom(pan, tilt, zoom);
+         * RBQ_API::instance().ptzCamera.getPanTiltZoom(pan, tilt, zoom);
          *
          * // Set new PTZ state
-         * api->ptzCamera.setPanTiltZoom(new_pan, new_tilt, new_zoom);
+         * RBQ_API::instance().ptzCamera.setPanTiltZoom(new_pan, new_tilt, new_zoom);
          * @endcode
          *
          * @ingroup PtzCamera

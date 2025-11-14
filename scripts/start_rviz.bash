@@ -31,15 +31,14 @@ if pgrep -x $APP_NAME > /dev/null; then
     exit 1
 fi
 
-source /opt/ros/humble/setup.bash
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-export CYCLONEDDS_URI=file://$PWD/configs/cyclonedds_ros2.xml
-
 function set_terminal_title {
     echo -ne "\033]0;$1\007"
 }
 set_terminal_title "$APP_NAME"
 source ros2/install/setup.bash
+source /opt/ros/humble/setup.bash
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export CYCLONEDDS_URI=file://$PWD/configs/cyclonedds_ros2.xml
 
 while true; do
     pid=$(pgrep -x "$APP_NAME")

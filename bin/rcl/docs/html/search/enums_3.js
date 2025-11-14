@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gait_5fstate_298',['GAIT_STATE',['../group__StatusAPI.html#ga725f6cb01b392ea4d4e09a7fb1a7b1ea',1,'RBQ_API::Status']]]
+  ['gait_5fids_338',['GAIT_IDs',['../group__StatusAPI.html#ga5d47a24243dcbd049f98339c06ef1aa2',1,'RBQ_API::Status']]]
 ];

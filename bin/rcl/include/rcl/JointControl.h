@@ -166,16 +166,14 @@ public:
     }
 
     void syncReferenceToRobot(int idx) {
-        float ref;
-        RBQ_API::instance().joint.getPosRef(idx, ref);
+        float ref = RBQ_API::instance().joint.getPosRef(idx);
         RBQ_API::instance().joint.setPosRef(idx, ref);
         m_joints[idx]->setMoving(false);
         m_joints[idx]->setCurrentAngle(ref);
     }
 
     void syncPositionToRobot(int idx) {
-        float pos;
-        RBQ_API::instance().joint.getPos(idx, pos);
+        float pos = RBQ_API::instance().joint.getPos(idx);
         RBQ_API::instance().joint.setPosRef(idx, pos);
         m_joints[idx]->setMoving(false);
         m_joints[idx]->setCurrentAngle(pos);

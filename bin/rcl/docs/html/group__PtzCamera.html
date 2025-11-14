@@ -91,10 +91,12 @@ Coordinate System</h3>
 </ul>
 <p>Example: </p><div class="fragment"><div class="line"><span class="comment">// Get current PTZ state</span></div>
 <div class="line"><span class="keywordtype">float</span> pan, tilt, zoom;</div>
-<div class="line">api-&gt;ptzCamera.getPanTiltZoom(pan, tilt, zoom);</div>
+<div class="line">RBQ_API::instance().ptzCamera.<a class="code" href="group__PtzCamera.html#gacd61a7025f3b625c7b46e979bc8d7db5">getPanTiltZoom</a>(pan, tilt, zoom);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Set new PTZ state</span></div>
-<div class="line">api-&gt;ptzCamera.setPanTiltZoom(new_pan, new_tilt, new_zoom);</div>
+<div class="line">RBQ_API::instance().ptzCamera.<a class="code" href="group__PtzCamera.html#ga28ce4e5f3cfaab00ec2ad4bcf4e2e656">setPanTiltZoom</a>(new_pan, new_tilt, new_zoom);</div>
+<div class="ttc" id="agroup__PtzCamera_html_ga28ce4e5f3cfaab00ec2ad4bcf4e2e656"><div class="ttname"><a href="group__PtzCamera.html#ga28ce4e5f3cfaab00ec2ad4bcf4e2e656">RBQ_API::PtzCamera::setPanTiltZoom</a></div><div class="ttdeci">int setPanTiltZoom(const float &amp;_pan, const float &amp;_tilt, const float &amp;_zoom)</div><div class="ttdoc">Sets the pan, tilt angles (in radians) and zoom.</div></div>
+<div class="ttc" id="agroup__PtzCamera_html_gacd61a7025f3b625c7b46e979bc8d7db5"><div class="ttname"><a href="group__PtzCamera.html#gacd61a7025f3b625c7b46e979bc8d7db5">RBQ_API::PtzCamera::getPanTiltZoom</a></div><div class="ttdeci">int getPanTiltZoom(float &amp;out_pan_, float &amp;out_tilt_, float &amp;out_zoom_)</div><div class="ttdoc">Returns the pan, tilt angles (in radians) and zoom.</div></div>
 </div><!-- fragment --> <h2 class="groupheader">Function Documentation</h2>
 <a id="gacd61a7025f3b625c7b46e979bc8d7db5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacd61a7025f3b625c7b46e979bc8d7db5">&#9670;&nbsp;</a></span>getPanTiltZoom()</h2>

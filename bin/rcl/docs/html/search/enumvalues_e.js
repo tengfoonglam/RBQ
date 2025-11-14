@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['trot_5frunning_395',['TROT_RUNNING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaad6e62e96224ce13afc49186424c1bed1',1,'RBQ_API::Status']]],
-  ['trot_5fstairs_396',['TROT_STAIRS',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaac3d60d7f3ccf1183b20e298a839e0090',1,'RBQ_API::Status']]],
-  ['trotting_397',['TROTTING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa4955f2b63172ee25a363b231e8c466d6',1,'RBQ_API::Status']]]
+  ['sitting_446',['SITTING',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2a43442c1fd8adc5655ff541c901aaf096',1,'RBQ_API::Status']]],
+  ['standing_447',['STANDING',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2ac388bfa683ee0cb80cb0f78c87529722',1,'RBQ_API::Status']]],
+  ['start_448',['START',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441ab078ffd28db767c502ac367053f6e0ac',1,'RBQ_API::Gamepad']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zmp_5finitializing_403',['ZMP_INITIALIZING',['../group__StatusAPI.html#gga725f6cb01b392ea4d4e09a7fb1a7b1eaa62a8bf54e79509e3d6e2be57972fdddc',1,'RBQ_API::Status']]]
+  ['y_457',['Y',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441a57cec4137b614c87cb4e24a3d003a3e0',1,'RBQ_API::Gamepad']]]
 ];

@@ -213,10 +213,10 @@ void goToMotionReady() {
 
     float motionTime = 1400.0f;
     float pitchAngles[4];
-    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::HRP, pitchAngles[0]);
-    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::HLP, pitchAngles[1]);
-    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::FRP, pitchAngles[2]);
-    RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::FLP, pitchAngles[3]);
+    pitchAngles[0] = RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::HRP);
+    pitchAngles[1] = RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::HLP);
+    pitchAngles[2] = RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::FRP);
+    pitchAngles[3] = RBQ_API::instance().joint.getPosRef(RBQ_API::Joint::JointID::FLP);
 
     bool isGrounded = (pitchAngles[0] > 60 * kD2R && pitchAngles[1] > 60 * kD2R &&
                        pitchAngles[2] > 60 * kD2R && pitchAngles[3] > 60 * kD2R);

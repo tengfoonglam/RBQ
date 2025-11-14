@@ -113,6 +113,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:ga1dd716e567cfe205484b8ee5e5538ab5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5">RBQ_API::Motion::parametersUpdate</a> (const uint8_t &amp;bodyHeight, const uint8_t &amp;speed, const uint8_t &amp;footHeight)</td></tr>
 <tr class="memdesc:ga1dd716e567cfe205484b8ee5e5538ab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates walking parameters such as body height, speed, and foot lift height.  <a href="group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5">More...</a><br /></td></tr>
 <tr class="separator:ga1dd716e567cfe205484b8ee5e5538ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga635aacf3656c6d47fd082868a59039b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#ga635aacf3656c6d47fd082868a59039b9">RBQ_API::Motion::zmpCalibrate</a> ()</td></tr>
+<tr class="memdesc:ga635aacf3656c6d47fd082868a59039b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibrates the Center of Mass (CoM) offset used during walking.  <a href="group__MotionAPI.html#ga635aacf3656c6d47fd082868a59039b9">More...</a><br /></td></tr>
+<tr class="separator:ga635aacf3656c6d47fd082868a59039b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga361fb2db86c66e80d181a782ef58e73e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MotionAPI.html#ga361fb2db86c66e80d181a782ef58e73e">RBQ_API::Motion::setHighLevelCMD</a> (const float &amp;roll, const float &amp;pitch, const float &amp;yaw, const float &amp;vel_x, const float &amp;vel_y, const float &amp;omega_z, const float &amp;delta_body_h, const float &amp;delta_foot_h, const float &amp;delta_max_speed, const int &amp;gait_id, const bool &amp;gaitTransition)</td></tr>
+<tr class="memdesc:ga361fb2db86c66e80d181a782ef58e73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">High-level command for robot control whose meaning and valid ranges depend on the gait.  <a href="group__MotionAPI.html#ga361fb2db86c66e80d181a782ef58e73e">More...</a><br /></td></tr>
+<tr class="separator:ga361fb2db86c66e80d181a782ef58e73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API for high-level motion control. </p>
@@ -287,6 +293,134 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 
 </div>
 </div>
+<a id="ga361fb2db86c66e80d181a782ef58e73e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga361fb2db86c66e80d181a782ef58e73e">&#9670;&nbsp;</a></span>setHighLevelCMD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Motion::setHighLevelCMD </td>
+          <td>(</td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>roll</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>pitch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>yaw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>vel_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>vel_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>omega_z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>delta_body_h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>delta_foot_h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const float &amp;&#160;</td>
+          <td class="paramname"><em>delta_max_speed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>gait_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>gaitTransition</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>High-level command for robot control whose meaning and valid ranges depend on the gait. </p>
+<p>Behavior and ranges vary by gait_id (see <a class="el" href="group__StatusAPI.html#ga5d47a24243dcbd049f98339c06ef1aa2" title="Enumeration of gait state identifiers.">RBQ_API::Status::GAIT_IDs</a>). If <code>gaitTransition</code> is true, the controller first transitions to <code>gait_id</code> and then applies this command in that gait. Any parameter not listed with a range for a given gait is ignored in that gait.</p>
+<p>Units:</p><ul>
+<li>Angles: radians; angular rates: rad/s; lengths: meters; linear speeds: m/s.</li>
+<li>Degree-based ranges are shown with rad equivalents in parentheses.</li>
+</ul>
+<p>Gait-specific behavior:</p><ul>
+<li>STANDING (id: 1): Adjust body posture with roll, pitch, yaw (ZYX). Yaw twists the body about the vertical axis. delta_body_h sets the body height offset from default. Ranges: roll <a href="±0.436 rad">-25°, 25°</a>, pitch <a href="±0.349 rad">-20°, 20°</a>, yaw <a href="±0.436 rad">-25°, 25°</a>, delta_body_h [-0.15, 0.05] m.</li>
+<li>TROTTING (id: 3): Set body-frame speeds vel_x (forward), vel_y (lateral), omega_z (yaw rate). delta_body_h adjusts body height offset; delta_foot_h sets swing foot lift; pitch sets body pitch angle. Ranges: vel_x [-1.0, 1.2] m/s, vel_y [-0.4, 0.4] m/s, omega_z [-75°, 75°]/s (±1.309 rad/s), delta_body_h [-0.15, 0.05] m, delta_foot_h [-0.06, 0.04] m.</li>
+<li>TROT_STAIRS (id: 4): Forward/lateral/rotational speeds for stairs navigation. The robot should remain aligned with the stair direction. Ranges: vel_x [-0.5, 0.5] m/s, vel_y [-0.2, 0.2] m/s, omega_z [-15°, 15°]/s (±0.262 rad/s).</li>
+<li>WAVING (id: 5): Slow movement control using vel_x, vel_y, omega_z. Ranges: vel_x [-0.3, 0.3] m/s, vel_y [-0.2, 0.2] m/s, omega_z [-20°, 20°]/s (±0.349 rad/s).</li>
+<li>TROT_RUNNING (id: 6): High-speed locomotion for flat or mildly sloped terrain. Ranges: vel_x [-1.0, 1.8] m/s, vel_y [-0.6, 0.6] m/s, omega_z [-75°, 75°]/s (±1.309 rad/s).</li>
+<li>RL_TROT (id: 30): Reinforcement-learning trot with enhanced speed control. Ranges: vel_x [-1.5, 2.0] m/s, vel_y [-1.0, 1.0] m/s, omega_z [-1.8, 1.8] rad/s.</li>
+<li>RL_TROT_VISION (id: 42): RL trot with vision integration. Ranges: vel_x [-1.5, 2.0] m/s, vel_y [-1.0, 1.0] m/s, omega_z [-1.8, 1.8] rad/s.</li>
+</ul>
+<p>Notes:</p><ul>
+<li>Values outside the listed ranges may be ignored or saturated by the controller.</li>
+<li><a class="el" href="structRBQ__API_1_1Parameters.html">Parameters</a> not mentioned for a gait are ignored in that gait.</li>
+</ul>
+<p>Example: </p><div class="fragment"><div class="line"><span class="comment">// Transition to TROTTING, then command forward 0.6 m/s with small yaw rate</span></div>
+<div class="line"><a class="code" href="classRBQ__API.html">RBQ_API</a> &amp;api = RBQ_API::instance();</div>
+<div class="line">api.motion.<a class="code" href="group__MotionAPI.html#ga361fb2db86c66e80d181a782ef58e73e">setHighLevelCMD</a>(</div>
+<div class="line">  0.0f, 0.0f, 0.0f,   <span class="comment">// roll, pitch, yaw</span></div>
+<div class="line">  0.6f, 0.0f, 0.5f,   <span class="comment">// vel_x, vel_y, omega_z (rad/s)</span></div>
+<div class="line">  0.00f, 0.02f, 0.0f, <span class="comment">// delta_body_h, delta_foot_h, delta_max_speed</span></div>
+<div class="line">  <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(RBQ_API::Status::GAIT_IDs::TROTTING), <span class="keyword">true</span>);</div>
+<div class="ttc" id="aclassRBQ__API_html"><div class="ttname"><a href="classRBQ__API.html">RBQ_API</a></div><div class="ttdef"><b>Definition:</b> Api.h:16</div></div>
+<div class="ttc" id="agroup__MotionAPI_html_ga361fb2db86c66e80d181a782ef58e73e"><div class="ttname"><a href="group__MotionAPI.html#ga361fb2db86c66e80d181a782ef58e73e">RBQ_API::Motion::setHighLevelCMD</a></div><div class="ttdeci">int setHighLevelCMD(const float &amp;roll, const float &amp;pitch, const float &amp;yaw, const float &amp;vel_x, const float &amp;vel_y, const float &amp;omega_z, const float &amp;delta_body_h, const float &amp;delta_foot_h, const float &amp;delta_max_speed, const int &amp;gait_id, const bool &amp;gaitTransition)</div><div class="ttdoc">High-level command for robot control whose meaning and valid ranges depend on the gait.</div></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">roll</td><td>Roll command [rad]. Used in STANDING. </td></tr>
+    <tr><td class="paramname">pitch</td><td>Pitch command [rad]. Used in STANDING; also used in TROTTING to set body pitch. </td></tr>
+    <tr><td class="paramname">yaw</td><td>Yaw command [rad]. Used in STANDING (twist). </td></tr>
+    <tr><td class="paramname">vel_x</td><td>Forward speed [m/s]. Used in locomotion gaits as listed above. </td></tr>
+    <tr><td class="paramname">vel_y</td><td>Lateral speed [m/s]. Used in locomotion gaits as listed above. </td></tr>
+    <tr><td class="paramname">omega_z</td><td>Yaw rate [rad/s]. Used in locomotion gaits as listed above. </td></tr>
+    <tr><td class="paramname">delta_body_h</td><td>Body height offset from default [m]. Used in STANDING, TROTTING. </td></tr>
+    <tr><td class="paramname">delta_foot_h</td><td>Swing foot lift offset [m]. Used in TROTTING. </td></tr>
+    <tr><td class="paramname">delta_max_speed</td><td>Max speed delta (unused unless specified for a gait). </td></tr>
+    <tr><td class="paramname">gait_id</td><td>Target gait (see <a class="el" href="group__StatusAPI.html#ga5d47a24243dcbd049f98339c06ef1aa2" title="Enumeration of gait state identifiers.">RBQ_API::Status::GAIT_IDs</a>). </td></tr>
+    <tr><td class="paramname">gaitTransition</td><td>If true, transition to gait_id first, then apply the command.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns 1 if the command was sent successfully. </dd></dl>
+
+</div>
+</div>
 <a id="gaa1e74e3e8b20d1b560e33a78665448e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa1e74e3e8b20d1b560e33a78665448e0">&#9670;&nbsp;</a></span>stairs()</h2>
 
@@ -387,6 +521,30 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <p>Switches to walking mode with dynamic locomotion control. </p>
 <p>Enables forward/backward, lateral, and rotational walking via the HighLevelControl API. Use <a class="el" href="group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5" title="Updates walking parameters such as body height, speed, and foot lift height.">parametersUpdate()</a> to adjust body height, maximum speed, and foot lift height.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__MotionAPI.html#ga1dd716e567cfe205484b8ee5e5538ab5" title="Updates walking parameters such as body height, speed, and foot lift height.">parametersUpdate()</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga635aacf3656c6d47fd082868a59039b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga635aacf3656c6d47fd082868a59039b9">&#9670;&nbsp;</a></span>zmpCalibrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RBQ_API::Motion::zmpCalibrate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calibrates the Center of Mass (CoM) offset used during walking. </p>
+<p>Searches for the CoM position along the robot's forward/backward axis (X-axis only) to improve walking stability.</p>
+<p>Prerequisite:</p><ul>
+<li>Call <a class="el" href="group__MotionAPI.html#ga3efa790ef654d68f70d53f42452c1de8" title="Transitions to a standing posture using dynamic control.">stand()</a> first so the robot is in the standing gait (gait_id: STANDING = 1).</li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__MotionAPI.html#ga3efa790ef654d68f70d53f42452c1de8" title="Transitions to a standing posture using dynamic control.">stand()</a> </dd></dl>
 
 </div>
 </div>

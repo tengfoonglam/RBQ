@@ -73,7 +73,15 @@ public:
     static Eigen::Matrix3f getJacobian(const int lnum, // 0:HR 1:HL 2:FR 3:FL
                                 const Eigen::Vector3f &joint_ang);
 
+    static Eigen::Matrix3f getJacobian2(const int lnum,
+                                        const Eigen::Vector3f &joint_ang);
+
+
     static Eigen::Matrix3f getJacobian(const int lnum, // 0:HR 1:HL 2:FR 3:FL
+                                const Eigen::Matrix3f &body_rot,
+                                const Eigen::Vector3f &joint_ang);
+
+    static Eigen::Matrix3f getJacobian2(const int lnum, // 0:HR 1:HL 2:FR 3:FL
                                 const Eigen::Matrix3f &body_rot,
                                 const Eigen::Vector3f &joint_ang);
 
@@ -112,11 +120,30 @@ public:
                                     const Eigen::Vector3f &joint_ang,
                                     const Eigen::Vector3f &joint_speed);
 
+    static Eigen::Vector3f getFootVelocity2(int lnum,
+                                            const Eigen::Vector3f &joint_ang,
+                                            const Eigen::Vector3f &joint_speed);
+    static Eigen::Vector3f getFootVelocity2(int lnum,
+                                    const Eigen::Matrix3f &body_rot,
+                                    const Eigen::Vector3f &W_ang_vel,
+                                    const Eigen::Vector3f &joint_ang,
+                                    const Eigen::Vector3f &joint_speed);
+
     static Eigen::Vector3f getIMU2FootPosition(int lnum,
                                         const Eigen::Matrix3f &body_rot,
                                         const Eigen::Vector3f &joint_ang);
 
     static Eigen::Vector3f getIMU2FootVelocity(int lnum,
+                                        const Eigen::Matrix3f &body_rot,
+                                        const Eigen::Vector3f &W_ang_vel,
+                                        const Eigen::Vector3f &joint_ang,
+                                        const Eigen::Vector3f &joint_speed);
+
+    static Eigen::Vector3f getIMU2FootPosition2(int lnum,
+                                        const Eigen::Matrix3f &body_rot,
+                                        const Eigen::Vector3f &joint_ang);
+
+    static Eigen::Vector3f getIMU2FootVelocity2(int lnum,
                                         const Eigen::Matrix3f &body_rot,
                                         const Eigen::Vector3f &W_ang_vel,
                                         const Eigen::Vector3f &joint_ang,

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['docking_5fstate_296',['DOCKING_STATE',['../group__StatusAPI.html#gacafa98314bd35271aae9cd7e14cf9b19',1,'RBQ_API::Status']]]
+  ['docking_5fstates_336',['DOCKING_STATEs',['../group__StatusAPI.html#ga058b858f27b372738d249a12157d75a4',1,'RBQ_API::Status']]]
 ];
