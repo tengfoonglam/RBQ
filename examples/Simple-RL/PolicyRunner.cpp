@@ -245,7 +245,3 @@ std::vector<float> PolicyRunner::compute_policy() {
         return std::vector<float>(NUM_JOINTS, 0.0f);
     }
 }
-
-
-
-

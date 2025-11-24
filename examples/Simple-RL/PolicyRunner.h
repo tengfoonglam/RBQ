@@ -2,13 +2,15 @@
 #define POLICYRUNNER_H
 
 #include <iostream>
+#include <fstream>
+#include <algorithm>
+
 #include <vector>
 #include <array>
 #include <memory>
 #include <cmath>
-#include <fstream>
 #include <filesystem>
-#include <algorithm> 
+
 #include <Eigen/Dense>
 #include <onnxruntime_cxx_api.h>
 

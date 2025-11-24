@@ -2,13 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(Simple-RL LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -ffunction-sections -fdata-sections")
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,--gc-sections -s")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
-
-add_executable(${PROJECT_NAME} main.cpp JointControl.h PolicyRunner.h PolicyRunner.cpp)
+add_executable(${PROJECT_NAME} main.cpp PolicyRunner.h PolicyRunner.cpp)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     BUILD_WITH_INSTALL_RPATH TRUE
@@ -22,9 +16,9 @@ target_link_libraries(${PROJECT_NAME}
     rt
     Eigen3::Eigen
     ${RCL_LIBRARY}
-    Qt5::Core
-    Qt5::Network
     onnxruntime::onnxruntime
+    CycloneDDS-CXX::ddscxx
+    CycloneDDS::ddsc
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -38,9 +32,11 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 get_target_property(ONNX_RUNTIME_LOCATION onnxruntime::onnxruntime IMPORTED_LOCATION_RELEASE)
-
+install(FILES ${ONNX_RUNTIME_LOCATION}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
     APP_NAME=\"${PROJECT_NAME}\"
 )
-

@@ -698,6 +698,143 @@ public:
     };
     Status status{this};
 
+    struct Imu {
+        /**
+         * @defgroup IMUSensorAPI IMU Sensor API
+         * @brief APIs for accessing IMU sensor data such as orientation, angular velocity, and linear acceleration.
+         *
+         * These functions provide access to the robot's onboard IMU sensor data in different representations,
+         * including quaternion, roll-pitch-yaw (RPY), angular velocity (gyro), and linear acceleration.
+         *
+         * ### Robot Coordinate System
+         * - +X: Forward (facing direction of the robot)
+         * - +Y: Left
+         * - +Z: Upward
+         *
+         * ### IMU Sensor Placement
+         * The IMU sensor is located with an offset from the robot's body frame center:
+         * - Offset (in meters): (0.00665, 0.0, -0.0404)
+         *
+         * All IMU-related data is expressed in this coordinate frame and reflects measurements from this fixed sensor position.
+         */
+
+        Imu(RBQ_API* parent) : m_parent(parent) {}
+
+        /**
+         * @brief Returns the IMU orientation as a quaternion (w, x, y, z).
+         *
+         * @param out_imu_ Reference to an Eigen::Quaternion<float> that will be filled with orientation data.
+         * @return Returns 1 on success.
+         *
+         * @ingroup IMUSensorAPI
+         */
+        int getQuaternion(Eigen::Quaternion<float> &out_imu_);
+
+        Eigen::Quaternion<float> getQuaternion(int &result_);
+
+        inline Eigen::Quaternion<float> getQuaternion() {
+            int dummy;
+            return getQuaternion(dummy);
+        }
+
+        /**
+         * @brief Returns the IMU orientation as roll, pitch, and yaw angles (in radians).
+         *
+         * The angles are computed from the quaternion using the Z-Y-X Euler angle convention (yaw → pitch → roll).
+         * The output ranges are:
+         * - Roll  ∈ [-π, π]
+         * - Pitch ∈ [-π/2, π/2]
+         * - Yaw   ∈ [-π, π]
+         *
+         * @param out_rpy_ Reference to a 3D vector that will be filled with (roll, pitch, yaw) in radians.
+         * @return Returns 1 on success.
+         *
+         * @ingroup IMUSensorAPI
+         */
+        int getRPY(Eigen::Matrix<float, 3, 1> &out_rpy_);
+
+        Eigen::Matrix<float,3,1> getRPY(int &result);
+
+        inline Eigen::Matrix<float,3,1> getRPY() {
+            int dummy;
+            return getRPY(dummy);
+        }
+
+        /**
+         * @brief Returns the IMU angular velocity (gyroscope) in rad/s.
+         *
+         * The output is a 3D vector where each component represents the angular velocity (rate of rotation)
+         * around the corresponding axis of the robot:
+         * - X: roll rate
+         * - Y: pitch rate
+         * - Z: yaw rate
+         *
+         * All values are in radians per second (rad/s).
+         * The measurement range is ±2000 deg/s(±34.9 rad/s).
+         *
+         * @param out_gyro_ Reference to an Eigen::Matrix<float, 3, 1> to store angular velocity.
+         * @return Returns 1 on success.
+         *
+         * @ingroup IMUSensorAPI
+         */
+        int getGyro(Eigen::Matrix<float, 3, 1> &out_gyro_);
+
+        Eigen::Matrix<float,3,1> getGyro(int &result);
+
+        inline Eigen::Matrix<float,3,1> getGyro() {
+            int dummy;
+            return getGyro(dummy);
+        }
+
+        /**
+         * @brief Returns the IMU linear acceleration in m/s².
+         *
+         * The output is a 3D vector where each component represents the linear acceleration along
+         * the corresponding axis of the robot:
+         * - X: forward/backward acceleration
+         * - Y: lateral (left/right) acceleration
+         * - Z: vertical (up/down) acceleration
+         *
+         * All values are expressed in meters per second squared (m/s²).
+         * The typical measurement range is ±16g (±156.96 m/s²).
+         *
+         * @param out_acc_ Reference to an Eigen::Matrix<float, 3, 1> to store acceleration data.
+         * @return Returns 1 on success.
+         *
+         * @ingroup IMUSensorAPI
+         */
+        int getAcc(Eigen::Matrix<float, 3, 1> &out_acc_);
+
+        Eigen::Matrix<float,3,1> getAcc(int &result);
+
+        inline Eigen::Matrix<float,3,1> getAcc() {
+            int dummy;
+            return getAcc(dummy);
+        }
+
+        int InitializeImu();
+
+        /**
+         * @brief Returns the connection status of the IMU sensor.
+         *
+         * Retrieves whether the IMU sensor is currently connected.
+         *
+         * @param result, Reference to store the return result. 1 on success, -1 if shared memory is not accessible.
+         * @return return connection status (true if connected).
+         * @ingroup IMUSensorAPI
+         */
+        bool getConnectionStatus(int &result);
+
+        inline bool getConnectionStatus() {
+            int dummy;
+            return getConnectionStatus(dummy);
+        }
+
+    private:
+        RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
+    };
+    Imu imu{this};
+
     struct Joint {
         /**
          * @defgroup JointControlAPI Joint Control API
@@ -1732,143 +1869,6 @@ public:
 #endif
     };
     Joint joint{this};
-
-    struct Imu {
-        /**
-         * @defgroup IMUSensorAPI IMU Sensor API
-         * @brief APIs for accessing IMU sensor data such as orientation, angular velocity, and linear acceleration.
-         *
-         * These functions provide access to the robot's onboard IMU sensor data in different representations,
-         * including quaternion, roll-pitch-yaw (RPY), angular velocity (gyro), and linear acceleration.
-         *
-         * ### Robot Coordinate System
-         * - +X: Forward (facing direction of the robot)
-         * - +Y: Left
-         * - +Z: Upward
-         *
-         * ### IMU Sensor Placement
-         * The IMU sensor is located with an offset from the robot's body frame center:
-         * - Offset (in meters): (0.00665, 0.0, -0.0404)
-         *
-         * All IMU-related data is expressed in this coordinate frame and reflects measurements from this fixed sensor position.
-         */
-
-        Imu(RBQ_API* parent) : m_parent(parent) {}
-
-        /**
-         * @brief Returns the IMU orientation as a quaternion (w, x, y, z).
-         *
-         * @param out_imu_ Reference to an Eigen::Quaternion<float> that will be filled with orientation data.
-         * @return Returns 1 on success.
-         *
-         * @ingroup IMUSensorAPI
-         */
-        int getQuaternion(Eigen::Quaternion<float> &out_imu_);
-
-        Eigen::Quaternion<float> getQuaternion(int &result_);
-
-        inline Eigen::Quaternion<float> getQuaternion() {
-            int dummy;
-            return getQuaternion(dummy);
-        }
-
-        /**
-         * @brief Returns the IMU orientation as roll, pitch, and yaw angles (in radians).
-         *
-         * The angles are computed from the quaternion using the Z-Y-X Euler angle convention (yaw → pitch → roll).
-         * The output ranges are:
-         * - Roll  ∈ [-π, π]
-         * - Pitch ∈ [-π/2, π/2]
-         * - Yaw   ∈ [-π, π]
-         *
-         * @param out_rpy_ Reference to a 3D vector that will be filled with (roll, pitch, yaw) in radians.
-         * @return Returns 1 on success.
-         *
-         * @ingroup IMUSensorAPI
-         */
-        int getRPY(Eigen::Matrix<float, 3, 1> &out_rpy_);
-
-        Eigen::Matrix<float,3,1> getRPY(int &result);
-
-        inline Eigen::Matrix<float,3,1> getRPY() {
-            int dummy;
-            return getRPY(dummy);
-        }
-
-        /**
-         * @brief Returns the IMU angular velocity (gyroscope) in rad/s.
-         *
-         * The output is a 3D vector where each component represents the angular velocity (rate of rotation)
-         * around the corresponding axis of the robot:
-         * - X: roll rate
-         * - Y: pitch rate
-         * - Z: yaw rate
-         *
-         * All values are in radians per second (rad/s).
-         * The measurement range is ±2000 deg/s(±34.9 rad/s).
-         *
-         * @param out_gyro_ Reference to an Eigen::Matrix<float, 3, 1> to store angular velocity.
-         * @return Returns 1 on success.
-         *
-         * @ingroup IMUSensorAPI
-         */
-        int getGyro(Eigen::Matrix<float, 3, 1> &out_gyro_);
-
-        Eigen::Matrix<float,3,1> getGyro(int &result);
-
-        inline Eigen::Matrix<float,3,1> getGyro() {
-            int dummy;
-            return getGyro(dummy);
-        }
-
-        /**
-         * @brief Returns the IMU linear acceleration in m/s².
-         *
-         * The output is a 3D vector where each component represents the linear acceleration along
-         * the corresponding axis of the robot:
-         * - X: forward/backward acceleration
-         * - Y: lateral (left/right) acceleration
-         * - Z: vertical (up/down) acceleration
-         *
-         * All values are expressed in meters per second squared (m/s²).
-         * The typical measurement range is ±16g (±156.96 m/s²).
-         *
-         * @param out_acc_ Reference to an Eigen::Matrix<float, 3, 1> to store acceleration data.
-         * @return Returns 1 on success.
-         *
-         * @ingroup IMUSensorAPI
-         */
-        int getAcc(Eigen::Matrix<float, 3, 1> &out_acc_);
-
-        Eigen::Matrix<float,3,1> getAcc(int &result);
-
-        inline Eigen::Matrix<float,3,1> getAcc() {
-            int dummy;
-            return getAcc(dummy);
-        }
-
-        int InitializeImu();
-
-        /**
-         * @brief Returns the connection status of the IMU sensor.
-         *
-         * Retrieves whether the IMU sensor is currently connected.
-         *
-         * @param result, Reference to store the return result. 1 on success, -1 if shared memory is not accessible.
-         * @return return connection status (true if connected).
-         * @ingroup IMUSensorAPI
-         */
-        bool getConnectionStatus(int &result);
-
-        inline bool getConnectionStatus() {
-            int dummy;
-            return getConnectionStatus(dummy);
-        }
-
-    private:
-        RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
-    };
-    Imu imu{this};
 
     struct Gamepad {
         /**
