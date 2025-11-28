@@ -2559,7 +2559,7 @@ public:
     private:
         RBQ_API* m_parent = nullptr;
         rbq::Parameters m_data;
-        bool m_dds = true;
+        bool m_dds = false;
     };
     Parameters parameters{this};
 
@@ -2618,8 +2618,8 @@ private:
     MOTION_REF          _getMotionRef() const;
 
     bool m_shm          = true;
-    bool m_shm_ref_get  = false;
-    bool m_shm_ref_set  = false;
+    bool m_shm_ref_get  = true;
+    bool m_shm_ref_set  = true;
 
     int m_processId = -1;
 
