@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamepad_234',['Gamepad',['../structRBQ__API_1_1Gamepad.html',1,'RBQ_API']]]
+  ['armjoint_249',['ArmJoint',['../structRBQ__API_1_1ArmJoint.html',1,'RBQ_API']]]
 ];

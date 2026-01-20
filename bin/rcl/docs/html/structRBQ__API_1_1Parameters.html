@@ -81,12 +81,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a20954ba662ce0916fb4758080cec87b4"><td class="memItemLeft" align="right" valign="top"><a id="a20954ba662ce0916fb4758080cec87b4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td></tr>
 <tr class="separator:a20954ba662ce0916fb4758080cec87b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfa7f0ca179136954e7858a50df10b14"><td class="memItemLeft" align="right" valign="top"><a id="acfa7f0ca179136954e7858a50df10b14"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isValid</b> ()</td></tr>
+<tr class="separator:acfa7f0ca179136954e7858a50df10b14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c4ccc19ff1c70d1bd74ec80a073a193"><td class="memItemLeft" align="right" valign="top"><a id="a2c4ccc19ff1c70d1bd74ec80a073a193"></a>
 Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>imuOffset</b> ()</td></tr>
 <tr class="separator:a2c4ccc19ff1c70d1bd74ec80a073a193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a9f4a8a6350e380dc1b6edfc61b923e"><td class="memItemLeft" align="right" valign="top"><a id="a6a9f4a8a6350e380dc1b6edfc61b923e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>totalMass</b> ()</td></tr>
-<tr class="separator:a6a9f4a8a6350e380dc1b6edfc61b923e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae10db97ac11c63365e310e1ec97841a8"><td class="memItemLeft" align="right" valign="top"><a id="ae10db97ac11c63365e310e1ec97841a8"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>bodyMass</b> ()</td></tr>
 <tr class="separator:ae10db97ac11c63365e310e1ec97841a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,6 +99,9 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>thighMass</b> ()</t
 <tr class="memitem:a3b2f794cd10197d23fd0e497dd9e8914"><td class="memItemLeft" align="right" valign="top"><a id="a3b2f794cd10197d23fd0e497dd9e8914"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>calfMass</b> ()</td></tr>
 <tr class="separator:a3b2f794cd10197d23fd0e497dd9e8914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a9f4a8a6350e380dc1b6edfc61b923e"><td class="memItemLeft" align="right" valign="top"><a id="a6a9f4a8a6350e380dc1b6edfc61b923e"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>totalMass</b> ()</td></tr>
+<tr class="separator:a6a9f4a8a6350e380dc1b6edfc61b923e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf2d4de7c1c2c8c85cfee9b887c5d781"><td class="memItemLeft" align="right" valign="top"><a id="abf2d4de7c1c2c8c85cfee9b887c5d781"></a>
 Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>bodyCoM</b> ()</td></tr>
 <tr class="separator:abf2d4de7c1c2c8c85cfee9b887c5d781"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,12 +138,45 @@ Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>calfOffset
 <tr class="memitem:a41fce8e9e70cf0bfaca1afb1a8703370"><td class="memItemLeft" align="right" valign="top"><a id="a41fce8e9e70cf0bfaca1afb1a8703370"></a>
 Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>footOffset</b> (const int &amp;leg_id)</td></tr>
 <tr class="separator:a41fce8e9e70cf0bfaca1afb1a8703370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2952758cde7367f808c2d29be8009fd"><td class="memItemLeft" align="right" valign="top"><a id="ab2952758cde7367f808c2d29be8009fd"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>initialJointPos</b> (const int &amp;joint_id)</td></tr>
-<tr class="separator:ab2952758cde7367f808c2d29be8009fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acca56fd6fdbb7d082aab9c8c69698ac8"><td class="memItemLeft" align="right" valign="top"><a id="acca56fd6fdbb7d082aab9c8c69698ac8"></a>
-Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><b>actuatorInertia</b> ()</td></tr>
-<tr class="separator:acca56fd6fdbb7d082aab9c8c69698ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b8256c7eaf8049dc67366cdf76ad6b0"><td class="memItemLeft" align="right" valign="top"><a id="a1b8256c7eaf8049dc67366cdf76ad6b0"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>footRadius</b> ()</td></tr>
+<tr class="separator:a1b8256c7eaf8049dc67366cdf76ad6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa684e6947577c715c2033965ef0afdad"><td class="memItemLeft" align="right" valign="top"><a id="aa684e6947577c715c2033965ef0afdad"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>actuatorInertia</b> (const int &amp;joint_id)</td></tr>
+<tr class="separator:aa684e6947577c715c2033965ef0afdad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac35856d29237151399a5f76578d356ca"><td class="memItemLeft" align="right" valign="top"><a id="ac35856d29237151399a5f76578d356ca"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>jointTorqueLimit</b> (const int &amp;joint_id)</td></tr>
+<tr class="separator:ac35856d29237151399a5f76578d356ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab631a22632982f6b11e400ad53efa8e"><td class="memItemLeft" align="right" valign="top"><a id="aab631a22632982f6b11e400ad53efa8e"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>currnetSensorR</b> (const int &amp;joint_id)</td></tr>
+<tr class="separator:aab631a22632982f6b11e400ad53efa8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e7d159716cbdc60ebd5f987ddf85d6a"><td class="memItemLeft" align="right" valign="top"><a id="a9e7d159716cbdc60ebd5f987ddf85d6a"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>jointUpperLimit</b> (const int &amp;joint_id)</td></tr>
+<tr class="separator:a9e7d159716cbdc60ebd5f987ddf85d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee4f0d54a322213188edd749afd740d"><td class="memItemLeft" align="right" valign="top"><a id="adee4f0d54a322213188edd749afd740d"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>jointLowerLimit</b> (const int &amp;joint_id)</td></tr>
+<tr class="separator:adee4f0d54a322213188edd749afd740d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac657fff4774ba1d56382f4ae2b28d206"><td class="memItemLeft" align="right" valign="top"><a id="ac657fff4774ba1d56382f4ae2b28d206"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>defaultFootHeight</b> ()</td></tr>
+<tr class="separator:ac657fff4774ba1d56382f4ae2b28d206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88f387adbda46a2b9ef67c898c0ac57f"><td class="memItemLeft" align="right" valign="top"><a id="a88f387adbda46a2b9ef67c898c0ac57f"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>defaultBodyHeight</b> ()</td></tr>
+<tr class="separator:a88f387adbda46a2b9ef67c898c0ac57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f0227667547d85b5ff5f18b15202f36"><td class="memItemLeft" align="right" valign="top"><a id="a2f0227667547d85b5ff5f18b15202f36"></a>
+Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>dockingOffset</b> ()</td></tr>
+<tr class="separator:a2f0227667547d85b5ff5f18b15202f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab754fcf9cc9c2195974044560cd65d"><td class="memItemLeft" align="right" valign="top"><a id="a6ab754fcf9cc9c2195974044560cd65d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxMarkerReqeustCount</b> ()</td></tr>
+<tr class="separator:a6ab754fcf9cc9c2195974044560cd65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5af81b78862a9864686cbc2069a7407"><td class="memItemLeft" align="right" valign="top"><a id="ad5af81b78862a9864686cbc2069a7407"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>maxDockingFailCount</b> ()</td></tr>
+<tr class="separator:ad5af81b78862a9864686cbc2069a7407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad697631f69fe82fe10dd7fcb8f366047"><td class="memItemLeft" align="right" valign="top"><a id="ad697631f69fe82fe10dd7fcb8f366047"></a>
+Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><b>payloadCoM</b> ()</td></tr>
+<tr class="separator:ad697631f69fe82fe10dd7fcb8f366047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79c109bf31ba39a1f92f1ba843882c30"><td class="memItemLeft" align="right" valign="top"><a id="a79c109bf31ba39a1f92f1ba843882c30"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>payloadMass</b> ()</td></tr>
+<tr class="separator:a79c109bf31ba39a1f92f1ba843882c30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>/workspace/src/rcl/<a class="el" href="Api_8h_source.html">Api.h</a></li>

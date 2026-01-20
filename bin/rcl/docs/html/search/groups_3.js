@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['joint_20control_20api_462',['Joint Control API',['../group__JointControlAPI.html',1,'']]]
+  ['imu_20sensor_20api_491',['IMU Sensor API',['../group__IMUSensorAPI.html',1,'']]]
 ];

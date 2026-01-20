@@ -228,6 +228,9 @@ struct PointPositions_t
     float getAnswerZ(const int &_id) {
         return (-1 < _id && _id < NUM_OF_POINTS) ? positions.at(_id).z() : 0;
     }
+    Eigen::Vector3f getAnswer(const int &_id) {
+        return (-1 < _id && _id < NUM_OF_POINTS) ? positions.at(_id) : Eigen::Vector3f::Zero();
+    }
     void setQuery(const int &_id, const Eigen::Vector3f &_pos) {
         if (-1 < _id && _id < NUM_OF_POINTS) {
             status[_id] = -1;
@@ -251,6 +254,7 @@ struct RobotPoseCombined_t
 {
     RobotPose_t pose;
     PointPositions_t query;
+    int queryMode = 0;
     ///
     /// \brief mode
     /// 0: global frame accumulation & grid update for each sensors

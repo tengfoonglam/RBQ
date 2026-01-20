@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['power_20control_20api_463',['Power Control API',['../group__PowerControlAPI.html',1,'']]],
-  ['ptz_20camera_20api_464',['PTZ Camera API',['../group__PtzCamera.html',1,'']]]
+  ['joint_20control_20api_492',['Joint Control API',['../group__JointControlAPI.html',1,'']]]
 ];

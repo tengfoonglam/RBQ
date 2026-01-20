@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['simulator_20api_465',['Simulator API',['../group__SimulatorAPI.html',1,'']]],
-  ['state_20estimation_20api_466',['State Estimation API',['../group__StateEstimationAPI.html',1,'']]],
-  ['status_20api_467',['Status API',['../group__StatusAPI.html',1,'']]]
+  ['power_20control_20api_493',['Power Control API',['../group__PowerControlAPI.html',1,'']]],
+  ['ptz_20camera_20api_494',['PTZ Camera API',['../group__PtzCamera.html',1,'']]]
 ];

@@ -70,14 +70,24 @@ $(function() {
 <li>getAcc()
 : <a class="el" href="group__IMUSensorAPI.html#gabe2711231941a993db81be44b9200df2">RBQ_API::Imu</a>
 </li>
+<li>getArmJointPos()
+: <a class="el" href="group__SimulatorAPI.html#ga70ec68c73904d17108eeba14470fd735">RBQ_API::Simulator</a>
+</li>
+<li>getArmJointTorque()
+: <a class="el" href="group__SimulatorAPI.html#gab6e1c78fa14959379306636a3a80cd84">RBQ_API::Simulator</a>
+</li>
+<li>getArmJointVel()
+: <a class="el" href="group__SimulatorAPI.html#ga3f0bc3501bc69cccc59e65af15af675c">RBQ_API::Simulator</a>
+</li>
 <li>getBatteryLoadCurrent()
-: <a class="el" href="group__PowerControlAPI.html#ga89a5a5b298929f546dfe24b70d115132">RBQ_API::Power</a>
+: <a class="el" href="group__PowerControlAPI.html#gaf8ad8b5b73439336a698e174ffc738fc">RBQ_API::Power</a>
 </li>
 <li>getBatteryVoltage()
-: <a class="el" href="group__PowerControlAPI.html#ga9690e65a9b81cb7ac9c54810046a4c6f">RBQ_API::Power</a>
+: <a class="el" href="group__PowerControlAPI.html#ga117aa795c1e60e8095ca38e83c8e6e07">RBQ_API::Power</a>
 </li>
 <li>getBoardTemperature()
-: <a class="el" href="group__JointControlAPI.html#gadd5c47add71af31b64e831d9f5e79466">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga01c83fe36d84a992d1758a3f67736a0f">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#gace4c50eb6d4302cb58ed5db942c04497">RBQ_API::Joint</a>
 </li>
 <li>getBodyPos()
 : <a class="el" href="group__SimulatorAPI.html#ga256d165b4d010fd7c7a05b02f280ff6a">RBQ_API::Simulator</a>
@@ -131,16 +141,20 @@ $(function() {
 : <a class="el" href="group__StateEstimationAPI.html#ga4b44e9d16dfebf587f10f51a374f0dd9">RBQ_API::StateEstimation</a>
 </li>
 <li>getGainKd()
-: <a class="el" href="group__JointControlAPI.html#gac71d6e76aef9daf10eb29c34abbfc561">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gad2109eb1303f1350734748fccbdb0aef">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga761bf621f8bf1917def83f32c0110729">RBQ_API::Joint</a>
 </li>
 <li>getGainKdRef()
-: <a class="el" href="group__JointControlAPI.html#ga0ce994fc66c92897256f4bf463700226">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gae2a213bc71705043d8c19b35b590e273">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#gafd4f646b38f51773e8e62a66515c7dc0">RBQ_API::Joint</a>
 </li>
 <li>getGainKp()
-: <a class="el" href="group__JointControlAPI.html#ga7ff7a2eafc0fd0c729053b6de9af14f7">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga836f1e747d30063aef7cc67184b7b5ec">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga72c9be82e96a75173466b6654dd8981e">RBQ_API::Joint</a>
 </li>
 <li>getGainKpRef()
-: <a class="el" href="group__JointControlAPI.html#ga12d4b421f9ae1074b67354e8fd3786ab">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga5e3bdc1d2bfa6a2a534a336dce1c48bc">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga214f31a5dc5903bda1f6c9a2e6f34d35">RBQ_API::Joint</a>
 </li>
 <li>getGyro()
 : <a class="el" href="group__IMUSensorAPI.html#ga61feacab46250d3dfb7bd5aa3ee90b4d">RBQ_API::Imu</a>
@@ -170,43 +184,51 @@ $(function() {
 : <a class="el" href="group__GamepadAPI.html#ga3c62ca53ddc39213d418f2437c1d88ea">RBQ_API::Gamepad</a>
 </li>
 <li>getMotionOwner()
-: <a class="el" href="group__JointControlAPI.html#gabb35bb00851e34961552452347e45b56">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga4b444fb6f680dd853f00a60ba9bd2a00">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#gabb35bb00851e34961552452347e45b56">RBQ_API::Joint</a>
 </li>
 <li>getMotorCommunicationState()
 : <a class="el" href="group__JointControlAPI.html#gabb1f6d5f987d94f21b19f6df13410c77">RBQ_API::Joint</a>
 </li>
 <li>getMotorCur()
-: <a class="el" href="group__JointControlAPI.html#gac212d65be5478f3d6a4b807d6641e521">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga42a1e014bd9ed3254bb644bd376d992b">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#gac212d65be5478f3d6a4b807d6641e521">RBQ_API::Joint</a>
 </li>
 <li>getMotorPos()
-: <a class="el" href="group__JointControlAPI.html#gac09f698e98ee15a4f2f23bfc48a7d01d">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gabf6aca7591fae14c3360aff2220888af">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#gac09f698e98ee15a4f2f23bfc48a7d01d">RBQ_API::Joint</a>
 </li>
 <li>getMotorStatus()
-: <a class="el" href="group__JointControlAPI.html#gaca96b56159a31f7765ea946919ae5435">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gab145c675b609d143c04d07f06f55fcd2">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga51d033c52569d63cc122a922ba581ef5">RBQ_API::Joint</a>
 </li>
 <li>getMotorTemperature()
-: <a class="el" href="group__JointControlAPI.html#ga944776e82c799bac5a260f151236f1bb">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gabd6b29127f151d88104a8acf9a913f41">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga266962a358d34f8456f056ad0f778d69">RBQ_API::Joint</a>
 </li>
 <li>getMotorVel()
-: <a class="el" href="group__JointControlAPI.html#ga0fb4c04b121dc02234f4152b37c45a66">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gadae5d38fb98474cd6c74feb57656eb13">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga317b5d9c5065ae5f2fbe3da27d0d3d6e">RBQ_API::Joint</a>
 </li>
 <li>getPanTiltZoom()
 : <a class="el" href="group__PtzCamera.html#gacd61a7025f3b625c7b46e979bc8d7db5">RBQ_API::PtzCamera</a>
 </li>
 <li>getPortCurrent()
-: <a class="el" href="group__PowerControlAPI.html#ga877bc1029f0610ab03c28af2d56dfb7e">RBQ_API::Power</a>
+: <a class="el" href="group__PowerControlAPI.html#ga428125ed1f34dbc3963ba1f0d43a563e">RBQ_API::Power</a>
 </li>
 <li>getPortState()
 : <a class="el" href="group__PowerControlAPI.html#gafe927071b6b34f59d3ab19e25f20ff26">RBQ_API::Power</a>
 </li>
 <li>getPortVoltage()
-: <a class="el" href="group__PowerControlAPI.html#gac89b2ee9f88f3875c2d5d176265f1c81">RBQ_API::Power</a>
+: <a class="el" href="group__PowerControlAPI.html#ga572b6a7671a79e449ddcd5f229e175d7">RBQ_API::Power</a>
 </li>
 <li>getPos()
-: <a class="el" href="group__JointControlAPI.html#ga3c4d21c33a4ab8d5c0c92755aee91fec">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga7b8905e1cf5f6f68cbd5347a0675eb3a">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga63210a7c051ac07ab69a4232d76526e8">RBQ_API::Joint</a>
 </li>
 <li>getPosRef()
-: <a class="el" href="group__JointControlAPI.html#ga72b0b69b901b76c4c7d5fc238d94cc67">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#ga449b20cc2f19d43d9bf1a8d0fee42d75">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga72b0b69b901b76c4c7d5fc238d94cc67">RBQ_API::Joint</a>
 </li>
 <li>getQuaternion()
 : <a class="el" href="group__IMUSensorAPI.html#gaa71b68ed30911d2eb37fdb894436be0b">RBQ_API::Imu</a>
@@ -230,13 +252,16 @@ $(function() {
 : <a class="el" href="group__SimulatorAPI.html#gaa16491a26b1cad206f636ba0472ea4b6">RBQ_API::Simulator</a>
 </li>
 <li>getTorque()
-: <a class="el" href="group__JointControlAPI.html#gaba681ba6696ca947d7a8e7a318916184">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gae779b1e715bcb7e90f2ce2921f9d089b">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga693bb7565067acee18e018d1415e347e">RBQ_API::Joint</a>
 </li>
 <li>getTorqueRef()
-: <a class="el" href="group__JointControlAPI.html#ga31de5e9a56ebb6b5b4d474549b06a426">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gae497bb34ddc2b244a858bff2a25fc1f8">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga406e784a43b999c3b64ea04e3160b316">RBQ_API::Joint</a>
 </li>
 <li>getVel()
-: <a class="el" href="group__JointControlAPI.html#ga3db85c0211f0c94bbf89505132b1f1a0">RBQ_API::Joint</a>
+: <a class="el" href="group__ArmJointControlAPI.html#gadd680de7b15e785d156b95371578e6e3">RBQ_API::ArmJoint</a>
+, <a class="el" href="group__JointControlAPI.html#ga3db85c0211f0c94bbf89505132b1f1a0">RBQ_API::Joint</a>
 </li>
 </ul>
 </div><!-- contents -->

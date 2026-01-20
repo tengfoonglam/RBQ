@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['imu_20sensor_20api_461',['IMU Sensor API',['../group__IMUSensorAPI.html',1,'']]]
+  ['high_2dlevel_20motion_20command_20api_490',['High-Level Motion Command API',['../group__MotionAPI.html',1,'']]]
 ];

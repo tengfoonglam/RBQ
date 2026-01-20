@@ -9,6 +9,9 @@ var searchData=
   ['ar_5fleft_6',['AR_LEFT',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441a2d8d2928e34e1f30d82558f504936356',1,'RBQ_API::Gamepad']]],
   ['ar_5fright_7',['AR_RIGHT',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441aea134f4224c124a9c4f6559326a815c7',1,'RBQ_API::Gamepad']]],
   ['ar_5fup_8',['AR_UP',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441a3d80ecd980349f5694a2539a6520b4d3',1,'RBQ_API::Gamepad']]],
-  ['audio_5f5v_9',['Audio_5V',['../group__PowerControlAPI.html#gga4edab5d25b650cec5606af9bb0b6535fa16116b4fe3256b958bb6a3e73e7ccb57',1,'RBQ_API::Power']]],
-  ['autostart_10',['autoStart',['../group__MotionAPI.html#gadaafefd212ddeecd66c8804780058a18',1,'RBQ_API::Motion']]]
+  ['arm_20joint_20control_20api_9',['Arm Joint Control API',['../group__ArmJointControlAPI.html',1,'']]],
+  ['armjoint_10',['ArmJoint',['../structRBQ__API_1_1ArmJoint.html',1,'RBQ_API']]],
+  ['armjointid_11',['ArmJointID',['../group__ArmJointControlAPI.html#gab32dd94c6d771de9a900f7003e8e1375',1,'RBQ_API::ArmJoint']]],
+  ['audio_5f5v_12',['Audio_5V',['../group__PowerControlAPI.html#gga4edab5d25b650cec5606af9bb0b6535fa16116b4fe3256b958bb6a3e73e7ccb57',1,'RBQ_API::Power']]],
+  ['autostart_13',['autoStart',['../group__MotionAPI.html#gadaafefd212ddeecd66c8804780058a18',1,'RBQ_API::Motion']]]
 ];

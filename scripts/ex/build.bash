@@ -72,6 +72,7 @@ if ! $USE_CACHE || [ ! -f "$BUILD_DIR/CMakeCache.txt" ]; then
     CMAKE_PREFIX_PATH_STRING+=";$DDS_DIR/lib/cmake"
     CMAKE_PREFIX_PATH_STRING+=";$DDS_CXX_DIR/lib/cmake"
     CMAKE_PREFIX_PATH_STRING+=";$ONNX_DIR/lib/cmake"
+    CMAKE_PREFIX_PATH_STRING+=";$JSON_DIR/share/cmake"
 
     CMAKE_OPTIONS+=("-DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH_STRING")
 

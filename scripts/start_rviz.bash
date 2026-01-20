@@ -2,6 +2,7 @@
 
 APP_NAME="rbq_description"
 SIM_MODE=false
+ROS2_DIR="ros2"
 
 print_help() {
     echo "Usage: bash scripts/start_vision.bash [OPTIONS]"
@@ -23,22 +24,20 @@ if [ "$EUID" -eq 0 ]; then
     sleep 10
     exit 1
 fi
-
-# Check if already running
 if pgrep -x $APP_NAME > /dev/null; then
     echo "$APP_NAME is already running. Please close it before starting a new instance."
     sleep 10
     exit 1
 fi
 
-function set_terminal_title {
-    echo -ne "\033]0;$1\007"
-}
-set_terminal_title "$APP_NAME"
-source ros2/install/setup.bash
-source /opt/ros/humble/setup.bash
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 export CYCLONEDDS_URI=file://$PWD/configs/cyclonedds_ros2.xml
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+source /opt/ros/humble/setup.bash
+
+cd $ROS2_DIR
+colcon build --symlink-install
+source install/setup.bash
+echo -ne "\033]0;$APP_NAME\007"
 
 while true; do
     pid=$(pgrep -x "$APP_NAME")

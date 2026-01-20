@@ -9,8 +9,14 @@
 #include <ctime>
 #include <filesystem>
 #include <mutex>
-#include <atomic>
 #include <algorithm>
+#include <thread>
+#include <fcntl.h>
+#include <sys/select.h>
+#include <chrono>
+#include <map>
+#include <vector>
+#include <fstream>
 
 #include <Eigen/Dense>
 
@@ -19,17 +25,21 @@
 #include "rcl/JointControl.h"
 #include "rcl/Policy.hpp"
 
+#include "nlohmann/json.hpp"
+
 constexpr float kR2D = 57.295779513f;
 constexpr float kD2R = 0.0174532925f;
-constexpr long kControlPeriodUs = kControlPeriodMs * 1000;
 
-// Command velocity limits (m/s for linear, rad/s for angular)
-constexpr float kMaxLinVel = 1.0f;      // Maximum forward/backward velocity
-constexpr float kMaxLatVel = 0.4f;     // Maximum lateral velocity
-constexpr float kMaxAngVel = 1.0f;     // Maximum yaw angular velocity
-constexpr float kVelStep = 0.1f;       // Velocity increment per key press
+
 
 struct VelocityCommand {
+    // Command velocity limits (m/s for linear, rad/s for angular)
+    const float kMaxLinVel  = 2.0f;     // Maximum forward/backward velocity
+    const float kMaxLatVel  = 1.0f;     // Maximum lateral velocity
+    const float kMaxAngVel  = 1.0f;     // Maximum yaw angular velocity
+    const float kVelStep    = 0.05f;    // Velocity increment per update (matches keyboard.py)
+    const float kVelDecay   = 0.95f;    // Velocity decay factor when keys not pressed (matches keyboard.py)
+
     std::mutex mtx;
     float vel_x = 0.0f;      // Forward/backward velocity (m/s)
     float vel_y = 0.0f;      // Lateral velocity (m/s)
@@ -65,27 +75,137 @@ struct VelocityCommand {
         omega_z = std::clamp(omega_z + delta, -kMaxAngVel, kMaxAngVel);
     }
     
+    void resetVelX() {
+        std::lock_guard<std::mutex> lock(mtx);
+        vel_x = 0.0f;
+    }
+    
+    void resetVelY() {
+        std::lock_guard<std::mutex> lock(mtx);
+        vel_y = 0.0f;
+    }
+    
+    void resetOmegaZ() {
+        std::lock_guard<std::mutex> lock(mtx);
+        omega_z = 0.0f;
+    }
+    
+    void applyDecayX() {
+        std::lock_guard<std::mutex> lock(mtx);
+        vel_x *= kVelDecay;
+    }
+    
+    void applyDecayY() {
+        std::lock_guard<std::mutex> lock(mtx);
+        vel_y *= kVelDecay;
+    }
+    
+    void applyDecayZ() {
+        std::lock_guard<std::mutex> lock(mtx);
+        omega_z *= kVelDecay;
+    }
+    
     Eigen::Vector3f get() {
         std::lock_guard<std::mutex> lock(mtx);
         return Eigen::Vector3f(vel_x, vel_y, omega_z);
     }
-    
-    void decay(float factor = 0.95f) {
+};
+
+struct PolicyParams {
+    std::mutex mtx;
+    std::string name;
+    float   dt;
+    float   action_scale;
+    float   KP[12];
+    float   KD[12];
+    int     num_observations;
+    int     num_actions;
+    float   command_ranges[3][2];
+    std::vector<float> default_joint_angles;
+    float   obs_lin_vel_scale;
+    float   obs_ang_vel_scale;
+    float   obs_dof_pos_scale;
+    float   obs_dof_vel_scale;
+    float   clip_observations;
+    float   clip_actions;
+
+    enum ERROR {
+        ERROR_NONE,
+        ERROR_CONFIG_NOT_FOUND,
+        ERROR_CONFIG_READ_FAIL,
+        ERROR_CONFIG_PARSE_FAIL,
+    };
+
+    ERROR error = ERROR_NONE;
+    bool loaded = false;
+
+    void loadFromPath(const std::string& path) {
         std::lock_guard<std::mutex> lock(mtx);
-        vel_x *= factor;
-        vel_y *= factor;
-        omega_z *= factor;
-        // Stop if very small
-        if (std::abs(vel_x) < 0.01f) vel_x = 0.0f;
-        if (std::abs(vel_y) < 0.01f) vel_y = 0.0f;
-        if (std::abs(omega_z) < 0.01f) omega_z = 0.0f;
+        loaded = false;
+        const std::string config = path + "/info.json";
+        if (!std::filesystem::exists(config)) {
+            throw(std::string("Config file path is wrong: " + config));
+            error = ERROR_CONFIG_NOT_FOUND;
+        }
+        std::ifstream file(config, std::ios::in);
+        if (!file.is_open()) {
+            throw(std::string("Config file read failed: " + config));
+            error = ERROR_CONFIG_READ_FAIL;
+        }
+        try {
+            nlohmann::json j;
+            file >> j;
+            name = j["config_info"]["run_name"];
+            dt   = j["config_info"]["control"]["policy_dt"];
+            action_scale = j["config_info"]["control"]["action_scale"];
+            for (int lnum = 0; lnum < 4; lnum++) {
+                KP[lnum*3 + 0]    = j["config_info"]["control"]["stiffness"]["R"];
+                KP[lnum*3 + 1]    = j["config_info"]["control"]["stiffness"]["P"];
+                KP[lnum*3 + 2]    = j["config_info"]["control"]["stiffness"]["K"];
+                KD[lnum*3 + 0]      = j["config_info"]["control"]["damping"]["R"];
+                KD[lnum*3 + 1]      = j["config_info"]["control"]["damping"]["P"];
+                KD[lnum*3 + 2]      = j["config_info"]["control"]["damping"]["K"];
+            }
+            num_observations = j["config_info"]["env"]["num_observations"];
+            num_actions      = j["config_info"]["env"]["num_actions"];
+            for (int i = 0; i < 2; i++) {
+                command_ranges[0][i] = j["config_info"]["commands"]["ranges"]["lin_vel_x"][i];
+                command_ranges[1][i] = j["config_info"]["commands"]["ranges"]["lin_vel_y"][i];
+                command_ranges[2][i] = j["config_info"]["commands"]["ranges"]["ang_vel_yaw"][i];
+            }
+            obs_lin_vel_scale        = j["config_info"]["normalization"]["obs_scales"]["lin_vel"];
+            obs_ang_vel_scale        = j["config_info"]["normalization"]["obs_scales"]["ang_vel"];
+            obs_dof_pos_scale        = j["config_info"]["normalization"]["obs_scales"]["dof_pos"];
+            obs_dof_vel_scale        = j["config_info"]["normalization"]["obs_scales"]["dof_vel"];
+            clip_observations        = j["config_info"]["normalization"]["clip_observations"];
+            clip_actions             = j["config_info"]["normalization"]["clip_actions"];
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint0_HRR"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint1_HRP"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint2_HRK"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint3_HLR"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint4_HLP"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint5_HLK"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint6_FRR"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint7_FRP"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint8_FRK"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint9_FLR"] );
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint10_FLP"]);
+            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint11_FLK"]);
+            error = ERROR_NONE;
+            loaded = true;
+            std::cout << "Config file parse complete: " << config << std::endl;
+        } catch (const std::exception &e) {
+            throw(std::string("Config file parse failed: " + config + ". Error: " + e.what()));
+            error = ERROR_CONFIG_PARSE_FAIL;
+        }
     }
 };
 
 JointTable g_jointTable;
 std::unique_ptr<JointController> g_jointController;
 std::unique_ptr<Policy> g_policy;
-VelocityCommand g_velocityCommand;
+VelocityCommand g_cmd;
+PolicyParams g_params;
 
 bool g_isWorking = false;
 
@@ -97,17 +217,36 @@ enum class TaskState {
 };
 TaskState g_currentTask = TaskState::Idle;
 
-enum class UserCommand {
+enum class MotionCmd {
     None = 0,
-    MotionReady,
-    MotionGround,
+    MotionSit,
+    MotionStand,
     MotionWalk,
 };
 
-void signalHandler(int signal);
+void signalHandler(int signal) {
+    std::cout << "Signal received: " << signal << "\n";
+    g_isWorking = false;
+    std::_Exit(signal);
+}
 void goToMotionReady();
 void goToMotionGround();
-void* controlLoop(void*);
+void controlLoop();
+
+void printHelp() {
+    std::cout << "\n";
+    std::cout << " " << APP_NAME << " Help\n";
+    std::cout << "\n -p | --path <path> : Specify the policy path to load\n";
+    std::cout << "\n";
+    std::cout << " Controls:\n";
+    std::cout << "  'z' - Motion Sit\n";
+    std::cout << "  'x' - Motion Stand\n";
+    std::cout << "  'c' - Motion Walk\n";
+    std::cout << " Velocity Control (when in control mode):\n";
+    std::cout << "  'w'/'s' - Forward/Backward\n";
+    std::cout << "  'a'/'d' - Left/Right\n";
+    std::cout << "  'q'/'e' - Yaw Left/Right\n\n";
+}
 
 int main(int argc, char* argv[])
 {
@@ -115,18 +254,52 @@ int main(int argc, char* argv[])
     signal(SIGINT,  signalHandler);
     signal(SIGHUP,  signalHandler);
     signal(SIGSEGV, signalHandler);
+    signal(SIGKILL, signalHandler);
+    signal(SIGSEGV, signalHandler);
+
+    std::string path = "";
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "-p" || arg == "--path") {
+            if (i + 1 < argc) {
+                path = argv[i + 1];
+                ++i;
+            } else {
+                std::cerr << "Error: Missing value for " << arg << " argument.\n";
+                return -1;
+            }
+        } else if (arg == "-h" || arg == "--help") {
+            printHelp();
+            return 0;
+        }
+    }
+
+    std::cout << "Starting " << APP_NAME << "...\n";
+    if (getuid() != 0) {
+        std::cout << "You are running as NON-ROOT. " << APP_NAME << " will now exit.\n";
+        return -1;
+    }
 
     g_isWorking = true;
-    std::cout << "Starting RobotControlApp...\n";
-    std::cout << "Controls:\n";
-    std::cout << "  'x' - MOTION_GROUND\n";
-    std::cout << "  'z' - MOTION_READY\n";
-    std::cout << "  'c' - Start walking control\n";
-    std::cout << "  'w' - Increase forward velocity\n";
-    std::cout << "  's' - Increase backward velocity\n";
-    std::cout << "  'a' - Increase left velocity\n";
-    std::cout << "  'd' - Increase right velocity\n";
-    std::cout << "  'q' - Quit\n";
+    try {
+        RBQ_API::instance().initialize(23, true);
+        RBQ_API::instance().stateEstimation.startEstimation();
+        RBQ_API::instance().imu.getQuaternion();
+        g_jointController = std::make_unique<JointController>(kMaxJoint);
+        g_jointController->syncReferenceToRobot();
+        if (path.empty()) {
+            std::filesystem::path exe_path = std::filesystem::canonical("/proc/self/exe").parent_path();
+            path = (exe_path.lexically_normal().string() + "/../../rbq_gym/policy/rbq10");
+        }
+        std::cout << "Loading policy from: " << path << std::endl;
+        g_policy = std::make_unique<Policy>(path);
+        g_params.loadFromPath(path);
+        std::cout << "Initialization complete.\n";
+    } catch (const std::exception& e) {
+        std::cerr << "Initialization failed: " << e.what() << "\n";
+        return -1;
+    }
+    std::thread controlThread = std::thread(controlLoop);
 
     // initialize terminal keyboard
     struct termios g_oldTio, g_newTio;
@@ -134,79 +307,136 @@ int main(int argc, char* argv[])
     g_newTio = g_oldTio;
     g_newTio.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &g_newTio);
-
-    if (mlockall(MCL_CURRENT | MCL_FUTURE) != 0) {
-        std::cerr << "Memory lock failed.\n";
-        return 1;
-    }
-
-    try {
-        RBQ_API::instance().initialize(23, true);
-        RBQ_API::instance().stateEstimation.startEstimation();
-        RBQ_API::instance().imu.getQuaternion();
-        g_jointController = std::make_unique<JointController>(kMaxJoint);
-        g_jointController->syncReferenceToRobot();
-        std::filesystem::path exe_path = std::filesystem::canonical("/proc/self/exe").parent_path();
-        std::string path = (exe_path.lexically_normal().string() + "/../../resources/policy/rbq10_trot");
-        std::cout << "Loading policy from: " << path << std::endl;
-        g_policy = std::make_unique<Policy>(path);
-        std::cout << "Control thread starting...\n";
-        pthread_t controlThread;
-        if (!Thread::generate_rt_thread(controlThread, controlLoop, "ControlLoop", 1, 90, nullptr)) {
-            std::cerr << "Failed to create control thread\n";
-            throw(std::exception());
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "Initialization failed: " << e.what() << "\n";
-        g_isWorking = false;
-    }
+    // Make stdin non-blocking
+    int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+    constexpr int KEY_TIMEOUT_MS = 300;
+    std::map<char, std::chrono::steady_clock::time_point> key_last_seen;
+    auto get_key_state = [&](char k) -> bool {
+        auto it = key_last_seen.find(k);
+        if (it == key_last_seen.end()) return false;
+        auto now = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - it->second).count();
+        return elapsed < KEY_TIMEOUT_MS;
+    };
 
     while (g_isWorking && g_jointController) {
-        UserCommand command = UserCommand::None;
+        MotionCmd command = MotionCmd::None;
+
+        fd_set readfds;
+        struct timeval timeout;
+        FD_ZERO(&readfds);
+        FD_SET(STDIN_FILENO, &readfds);
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 10000;
+        
+        bool has_input = (select(STDIN_FILENO + 1, &readfds, NULL, NULL, &timeout) > 0);
+
         char key = 0;
-        if (read(STDIN_FILENO, &key, 1) == 1) {
-            switch (key) {
-            case 'x': command = UserCommand::MotionGround; break;
-            case 'z': command = UserCommand::MotionReady; break;
-            case 'c': command = UserCommand::MotionWalk; break;
-            case 'w': g_velocityCommand.adjustVelX(kVelStep); break;
-            case 's': g_velocityCommand.adjustVelX(-kVelStep); break;
-            case 'a': g_velocityCommand.adjustVelY(kVelStep); break;
-            case 'd': g_velocityCommand.adjustVelY(-kVelStep); break;
-            case 'q': g_isWorking = false; break;
+        std::vector<char> keys_read;
+        while (has_input && read(STDIN_FILENO, &key, 1) == 1) {
+            keys_read.push_back(key);
+            // Check if more input is available immediately (non-blocking)
+            FD_ZERO(&readfds);
+            FD_SET(STDIN_FILENO, &readfds);
+            timeout.tv_sec = 0;
+            timeout.tv_usec = 0;
+            has_input = (select(STDIN_FILENO + 1, &readfds, NULL, NULL, &timeout) > 0);
+        }
+
+        auto now = std::chrono::steady_clock::now();
+        for (char k : keys_read) {
+            if (g_currentTask == TaskState::Control) {
+                // Update timestamp for velocity control keys
+                if (k == 'w' || k == 's' || k == 'a' || k == 'd' || k == 'q' || k == 'e') {
+                    key_last_seen[k] = now;
+                }
+            }
+            switch (k) {
+            case 'z': command = MotionCmd::MotionSit; break;
+            case 'x': command = MotionCmd::MotionStand; break;
+            case 'c': command = MotionCmd::MotionWalk; break;
             }
         }
 
+        if (g_currentTask == TaskState::Control) {
+            bool key_w = get_key_state('w');
+            bool key_s = get_key_state('s');
+            bool key_a = get_key_state('a');
+            bool key_d = get_key_state('d');
+            bool key_q = get_key_state('q');
+            bool key_e = get_key_state('e');
+            
+            // Update velocities based on key presses (similar to keyboard.py)
+            // lin_vel_x (forward/backward)
+            if (key_w && !key_s) {
+                g_cmd.adjustVelX(g_cmd.kVelStep);
+            }
+            if (key_s && !key_w) {
+                g_cmd.adjustVelX(-g_cmd.kVelStep);
+            }
+            
+            // lin_vel_y (lateral left/right)
+            if (key_a && !key_d) {
+                g_cmd.adjustVelY(g_cmd.kVelStep);
+            }
+            if (key_d && !key_a) {
+                g_cmd.adjustVelY(-g_cmd.kVelStep);
+            }
+            
+            // ang_vel_yaw (yaw rotation)
+            if (key_q && !key_e) {
+                g_cmd.adjustOmegaZ(g_cmd.kVelStep);
+            }
+            if (key_e && !key_q) {
+                g_cmd.adjustOmegaZ(-g_cmd.kVelStep);
+            }
+            
+            // Apply decay when keys are not pressed (similar to keyboard.py)
+            if (!key_w && !key_s) {
+                g_cmd.applyDecayX();
+            }
+            if (!key_a && !key_d) {
+                g_cmd.applyDecayY();
+            }
+            if (!key_q && !key_e) {
+                g_cmd.applyDecayZ();
+            }
+        } else {
+            key_last_seen.clear();
+        }
+        
         switch (command) {
-        case UserCommand::MotionReady: {
+        case MotionCmd::MotionStand: {
             std::cout << "Executing Motion Ready...\n";
             g_currentTask = TaskState::Motion;
             goToMotionReady();
             g_currentTask = TaskState::Idle;
             break;
         }
-        case UserCommand::MotionGround: {
+        case MotionCmd::MotionSit: {
             std::cout << "Executing Motion Ground...\n";
             g_currentTask = TaskState::Motion;
             goToMotionGround();
             g_currentTask = TaskState::Idle;
             break;
         }
-        case UserCommand::MotionWalk: {
+        case MotionCmd::MotionWalk: {
             std::cout << "Executing Motion Walk...\n";
             g_currentTask = TaskState::Motion;
             g_jointController->syncReferenceToRobot();
             g_jointController->setAllOwners();
             // Reset velocity command when starting control
-            g_velocityCommand.setVelX(0.0f);
-            g_velocityCommand.setVelY(0.0f);
-            g_velocityCommand.setOmegaZ(0.0f);
+            g_cmd.setVelX(0.0f);
+            g_cmd.setVelY(0.0f);
+            g_cmd.setOmegaZ(0.0f);
             g_currentTask = TaskState::Control;
             break;
         }
         default:
             break;
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     std::cout << "Shutting down...\n";
@@ -217,7 +447,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void* controlLoop(void*)
+void controlLoop()
 {
     std::cout << "Control loop started.\n";
 
@@ -238,64 +468,76 @@ void* controlLoop(void*)
             break;
         }
         case TaskState::Control: {
-            // Ensure motion ownership is maintained
-            static bool ownership_set = false;
-            if (!ownership_set) {
-                std::cout << "Setting motion ownership in control loop..." << std::endl;
-                for (int i = 0; i < 12; i++) {
-                    RBQ_API::instance().joint.setMotionOwner(i);
-                }
-                ownership_set = true;
-                std::cout << "Motion ownership set for all joints." << std::endl;
+            static bool policyError = false;
+            if (policyError) {
+                std::cerr << "Exiting control task due to policy error.\n";
+                g_currentTask = TaskState::Idle;
+                break;
             }
-
-            // Apply velocity decay (gradually reduce velocity when no keys are pressed)
-            g_velocityCommand.decay(0.99f);
-
             // -- 100Hz policy control
             static int decimation_cnt = 0;
-            if (decimation_cnt == 5){
+            if (decimation_cnt == 5) {
                 decimation_cnt = 0;
                 try {
-                    if (g_policy) {
+                    if (g_policy && g_policy->error() == Policy::ERROR_NONE &&
+                        g_params.error == PolicyParams::ERROR_NONE && g_params.loaded) {
+                        const int jointSize = 12;
                         Eigen::Vector3f gyro            = RBQ_API::instance().imu.getGyro();
                         Eigen::Quaternion<float> quat   = RBQ_API::instance().imu.getQuaternion();
-                        const int jointSize = 12;
                         Eigen::VectorXf pos = Eigen::VectorXf::Zero(jointSize);
                         Eigen::VectorXf vel = Eigen::VectorXf::Zero(jointSize);
                         for (int i=0; i<jointSize; i++) {
                             pos[i]    = RBQ_API::instance().joint.getPos(i);
                             vel[i]    = RBQ_API::instance().joint.getVel(i);
                         }
-                        // Get velocity command from keyboard input
-                        Eigen::Vector3f command = g_velocityCommand.get();
+                        Eigen::Vector3f command = g_cmd.get();
+                        static std::vector<float> lastActions(jointSize, 0.0f);
+                        std::vector<float> obs;
+                        for (int i = 0; i < 3; i++)
+                            obs.push_back(gyro[i] * g_params.obs_ang_vel_scale);
+                        Eigen::Vector3f proj_grav = quat.inverse() * Eigen::Vector3f(0.0f, 0.0f, -1.0f);
+                        for (int i = 0; i < 3; i++)
+                            obs.push_back(proj_grav[i]);
+                        static float commands_scale[] = {g_params.obs_lin_vel_scale, g_params.obs_lin_vel_scale, g_params.obs_ang_vel_scale};
+                        for (int i = 0; i < 3; i++)
+                            obs.push_back(command[i] * commands_scale[i]);
+                        for (int i = 0; i < jointSize; i++)
+                            obs.push_back((pos[i] - g_params.default_joint_angles[i]) * g_params.obs_dof_pos_scale);
+                        for (int i = 0; i < jointSize; i++)
+                            obs.push_back(vel[i] * g_params.obs_dof_vel_scale);
+                        for (int i = 0; i < jointSize; i++)
+                            obs.push_back(lastActions[i]);
+                        int error;
+                        std::vector<float> actions = g_policy->compute(obs, g_params.num_observations, g_params.num_actions, error);
+                        for (int i=0; i<jointSize; i++) {
+                            actions[i] = std::clamp(actions[i], -g_params.clip_actions, g_params.clip_actions);
+                            lastActions[i] = actions[i];
+                        }
 
-                        static bool first_run = true;
-                        Eigen::MatrixXf actions = g_policy->compute(gyro, quat, pos, vel, command, first_run);
-                        first_run = false;
-                        if (g_policy->error() == Policy::ERROR_NONE) {
+                        if (error == Policy::ERROR_NONE) {
+                            static float actions_filt[12] = {0, };
                             for (int i=0; i<jointSize; i++) {
-                                RBQ_API::instance().joint.setPosRef   (i, actions(i, 0));
-                                RBQ_API::instance().joint.setGainKpRef(i, actions(i, 1));
-                                RBQ_API::instance().joint.setGainKdRef(i, actions(i, 2));
+                                actions_filt[i] = 0.55673*actions[i] + (1.0 - 0.55673)*actions_filt[i]; //100Hz low-pass filter
+                                const float posRef = actions_filt[i] * g_params.action_scale + g_params.default_joint_angles[i];
+                                RBQ_API::instance().joint.setPosRef   (i, posRef);
+                                RBQ_API::instance().joint.setGainKpRef(i, g_params.KP[i]);
+                                RBQ_API::instance().joint.setGainKdRef(i, g_params.KD[i]);
+                                RBQ_API::instance().joint.setTorqueRef(i, 0);
                             }
                             RBQ_API::instance().joint.setAllJointRef();
                         } else {
                             std::cerr << "Policy error occurred: " << static_cast<int>(g_policy->error()) << std::endl;
                         }
+                    } else {
+                        std::cerr << "Policy not loaded or has error.\n";
+                        policyError = true;
                     }
                 } catch (const std::exception& e) {
-                    static bool policy_error_logged = false;
-                    if (!policy_error_logged) {
-                        std::cerr << "Policy execution error: " << e.what() << std::endl;
-                        policy_error_logged = true;
-                    }
+                    std::cerr << "Policy execution error: " << e.what() << std::endl;
+                    policyError = true;
                 } catch (...) {
-                    static bool policy_error_logged = false;
-                    if (!policy_error_logged) {
-                        std::cerr << "Unknown policy execution error" << std::endl;
-                        policy_error_logged = true;
-                    }
+                    std::cerr << "Unknown policy execution error" << std::endl;
+                    policyError = true;
                 }
             }
             decimation_cnt++;
@@ -305,20 +547,11 @@ void* controlLoop(void*)
             break;
         }
 
-        Thread::timespec_add_us(&timeNext, kControlPeriodUs);
+        Thread::timespec_add_us(&timeNext, kControlPeriodMs * 1000);
         clock_nanosleep(CLOCK_REALTIME, TIMER_ABSTIME, &timeNext, NULL);
         clock_gettime(CLOCK_REALTIME, &timeNext);
     }
-
     std::cout << "Control loop exiting.\n";
-    return nullptr;
-}
-
-void signalHandler(int signal)
-{
-    std::cout << "Signal received: " << signal << "\n";
-    g_isWorking = false;
-    std::_Exit(signal);
 }
 
 void goToMotionReady()
@@ -377,3 +610,4 @@ void goToMotionGround()
         g_jointController->moveJoint(i, g_jointTable.ground[i] * kD2R, motionTime, MoveCommandMode::Absolute);
     usleep((motionTime + 100) * 1000);
 }
+

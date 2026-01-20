@@ -270,37 +270,37 @@
                 <body name="RB1_Base_Yaw" pos="0.0 0.0 0.09680">
                     <inertial pos="0 0 0" mass="1.34302101" diaginertia="0.0649 0.17 0.2217"/>
                     <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Base_Yaw" type="mesh" class="visual"/>
-                    <joint name="RB1_Base_Yaw_joint" type="hinge" axis="0 0 1" range="-6.108652 6.108652" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                    <joint name="RB1_Base_Yaw_joint" type="hinge" axis="0 0 1" range="-6.108652 6.108652" damping="0.0" armature="0.1647" frictionloss="4.5"/>
                     <geom type="cylinder" size="0.045 0.04" pos="0.0 0 0.0" euler="0 0 0" class="collision"/>
                     
                     <body name="RB1_Shoulder_Pitch" pos="0.0 0.0 0.0">
                         <inertial pos="-0.00002116 0.00470788 -0.02689974" mass="2.40712938" diaginertia="0.0016199 0.0014656 0.00117931"/>
                         <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Shoulder_Pitch" type="mesh" class="visual"/>
-                        <joint name="RB1_Shoulder_Pitch_joint" type="hinge" axis="0 1 0" range="-1.745329 1.745329" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                        <joint name="RB1_Shoulder_Pitch_joint" type="hinge" axis="0 1 0" range="-1.745329 1.745329" damping="0.0" armature="0.1647" frictionloss="4.5"/>
                         <geom type="cylinder" size="0.05 0.18" pos="0.0 0.07 0.135" euler="0.38 0 0" class="collision"/>
                         
                         <body name="RB1_Elbow_Pitch" pos="0.0 0.00980 0.33440">
                             <inertial pos="0.00001796 0.05973689 0.12776266" mass="0.70337555" diaginertia="0.0605619 0.05435169 0.00778141"/>
                             <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Elbow_Pitch" type="mesh" class="visual"/>
-                            <joint name="RB1_Elbow_Pitch_joint" type="hinge" axis="0 1 0" range="-2.967060 2.967060" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                            <joint name="RB1_Elbow_Pitch_joint" type="hinge" axis="0 1 0" range="-2.967060 2.967060" damping="0.0" armature="0.0324" frictionloss="1.7"/>
                             <geom type="cylinder" size="0.045 0.085" pos="0.0 -0.04 0.0" euler="1.57 0 0" class="collision"/>
                             
                             <body name="RB1_Elbow_Yaw" pos="0.0 -0.09480 0.0">
                                 <inertial pos="0.00001527 -0.09261065 0.01720698" mass="1.02655037" diaginertia="0.00081312 0.00080079 0.00049095"/>
                                 <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Elbow_Yaw" type="mesh" class="visual"/>
-                                <joint name="RB1_Elbow_Yaw_joint" type="hinge" axis="0 0 1" range="-3.141593 3.141593" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                                <joint name="RB1_Elbow_Yaw_joint" type="hinge" axis="0 0 1" range="-3.141593 3.141593" damping="0.0" armature="0.0324" frictionloss="1.7"/>
                                 <geom type="cylinder" size="0.03 0.12" pos="0.0 0 0.15" euler="0 0 0" class="collision"/>
                                 
                                 <body name="RB1_Wrist_Pitch" pos="0.0 0.08500 0.29600">
                                     <inertial pos="0.00005536 0.00362683 0.25029413" mass="0.70337555" diaginertia="0.00672153 0.00633288 0.0009534"/>
                                     <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Wrist_Pitch" type="mesh" class="visual"/>
-                                    <joint name="RB1_Wrist_Pitch_joint" type="hinge" axis="0 1 0" range="-2.967060 2.967060" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                                    <joint name="RB1_Wrist_Pitch_joint" type="hinge" axis="0 1 0" range="-2.967060 2.967060" damping="0.0" armature="0.0324" frictionloss="1.7"/>
                                     <geom type="cylinder" size="0.04 0.05" pos="0.0 -0.09 0.0" euler="1.57 0 0" class="collision"/>
                                     
                                     <body name="RB1_Wrist_Yaw" pos="0.0 0.0 0.0">
                                         <inertial pos="-0.00001527 -0.00218935 0.01720698" mass="0.58000000" diaginertia="0.00081312 0.00080079 0.00049095"/>
                                         <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Wrist_Yaw" type="mesh" class="visual"/>
-                                        <joint name="RB1_Wrist_Yaw_joint" type="hinge" axis="0 0 1" range="-6.108652 6.108652" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                                        <joint name="RB1_Wrist_Yaw_joint" type="hinge" axis="0 0 1" range="-6.108652 6.108652" damping="0.0" armature="0.0324" frictionloss="1.7"/>
                                         <geom type="cylinder" size="0.035 0.155" pos="0.0 0 0.115" euler="0 0 0" class="collision"/>
                                         
                                         <site name="ee_site" pos="0 0 0.24555" size="0.01" rgba="1 0 0 1"/>
@@ -337,12 +337,12 @@
         <motor class="knee" name="motor11_FLK" joint="joint11_FLK"/>
 
         <!-- RB1 Manipulator 모터 -->
-        <motor name="RB1_Base_Yaw" gear="101" ctrllimited="true" ctrlrange="-1 1" joint="RB1_Base_Yaw_joint"/>
-        <motor name="RB1_Shoulder_Pitch" gear="101" ctrllimited="true" ctrlrange="-1 1" joint="RB1_Shoulder_Pitch_joint"/>
-        <motor name="RB1_Elbow_Pitch" gear="100" ctrllimited="true" ctrlrange="-1 1" joint="RB1_Elbow_Pitch_joint"/>
-        <motor name="RB1_Elbow_Yaw" gear="100" ctrllimited="true" ctrlrange="-1 1" joint="RB1_Elbow_Yaw_joint"/>
-        <motor name="RB1_Wrist_Pitch" gear="100" ctrllimited="true" ctrlrange="-1 1" joint="RB1_Wrist_Pitch_joint"/>
-        <motor name="RB1_Wrist_Yaw" gear="100" ctrllimited="true" ctrlrange="-1 1" joint="RB1_Wrist_Yaw_joint"/>
+        <motor name="RB1_Base_Yaw" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Base_Yaw_joint"/>
+        <motor name="RB1_Shoulder_Pitch" 	ctrllimited="true" ctrlrange="-100 100" joint="RB1_Shoulder_Pitch_joint"/>
+        <motor name="RB1_Elbow_Pitch" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Elbow_Pitch_joint"/>
+        <motor name="RB1_Elbow_Yaw" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Elbow_Yaw_joint"/>
+        <motor name="RB1_Wrist_Pitch" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Wrist_Pitch_joint"/>
+        <motor name="RB1_Wrist_Yaw" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Wrist_Yaw_joint"/>
     </actuator>
 
     <!-- 센서 정의 -->

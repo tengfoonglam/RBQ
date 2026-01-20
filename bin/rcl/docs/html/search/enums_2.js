@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['frame_337',['Frame',['../group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf',1,'RBQ_API::StateEstimation']]]
+  ['docking_5fstates_358',['DOCKING_STATEs',['../group__StatusAPI.html#ga058b858f27b372738d249a12157d75a4',1,'RBQ_API::Status']]]
 ];

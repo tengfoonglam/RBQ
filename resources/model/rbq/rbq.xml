@@ -280,6 +280,13 @@
 
         </body>
     </worldbody>
+    
+    <!-- 몸통 고정 -->
+    <!--
+    <equality>
+        <weld name="fix_base" body1="base_link" body2="world"/>
+    </equality>
+    -->
 
     <actuator>
         <!-- RR 다리 모터 -->

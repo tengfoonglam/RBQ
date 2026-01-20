@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['docking_5fstates_336',['DOCKING_STATEs',['../group__StatusAPI.html#ga058b858f27b372738d249a12157d75a4',1,'RBQ_API::Status']]]
+  ['button_357',['Button',['../group__GamepadAPI.html#gaf9ae8cd9844d42867754b07d52f5a441',1,'RBQ_API::Gamepad']]]
 ];

@@ -19,6 +19,7 @@ target_link_libraries(${PROJECT_NAME}
     onnxruntime::onnxruntime
     CycloneDDS-CXX::ddscxx
     CycloneDDS::ddsc
+    nlohmann_json::nlohmann_json
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

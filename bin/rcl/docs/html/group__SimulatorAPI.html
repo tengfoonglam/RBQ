@@ -97,6 +97,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5f96a7f17eb5803a43b2ceece20cf6da"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SimulatorAPI.html#ga5f96a7f17eb5803a43b2ceece20cf6da">RBQ_API::Simulator::getJointTorque</a> (const int &amp;_jointId, float &amp;joint_torque_)</td></tr>
 <tr class="memdesc:ga5f96a7f17eb5803a43b2ceece20cf6da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the torque of the specified joint.  <a href="group__SimulatorAPI.html#ga5f96a7f17eb5803a43b2ceece20cf6da">More...</a><br /></td></tr>
 <tr class="separator:ga5f96a7f17eb5803a43b2ceece20cf6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70ec68c73904d17108eeba14470fd735"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SimulatorAPI.html#ga70ec68c73904d17108eeba14470fd735">RBQ_API::Simulator::getArmJointPos</a> (const int &amp;_jointId, float &amp;joint_pos_)</td></tr>
+<tr class="memdesc:ga70ec68c73904d17108eeba14470fd735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the specified arm joint.  <a href="group__SimulatorAPI.html#ga70ec68c73904d17108eeba14470fd735">More...</a><br /></td></tr>
+<tr class="separator:ga70ec68c73904d17108eeba14470fd735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f0bc3501bc69cccc59e65af15af675c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SimulatorAPI.html#ga3f0bc3501bc69cccc59e65af15af675c">RBQ_API::Simulator::getArmJointVel</a> (const int &amp;_jointId, float &amp;joint_vel_)</td></tr>
+<tr class="memdesc:ga3f0bc3501bc69cccc59e65af15af675c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the velocity of the specified arm joint.  <a href="group__SimulatorAPI.html#ga3f0bc3501bc69cccc59e65af15af675c">More...</a><br /></td></tr>
+<tr class="separator:ga3f0bc3501bc69cccc59e65af15af675c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6e1c78fa14959379306636a3a80cd84"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SimulatorAPI.html#gab6e1c78fa14959379306636a3a80cd84">RBQ_API::Simulator::getArmJointTorque</a> (const int &amp;_jointId, float &amp;joint_torque_)</td></tr>
+<tr class="memdesc:gab6e1c78fa14959379306636a3a80cd84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the torque of the specified arm joint.  <a href="group__SimulatorAPI.html#gab6e1c78fa14959379306636a3a80cd84">More...</a><br /></td></tr>
+<tr class="separator:gab6e1c78fa14959379306636a3a80cd84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6a93b933cd3fe0734b31dd640864a05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SimulatorAPI.html#gaf6a93b933cd3fe0734b31dd640864a05">RBQ_API::Simulator::getFootContactForce</a> (const int &amp;_legId, Eigen::Vector3f &amp;contact_force_)</td></tr>
 <tr class="memdesc:gaf6a93b933cd3fe0734b31dd640864a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the contact force at the specified leg's foot.  <a href="group__SimulatorAPI.html#gaf6a93b933cd3fe0734b31dd640864a05">More...</a><br /></td></tr>
 <tr class="separator:gaf6a93b933cd3fe0734b31dd640864a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,6 +130,123 @@ Functions</h2></td></tr>
 <div class="line">Eigen::Vector3f bodyPos;</div>
 <div class="line">api-&gt;simulator.getBodyPos(bodyPos);</div>
 </div><!-- fragment --> <h2 class="groupheader">Function Documentation</h2>
+<a id="ga70ec68c73904d17108eeba14470fd735"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70ec68c73904d17108eeba14470fd735">&#9670;&nbsp;</a></span>getArmJointPos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Simulator::getArmJointPos </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_pos_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the position of the specified arm joint. </p>
+<p>Retrieves the current position of the specified arm joint in radians.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The arm joint ID (valid range: 0 to 6). </td></tr>
+    <tr><td class="paramname">joint_pos_</td><td>Reference to store the joint position (in radians). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="gab6e1c78fa14959379306636a3a80cd84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6e1c78fa14959379306636a3a80cd84">&#9670;&nbsp;</a></span>getArmJointTorque()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Simulator::getArmJointTorque </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_torque_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the torque of the specified arm joint. </p>
+<p>Retrieves the current torque of the specified arm joint in Newton-meters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The arm joint ID (valid range: 0 to 6). </td></tr>
+    <tr><td class="paramname">joint_torque_</td><td>Reference to store the joint torque (in Newton-meters). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
+<a id="ga3f0bc3501bc69cccc59e65af15af675c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3f0bc3501bc69cccc59e65af15af675c">&#9670;&nbsp;</a></span>getArmJointVel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int RBQ_API::Simulator::getArmJointVel </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>_jointId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &amp;&#160;</td>
+          <td class="paramname"><em>joint_vel_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the velocity of the specified arm joint. </p>
+<p>Retrieves the current velocity of the specified arm joint in radians per second.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_jointId</td><td>The arm joint ID (valid range: 0 to 6). </td></tr>
+    <tr><td class="paramname">joint_vel_</td><td>Reference to store the joint velocity (in radians per second). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+
+</div>
+</div>
 <a id="ga256d165b4d010fd7c7a05b02f280ff6a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga256d165b4d010fd7c7a05b02f280ff6a">&#9670;&nbsp;</a></span>getBodyPos()</h2>
 

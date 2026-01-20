@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jointid_339',['JointID',['../group__JointControlAPI.html#ga006742a92d0ba21c56361dcaf5124071',1,'RBQ_API::Joint']]]
+  ['gait_5fids_360',['GAIT_IDs',['../group__StatusAPI.html#ga5d47a24243dcbd049f98339c06ef1aa2',1,'RBQ_API::Status']]]
 ];

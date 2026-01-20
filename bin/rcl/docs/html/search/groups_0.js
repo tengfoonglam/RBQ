@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamepad_20api_459',['Gamepad API',['../group__GamepadAPI.html',1,'']]]
+  ['arm_20joint_20control_20api_488',['Arm Joint Control API',['../group__ArmJointControlAPI.html',1,'']]]
 ];

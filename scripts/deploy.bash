@@ -15,12 +15,14 @@ ROS2_SRC_DIR="ros2/src"
 LOGFILE="deploy.log"
 
 SELECTED_BINARIES=()
+LOCAL_MODE=false
 
 print_help() {
     echo "Usage: ./deploy.bash [OPTIONS]"
     echo "  --help             Display this help message and exit."
     echo "  --pro [FILES...]    Specify binary names for selective deployment."
     echo "  --device [USER@IP] Set the remote device (default: $REMOTE_DEVICE)."
+    echo "  --local            Deploy files locally on the same PC instead of remote transfer."
 }
 
 exec > >(tee -a "$LOGFILE") 2>&1
@@ -30,6 +32,7 @@ while [[ $# -gt 0 ]]; do
         --help) print_help; exit 0 ;;
         --device) shift; REMOTE_DEVICE="$1"; shift ;;
         --pro) shift; while [[ $# -gt 0 && ! $1 =~ ^- ]]; do SELECTED_BINARIES+=("$1"); shift; done ;;
+        --local) LOCAL_MODE=true; shift ;;
         *) echo "Unknown argument: $1"; print_help; exit 1 ;;
     esac
 done
@@ -97,44 +100,120 @@ else
     fi
 fi
 
-echo -e "\e[33mEnter SSH password.\e[0m"
-read -s -p "SSH Password: " SSH_PASSWORD
-echo ""
-SSH_AUTH="sshpass -p $SSH_PASSWORD ssh"
+# Setup for local or remote deployment
+if [ "$LOCAL_MODE" = true ]; then
+    # Local deployment - use local rbq_ws directory
+    # Get the real user's home directory (not root's if running as sudo)
+    REAL_HOME="$HOME"
+    if [ -n "$SUDO_USER" ]; then
+        # Running as sudo, get the original user's home directory
+        REAL_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+        if [ -z "$REAL_HOME" ]; then
+            # Fallback: try to get from environment
+            REAL_HOME=$(eval echo ~$SUDO_USER)
+        fi
+    fi
+    
+    # If still empty, use current HOME as fallback
+    if [ -z "$REAL_HOME" ]; then
+        REAL_HOME="$HOME"
+    fi
+    
+    LOCAL_HOME_DIR="$REAL_HOME/rbq_ws"
+    LOCAL_BIN_DIR="$LOCAL_HOME_DIR/bin"
+    LOCAL_SCRIPTS_DIR="$LOCAL_HOME_DIR/scripts"
+    LOCAL_RESOURCES_DIR="$LOCAL_HOME_DIR/resources"
+    LOCAL_ROS2_SRC_DIR="$LOCAL_HOME_DIR/ros2/src"
+    LOCAL_CONFIGS_DIR="$LOCAL_HOME_DIR/configs"
+    echo "Local deployment mode: deploying to $LOCAL_HOME_DIR"
+    
+    # Create local directories if they don't exist
+    mkdir -p "$LOCAL_BIN_DIR"
+    mkdir -p "$LOCAL_SCRIPTS_DIR"
+    mkdir -p "$LOCAL_RESOURCES_DIR"
+    mkdir -p "$LOCAL_ROS2_SRC_DIR"
+    mkdir -p "$LOCAL_CONFIGS_DIR"
+else
+    # Remote deployment - setup SSH
+    echo -e "\e[33mEnter SSH password.\e[0m"
+    read -s -p "SSH Password: " SSH_PASSWORD
+    echo ""
+    SSH_AUTH="sshpass -p $SSH_PASSWORD ssh"
 
-if [ ! -f "$HOME/.ssh/known_hosts" ]; then
-    echo -e "\e[33mNo ~/.ssh/known_hosts yet. Now will ssh to the robot. Type the password then type exit to return\e[0m"
-    ssh $REMOTE_DEVICE
+    if [ ! -f "$HOME/.ssh/known_hosts" ]; then
+        echo -e "\e[33mNo ~/.ssh/known_hosts yet. Now will ssh to the robot. Type the password then type exit to return\e[0m"
+        ssh $REMOTE_DEVICE
+    fi
+    ssh-keyscan -H $(echo "$REMOTE_DEVICE" | cut -d'@' -f2) >> ~/.ssh/known_hosts 2>/dev/null
 fi
-ssh-keyscan -H $(echo "$REMOTE_DEVICE" | cut -d'@' -f2) >> ~/.ssh/known_hosts 2>/dev/null
 
-if [ ${#BINARIES_TO_DEPLOY[@]} -gt 0 ]; then
-    echo "File transfer starting..."
-    if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_BIN_DIR[@]} && rsync" -e "$SSH_AUTH" "${BINARIES_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_BIN_DIR/"; then
-        echo -e "\e[31mError: File transfer failed.\e[0m"
+if [ "$LOCAL_MODE" = true ]; then
+    # Local deployment using cp/rsync locally
+    if [ ${#BINARIES_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Copying binaries to $LOCAL_BIN_DIR..."
+        if ! rsync -av --progress "${BINARIES_TO_DEPLOY[@]}" "$LOCAL_BIN_DIR/"; then
+            echo -e "\e[31mError: Binary copy failed.\e[0m"
+            exit 1
+        fi
+    fi
+    if [ ${#SCRIPTS_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Copying scripts to $LOCAL_SCRIPTS_DIR..."
+        if ! rsync -av --progress "${SCRIPTS_TO_DEPLOY[@]}" "$LOCAL_SCRIPTS_DIR/"; then
+            echo -e "\e[31mError: Script copy failed.\e[0m"
+            exit 1
+        fi
+    fi
+    if [ ${#ROS2_SRC_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Copying ros2/src to $LOCAL_ROS2_SRC_DIR..."
+        if ! rsync -av --progress "${ROS2_SRC_TO_DEPLOY[@]}/" "$LOCAL_ROS2_SRC_DIR/"; then
+            echo -e "\e[31mError: ros2/src copy failed.\e[0m"
+            exit 1
+        fi
+    fi
+    if [ ${#RESOURCES_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Copying resources to $LOCAL_RESOURCES_DIR..."
+        if ! rsync -av --progress "${RESOURCES_TO_DEPLOY[@]}" "$LOCAL_RESOURCES_DIR/"; then
+            echo -e "\e[31mError: Resources copy failed.\e[0m"
+            exit 1
+        fi
+    fi
+    if [ ${#CONFIGS_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Copying configs to $LOCAL_CONFIGS_DIR..."
+        if ! rsync -av --progress "${CONFIGS_TO_DEPLOY[@]}" "$LOCAL_CONFIGS_DIR/"; then
+            echo -e "\e[31mError: Configs copy failed.\e[0m"
+            exit 1
+        fi
+    fi
+else
+    # Remote deployment using rsync over SSH
+    if [ ${#BINARIES_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "File transfer starting..."
+        if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_BIN_DIR[@]} && rsync" -e "$SSH_AUTH" "${BINARIES_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_BIN_DIR/"; then
+            echo -e "\e[31mError: File transfer failed.\e[0m"
+            exit 1
+        fi
+    fi
+    if ! rsync -avz --progress -e "$SSH_AUTH" "${SCRIPTS_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_SCRIPTS_DIR"; then
+        echo -e "\e[31mError: Script file transfer failed.\e[0m"
         exit 1
     fi
-fi
-if ! rsync -avz --progress -e "$SSH_AUTH" "${SCRIPTS_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_SCRIPTS_DIR"; then
-    echo -e "\e[31mError: Script file transfer failed.\e[0m"
-    exit 1
-fi
-if [ ${#ROS2_SRC_TO_DEPLOY[@]} -gt 0 ]; then
-    echo "Deploying ros2/src to $REMOTE_ROS2_SRC_DIR..."
-    if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_ROS2_SRC_DIR[@]} && rsync" -e "$SSH_AUTH" "${ROS2_SRC_TO_DEPLOY[@]}/" "$REMOTE_DEVICE:$REMOTE_ROS2_SRC_DIR/"; then
-        echo -e "\e[31mError: ros2/src file transfer failed.\e[0m"
+    if [ ${#ROS2_SRC_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Deploying ros2/src to $REMOTE_ROS2_SRC_DIR..."
+        if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_ROS2_SRC_DIR[@]} && rsync" -e "$SSH_AUTH" "${ROS2_SRC_TO_DEPLOY[@]}/" "$REMOTE_DEVICE:$REMOTE_ROS2_SRC_DIR/"; then
+            echo -e "\e[31mError: ros2/src file transfer failed.\e[0m"
+            exit 1
+        fi
+    fi
+    if ! rsync -avz --progress -e "$SSH_AUTH" "${RESOURCES_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_RESOURCES_DIR/"; then
+        echo -e "\e[31mError: Resources/mediamtx file transfer failed.\e[0m"
         exit 1
     fi
-fi
-if ! rsync -avz --progress -e "$SSH_AUTH" "${RESOURCES_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_RESOURCES_DIR/"; then
-    echo -e "\e[31mError: Resources/mediamtx file transfer failed.\e[0m"
-    exit 1
-fi
-if [ ${#CONFIGS_TO_DEPLOY[@]} -gt 0 ]; then
-    echo "Deploying ${CONFIGS_TO_DEPLOY[@]} to $REMOTE_DEVICE:$REMOTE_CONFIGS_DIR..."
-    if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_CONFIGS_DIR[@]} && rsync" -e "$SSH_AUTH" "${CONFIGS_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_CONFIGS_DIR/"; then
-        echo -e "\e[31mError: ${CONFIGS_TO_DEPLOY[@]} file transfer failed.\e[0m"
-        exit 1
+    if [ ${#CONFIGS_TO_DEPLOY[@]} -gt 0 ]; then
+        echo "Deploying ${CONFIGS_TO_DEPLOY[@]} to $REMOTE_DEVICE:$REMOTE_CONFIGS_DIR..."
+        if ! rsync -avz --progress --rsync-path="mkdir -p ${REMOTE_CONFIGS_DIR[@]} && rsync" -e "$SSH_AUTH" "${CONFIGS_TO_DEPLOY[@]}" "$REMOTE_DEVICE:$REMOTE_CONFIGS_DIR/"; then
+            echo -e "\e[31mError: ${CONFIGS_TO_DEPLOY[@]} file transfer failed.\e[0m"
+            exit 1
+        fi
     fi
 fi
 

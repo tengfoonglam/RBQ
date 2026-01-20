@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['high_2dlevel_20motion_20command_20api_460',['High-Level Motion Command API',['../group__MotionAPI.html',1,'']]]
+  ['gamepad_20api_489',['Gamepad API',['../group__GamepadAPI.html',1,'']]]
 ];
