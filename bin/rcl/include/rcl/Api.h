@@ -3552,9 +3552,153 @@ public:
     private:
         RBQ_API* m_parent = nullptr;
         rbq::Parameters m_data;
-        bool m_dds = true;
+        bool m_dds = false;
     };
     Parameters parameters{this};
+
+    #include <cstdint>
+    struct ErrorCode
+    {
+        /**
+         * @defgroup ErrorCodeAPI RBQ Error Code API
+         * @brief Unified error code table for RBQ.
+         *
+         * Error code format (10 digits):
+         *   D SSS TTT JJJ
+         *
+         *   D   : Severity (1 = WARNING, 2 = FATAL)
+         *   SSS : Subsystem
+         *   TTT : Type
+         *   JJJ : Index (Joint ID, port number, etc.)
+         *
+         * Notes:
+         * - For Joint (SSS=001), JJJ is the joint number.
+         * - This class is for documentation and compile-time constants only.
+         */
+
+        /**
+         * @brief Error code enumeration.
+         * @ingroup ErrorCodeAPI
+         */
+        enum Code : uint32_t
+        {
+            // =========================================================
+            // Subsystem 001 : Joint (JNT)   JJJ = Joint ID
+            // Types:
+            //   001 = OVT (over temperature)
+            //   002 = OVC (over current)
+            //   003 = LIM (limit)
+            //   004 = HOME
+            //   005 = COMM
+            // =========================================================
+
+            // ---- WARNING ----
+            WARN_JNT_OVT_000   = 1001001000, ///< Joint over-temperature warning (joint 000)
+            WARN_JNT_OVC_000   = 1001002000, ///< Joint over-current warning (joint 000)
+            WARN_JNT_LIM_000   = 1001003000, ///< Joint limit warning (joint 000)
+
+            // ---- FATAL ----
+            FATAL_JNT_OVT_000  = 2001001000, ///< Joint over-temperature fatal (joint 000)
+            FATAL_JNT_HOME_000 = 2001004000, ///< Joint homing failed (joint 000)
+            FATAL_JNT_COMM_000 = 2001005000, ///< Joint communication lost (joint 000)
+
+            // =========================================================
+            // Subsystem 002 : IMU
+            // Types:
+            //   001 = DRFT, 002 = BIAS, 003 = COMM
+            // =========================================================
+
+            FATAL_IMU_DRFT_000 = 2002001000, ///< IMU drift error
+            FATAL_IMU_BIAS_000 = 2002002000, ///< IMU bias error
+            FATAL_IMU_COMM_000 = 2002003000, ///< IMU communication lost
+
+            // =========================================================
+            // Subsystem 003 : Camera (CAM)
+            // Types:
+            //   001 = COMM, 002 = LFPS
+            // =========================================================
+
+            WARN_CAM_COMM_001  = 1003001001, ///< Camera disconnected
+            WARN_CAM_LFPS_001  = 1003002001, ///< Camera FPS low
+
+            // =========================================================
+            // Subsystem 004 : Dock
+            // Types:
+            //   001 = RTRY, 002 = CHG, 003 = ABRT, 004 = ALGN, 005 = MARK
+            // =========================================================
+
+            WARN_DOCK_RTRY_001 = 1004010001, ///< Docking retry
+
+            FATAL_DOCK_CHG_001  = 2004002001, ///< Docked but not charging
+            FATAL_DOCK_ABRT_001 = 2004003001, ///< Dock aborted (max retries)
+            FATAL_DOCK_ALGN_001 = 2004004001, ///< Docking alignment error
+            FATAL_DOCK_MARK_001 = 2004005001, ///< Docking marker not found
+
+            // =========================================================
+            // Subsystem 005 : PDU
+            // Types:
+            //   001 = OVT, 002 = OVC
+            // =========================================================
+
+            WARN_PDU_OVT_000   = 1005001000, ///< PDU temperature warning
+            WARN_PDU_OVC_001   = 1005002001, ///< Total current warning
+            WARN_PDU_OVC_002   = 1005002002, ///< Leg current warning
+            WARN_PDU_OVC_003   = 1005002003, ///< Port1 over-current
+            WARN_PDU_OVC_004   = 1005002004, ///< Port2 over-current
+            WARN_PDU_OVC_005   = 1005002005, ///< Port3 over-current
+
+            FATAL_PDU_OVT_000  = 2005001000, ///< PDU over-temperature
+
+            // =========================================================
+            // Subsystem 006 : Battery
+            // Types:
+            //   001 = LV
+            // =========================================================
+
+            WARN_BAT_LV_000    = 1006001000, ///< Battery voltage low
+
+            FATAL_BAT_LV_000   = 2006001000, ///< Battery voltage is fatal level, robot immediate sit down
+
+            // =========================================================
+            // Subsystem 007 : System
+            // Types:
+            //   001 = CPU, 002 = OVT, 003 = PROC
+            // =========================================================
+
+            WARN_SYS_CPU_001   = 1007001001, ///< CPU usage high
+            WARN_SYS_CPU_002   = 1007001002, ///< CPU temperature high
+            WARN_SYS_OVT_001   = 1007002001, ///< System over-temperature
+
+            FATAL_SYS_PROC_001 = 2007003001, ///< Application crash repeated
+
+            // =========================================================
+            // Subsystem 008 : Network
+            // Types:
+            //   001 = PING
+            // =========================================================
+
+            FATAL_LAN_PING_001 = 2008017001, ///< Ping to robot router failed
+
+            // =========================================================
+            // Subsystem 009 : Settings
+            // Types:
+            //   001 = MASS, 002 = COM
+            // =========================================================
+
+            WARN_SET_MASS_001 = 1009001001, ///< additional mass out of range
+            WARN_SET_COM_001 = 1009002001,  ///< additional mass com x out of range
+            WARN_SET_COM_002 = 1009002002,  ///< additional mass com y out of range
+            WARN_SET_COM_003 = 1009002003,   ///< additional mass com z out of range
+
+            // =========================================================
+            // Subsystem 010 : Status
+            // Types:
+            //   001 = FLP (robot flipped)
+            // =========================================================
+            FATAL_STS_FLP_000 = 2010001000, ///< Robot flipped over, can not stand up
+
+        };
+    };
 
 #if defined(PRIVATE)
     struct Command {

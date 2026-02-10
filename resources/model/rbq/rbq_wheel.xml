@@ -40,7 +40,7 @@
             </default>
             <default class="wheel">
                 <joint axis="0 1 0" damping="0." armature="0.000" frictionloss="0.02"/>
-                <motor ctrlrange="-20 20" ctrllimited="true"/>
+                <motor ctrlrange="-30 30" ctrllimited="true"/>
             </default>
             <default class="visual">
                 <geom type="mesh" contype="0" conaffinity="0" group="2"/>
@@ -165,9 +165,9 @@
                         <joint name="joint_HRK" class="knee"/>
                         <geom type="mesh" mesh="calf_wheel_right" material="charcoal" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
-                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.33" euler="1.5707 0 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.29" euler="1.5707 0 0" class="collision"/>
 
-                        <body name="RR_wheel" pos="0 -0.0435 -0.33">
+                        <body name="RR_wheel" pos="0 -0.047 -0.29">
                             <inertial pos="-0.00000 0.003302 0" mass="1.671205"
                                 fullinertia="0.002972532 0.005348895 0.002972532 0.00000000 0.0000000 -0.00000000"/>
                             <joint name="joint_HRW" class="wheel"/>
@@ -199,9 +199,9 @@
                         <joint name="joint_HLK" class="knee"/>
                         <geom type="mesh" mesh="calf_wheel_left" material="charcoal" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
-                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.33" euler="1.5707 0 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.29" euler="1.5707 0 0" class="collision"/>
 
-                        <body name="RL_wheel" pos="0 0.0435 -0.33">
+                        <body name="RL_wheel" pos="0 0.047 -0.29">
                             <inertial pos="-0.00000 -0.003302 0" mass="1.671205"
                                 fullinertia="0.002972532 0.005348895 0.002972532 0.00000000 0.0000000 -0.00000000"/>
                             <joint name="joint_HLW" class="wheel"/>
@@ -233,9 +233,9 @@
                         <joint name="joint_FRK" class="knee"/>
                         <geom type="mesh" mesh="calf_wheel_right" material="charcoal" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
-                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.33" euler="1.5707 0 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.29" euler="1.5707 0 0" class="collision"/>
 
-                        <body name="FR_wheel" pos="0 -0.0435 -0.33">
+                        <body name="FR_wheel" pos="0 -0.047 -0.29">
                             <inertial pos="0 0.003302 0" mass="1.671205"
                                 fullinertia="0.002972532 0.005348895 0.002972532 0.00000000 0.0000000 -0.00000000"/>
                             <joint name="joint_FRW" class="wheel"/>
@@ -267,9 +267,9 @@
                         <joint name="joint_FLK" class="knee"/>
                         <geom type="mesh" mesh="calf_wheel_left" material="charcoal" class="visual"/>
                         <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
-                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.33" euler="1.5707 0 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0 -0.29" euler="1.5707 0 0" class="collision"/>
 
-                        <body name="FL_wheel" pos="0 0.0435 -0.33">
+                        <body name="FL_wheel" pos="0 0.047 -0.29">
                             <inertial pos="0 -0.003302 0" mass="1.671205"
                                 fullinertia="0.002972532 0.005348895 0.002972532 0.00000000 0.0000000 -0.00000000"/>
                             <joint name="joint_FLW" class="wheel"/>

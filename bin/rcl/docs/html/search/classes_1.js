@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamepad_250',['Gamepad',['../structRBQ__API_1_1Gamepad.html',1,'RBQ_API']]]
+  ['errorcode_288',['ErrorCode',['../structRBQ__API_1_1ErrorCode.html',1,'RBQ_API']]]
 ];

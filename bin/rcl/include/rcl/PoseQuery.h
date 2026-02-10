@@ -205,7 +205,7 @@ struct TFs_t
     }
 };
 
-constexpr int NUM_OF_POINTS = 50;
+constexpr int NUM_OF_POINTS = 77;
 
 struct PointPositions_t
 {

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['simulator_20api_495',['Simulator API',['../group__SimulatorAPI.html',1,'']]],
-  ['state_20estimation_20api_496',['State Estimation API',['../group__StateEstimationAPI.html',1,'']]],
-  ['status_20api_497',['Status API',['../group__StatusAPI.html',1,'']]]
+  ['rbq_20error_20code_20api_570',['RBQ Error Code API',['../group__ErrorCodeAPI.html',1,'']]]
 ];

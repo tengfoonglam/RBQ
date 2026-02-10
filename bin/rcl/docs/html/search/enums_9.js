@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stat_365',['STAT',['../group__StatusAPI.html#ga55d067c30acca13567c9ee40857113f1',1,'RBQ_API::Status']]]
+  ['port_404',['Port',['../group__PowerControlAPI.html#ga4edab5d25b650cec5606af9bb0b6535f',1,'RBQ_API::Power']]]
 ];

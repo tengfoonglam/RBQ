@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['imu_251',['Imu',['../structRBQ__API_1_1Imu.html',1,'RBQ_API']]]
+  ['gamepad_289',['Gamepad',['../structRBQ__API_1_1Gamepad.html',1,'RBQ_API']]]
 ];
