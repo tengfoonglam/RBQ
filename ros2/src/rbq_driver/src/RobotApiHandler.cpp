@@ -10,6 +10,11 @@ extern bool GLOBAL_KILL_SIGNAL;
 
 #include "RobotApiHandler.h"
 #include "NetworkHandler.h"
+#include <rbq_msgs/msg/high_level_command.hpp>
+
+namespace {
+    using Gait = rbq_msgs::msg::HighLevelCommand;
+    }    
 
 #include <thread>
 
@@ -552,67 +557,67 @@ void RobotApiHandler::switchGait(const int &gait_id)
     qDebug() << "RobotApiHandler::switchGait() gait_id:" << gait_id;
     
     switch(gait_id) {
-        case 0: // STATE_SIT
+        case Gait::STATE_SIT:
             motionDynamicGround();
             break;
-        case 1: // STATE_STAND
+        case Gait::STATE_STAND:
             motionDynamicReady();
             break;
-        case 2: // STATE_WALK
+        case Gait::STATE_WALK:
             motionDynamicWalk();
             break;
-        case 3: // STATE_AIM
+        case Gait::STATE_AIM:
             motionDynamicAim();
             break;
-        case 4: // STATE_STAIRS
+        case Gait::STATE_STAIRS:
             motionDynamicWalkStairs();
             break;
-        case 5: // STATE_WAVE
+        case Gait::STATE_WAVE:
             motionDynamicWalkSlow();
             break;
-        case 6: // STATE_RUN
+        case Gait::STATE_RUN:
             motionDynamicRun();
             break;
-        case 30: // STATE_RL_TROT
+        case Gait::STATE_RL_TROT:
             motionRLTrot();
             break;
-        case 31: // STATE_RL_FRONT_WALK
+        case Gait::STATE_RL_FRONT_WALK:
             motionRLFrontWalk();
             break;
-        case 33: // STATE_RL_LEFT_WALK
+        case Gait::STATE_RL_LEFT_WALK:
             motionRLLeftWalk();
             break;
-        case 34: // STATE_RL_RIGHT_WALK
+        case Gait::STATE_RL_RIGHT_WALK:
             motionRLRightWalk();
             break;
-        case 35: // STATE_RL_BOUND
+        case Gait::STATE_RL_BOUND:
             motionRLBound();
             break;
-        case 36: // STATE_RL_PACE
+        case Gait::STATE_RL_PACE:
             motionRLPace();
             break;
-        case 37: // STATE_RL_PRONK
+        case Gait::STATE_RL_PRONK:
             motionRLPronk();
             break;
-        case 38: // STATE_RL_3LEG_HR
+        case Gait::STATE_RL_3LEG_HR:
             motionRL3LegHR();
             break;
-        case 39: // STATE_RL_3LEG_HL
+        case Gait::STATE_RL_3LEG_HL:
             motionRL3LegHL();
             break;
-        case 40: // STATE_RL_3LEG_FR
+        case Gait::STATE_RL_3LEG_FR:
             motionRL3LegFR();
             break;
-        case 41: // STATE_RL_3LEG_FL
+        case Gait::STATE_RL_3LEG_FL:
             motionRL3LegFL();
             break;
-        case 42: // STATE_RL_TROT_VISION
+        case Gait::STATE_RL_TROT_VISION:
             motionRLTrotVision();
             break;
-        case 45: // STATE_RL_TROT_RUN
+        case Gait::STATE_RL_TROT_RUN:
             motionRLTrotRun();
             break;
-        case 46: // STATE_RL_SILENT
+        case Gait::STATE_RL_SILENT:
             motionRLSilent();
             break;
         default:

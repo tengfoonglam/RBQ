@@ -1,6 +1,6 @@
 {
     "export_info": {
-        "onnx_path": "/home/dev/rbq_ws/RBQ/main/rbq_gym/logs/rbq10/exported/policies/policy.onnx",
+        "onnx_path": "/home/dev/RBQ/rbq_gym/logs/rbq10/exported/policies/policy.onnx",
         "obs_shape": 45
     },
     "config_info": {
