@@ -37,6 +37,7 @@ sleep 1
 if [ "$VISION_ENABLED" = "true" ]; then
     gnome-terminal --tab --title="Vision" -- bash -i -c "bash scripts/start_vision.bash --sim"
     gnome-terminal --tab --title="Mujoco" -- bash -i -c "bash scripts/start_mujoco.bash ${ROBOT_ARGS[@]} --vision "
+    gnome-terminal --tab --title="mediamtx" -- bash -i -c "bash scripts/start_mediamtx.bash"
 else
     gnome-terminal --tab --title="Mujoco" -- bash -i -c "bash scripts/start_mujoco.bash ${ROBOT_ARGS[@]}"
 fi
