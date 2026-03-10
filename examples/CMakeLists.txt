@@ -11,7 +11,6 @@ set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,--gc-sections -s")
 
 find_package(Eigen3 REQUIRED)
 find_package(RCL REQUIRED)
-find_package(onnxruntime REQUIRED)
 find_package(CycloneDDS REQUIRED)
 find_package(CycloneDDS-CXX REQUIRED)
 find_package(nlohmann_json REQUIRED)

@@ -24,13 +24,12 @@
 #include "rcl/Thread.h"
 #include "rcl/JointControl.h"
 #include "rcl/Policy.hpp"
+#include "rcl/PolicyParams.hpp"
 
 #include "nlohmann/json.hpp"
 
 constexpr float kR2D = 57.295779513f;
 constexpr float kD2R = 0.0174532925f;
-
-
 
 struct VelocityCommand {
     // Command velocity limits (m/s for linear, rad/s for angular)
@@ -111,101 +110,10 @@ struct VelocityCommand {
     }
 };
 
-struct PolicyParams {
-    std::mutex mtx;
-    std::string name;
-    float   dt;
-    float   action_scale;
-    float   KP[12];
-    float   KD[12];
-    int     num_observations;
-    int     num_actions;
-    float   command_ranges[3][2];
-    std::vector<float> default_joint_angles;
-    float   obs_lin_vel_scale;
-    float   obs_ang_vel_scale;
-    float   obs_dof_pos_scale;
-    float   obs_dof_vel_scale;
-    float   clip_observations;
-    float   clip_actions;
-
-    enum ERROR {
-        ERROR_NONE,
-        ERROR_CONFIG_NOT_FOUND,
-        ERROR_CONFIG_READ_FAIL,
-        ERROR_CONFIG_PARSE_FAIL,
-    };
-
-    ERROR error = ERROR_NONE;
-    bool loaded = false;
-
-    void loadFromPath(const std::string& path) {
-        std::lock_guard<std::mutex> lock(mtx);
-        loaded = false;
-        const std::string config = path + "/info.json";
-        if (!std::filesystem::exists(config)) {
-            throw(std::string("Config file path is wrong: " + config));
-            error = ERROR_CONFIG_NOT_FOUND;
-        }
-        std::ifstream file(config, std::ios::in);
-        if (!file.is_open()) {
-            throw(std::string("Config file read failed: " + config));
-            error = ERROR_CONFIG_READ_FAIL;
-        }
-        try {
-            nlohmann::json j;
-            file >> j;
-            name = j["config_info"]["run_name"];
-            dt   = j["config_info"]["control"]["policy_dt"];
-            action_scale = j["config_info"]["control"]["action_scale"];
-            for (int lnum = 0; lnum < 4; lnum++) {
-                KP[lnum*3 + 0]    = j["config_info"]["control"]["stiffness"]["R"];
-                KP[lnum*3 + 1]    = j["config_info"]["control"]["stiffness"]["P"];
-                KP[lnum*3 + 2]    = j["config_info"]["control"]["stiffness"]["K"];
-                KD[lnum*3 + 0]      = j["config_info"]["control"]["damping"]["R"];
-                KD[lnum*3 + 1]      = j["config_info"]["control"]["damping"]["P"];
-                KD[lnum*3 + 2]      = j["config_info"]["control"]["damping"]["K"];
-            }
-            num_observations = j["config_info"]["env"]["num_observations"];
-            num_actions      = j["config_info"]["env"]["num_actions"];
-            for (int i = 0; i < 2; i++) {
-                command_ranges[0][i] = j["config_info"]["commands"]["ranges"]["lin_vel_x"][i];
-                command_ranges[1][i] = j["config_info"]["commands"]["ranges"]["lin_vel_y"][i];
-                command_ranges[2][i] = j["config_info"]["commands"]["ranges"]["ang_vel_yaw"][i];
-            }
-            obs_lin_vel_scale        = j["config_info"]["normalization"]["obs_scales"]["lin_vel"];
-            obs_ang_vel_scale        = j["config_info"]["normalization"]["obs_scales"]["ang_vel"];
-            obs_dof_pos_scale        = j["config_info"]["normalization"]["obs_scales"]["dof_pos"];
-            obs_dof_vel_scale        = j["config_info"]["normalization"]["obs_scales"]["dof_vel"];
-            clip_observations        = j["config_info"]["normalization"]["clip_observations"];
-            clip_actions             = j["config_info"]["normalization"]["clip_actions"];
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint0_HRR"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint1_HRP"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint2_HRK"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint3_HLR"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint4_HLP"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint5_HLK"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint6_FRR"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint7_FRP"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint8_FRK"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint9_FLR"] );
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint10_FLP"]);
-            default_joint_angles.push_back(j["config_info"]["init_state"]["default_joint_angles"]["joint11_FLK"]);
-            error = ERROR_NONE;
-            loaded = true;
-            std::cout << "Config file parse complete: " << config << std::endl;
-        } catch (const std::exception &e) {
-            throw(std::string("Config file parse failed: " + config + ". Error: " + e.what()));
-            error = ERROR_CONFIG_PARSE_FAIL;
-        }
-    }
-};
-
 JointTable g_jointTable;
 std::unique_ptr<JointController> g_jointController;
-std::unique_ptr<Policy> g_policy;
 VelocityCommand g_cmd;
-PolicyParams g_params;
+std::string g_policyPath = "";
 
 bool g_isWorking = false;
 
@@ -279,6 +187,7 @@ int main(int argc, char* argv[])
         std::cout << "You are running as NON-ROOT. " << APP_NAME << " will now exit.\n";
         return -1;
     }
+    mlockall(MCL_CURRENT|MCL_FUTURE);
 
     g_isWorking = true;
     try {
@@ -291,9 +200,8 @@ int main(int argc, char* argv[])
             std::filesystem::path exe_path = std::filesystem::canonical("/proc/self/exe").parent_path();
             path = (exe_path.lexically_normal().string() + "/../../rbq_gym/policy/rbq10");
         }
-        std::cout << "Loading policy from: " << path << std::endl;
-        g_policy = std::make_unique<Policy>(path);
-        g_params.loadFromPath(path);
+        g_policyPath = path;
+        std::cout << "Loading policy from: " << g_policyPath << std::endl;
         std::cout << "Initialization complete.\n";
     } catch (const std::exception& e) {
         std::cerr << "Initialization failed: " << e.what() << "\n";
@@ -456,8 +364,16 @@ void controlLoop()
     timespec timeNext;
     clock_gettime(CLOCK_REALTIME, &timeNext);
 
-    while (g_isWorking && g_jointController) {
+    bool policyReset = true;
+    TaskState lastTask = TaskState::Idle;
+    PolicyParams params;
+    Policy policy;
 
+    while (g_isWorking && g_jointController) {
+        if (lastTask != g_currentTask) {
+            lastTask = g_currentTask;
+            policyReset = true;
+        }
         switch (g_currentTask) {
         case TaskState::Idle: {
             break;
@@ -479,8 +395,15 @@ void controlLoop()
             if (decimation_cnt == 5) {
                 decimation_cnt = 0;
                 try {
-                    if (g_policy && g_policy->error() == Policy::ERROR_NONE &&
-                        g_params.error == PolicyParams::ERROR_NONE && g_params.loaded) {
+                    if (!policy.loaded() || !params.loaded() || policyReset ) {
+                        std::cout << "Loading policy from: " << g_policyPath << std::endl;
+                        params.loadFromPath(g_policyPath);
+                        policy = Policy();
+                        policy.reload(g_policyPath);
+                        policyReset = false;
+                    }
+                    if (policy.error() == Policy::ERROR_NONE && policy.loaded() &&
+                        params.error() == PolicyParams::ERROR_NONE && params.loaded()) {
                         const int jointSize = 12;
                         Eigen::Vector3f gyro            = RBQ_API::instance().imu.getGyro();
                         Eigen::Quaternion<float> quat   = RBQ_API::instance().imu.getQuaternion();
@@ -494,39 +417,36 @@ void controlLoop()
                         static std::vector<float> lastActions(jointSize, 0.0f);
                         std::vector<float> obs;
                         for (int i = 0; i < 3; i++)
-                            obs.push_back(gyro[i] * g_params.obs_ang_vel_scale);
+                            obs.push_back(gyro[i] * params.obs_ang_vel_scale);
                         Eigen::Vector3f proj_grav = quat.inverse() * Eigen::Vector3f(0.0f, 0.0f, -1.0f);
                         for (int i = 0; i < 3; i++)
                             obs.push_back(proj_grav[i]);
-                        static float commands_scale[] = {g_params.obs_lin_vel_scale, g_params.obs_lin_vel_scale, g_params.obs_ang_vel_scale};
+                        static float commands_scale[] = {params.obs_lin_vel_scale, params.obs_lin_vel_scale, params.obs_ang_vel_scale};
                         for (int i = 0; i < 3; i++)
                             obs.push_back(command[i] * commands_scale[i]);
                         for (int i = 0; i < jointSize; i++)
-                            obs.push_back((pos[i] - g_params.default_joint_angles[i]) * g_params.obs_dof_pos_scale);
+                            obs.push_back((pos[i] - params.default_joint_angles[i]) * params.obs_dof_pos_scale);
                         for (int i = 0; i < jointSize; i++)
-                            obs.push_back(vel[i] * g_params.obs_dof_vel_scale);
+                            obs.push_back(vel[i] * params.obs_dof_vel_scale);
                         for (int i = 0; i < jointSize; i++)
                             obs.push_back(lastActions[i]);
                         int error;
-                        std::vector<float> actions = g_policy->compute(obs, g_params.num_observations, g_params.num_actions, error);
+                        std::vector<float> actions = policy.inference(obs, params.num_observations, params.num_actions, error);
                         for (int i=0; i<jointSize; i++) {
-                            actions[i] = std::clamp(actions[i], -g_params.clip_actions, g_params.clip_actions);
+                            actions[i] = std::clamp(actions[i], -params.clip_actions, params.clip_actions);
                             lastActions[i] = actions[i];
                         }
-
                         if (error == Policy::ERROR_NONE) {
-                            static float actions_filt[12] = {0, };
                             for (int i=0; i<jointSize; i++) {
-                                actions_filt[i] = 0.55673*actions[i] + (1.0 - 0.55673)*actions_filt[i]; //100Hz low-pass filter
-                                const float posRef = actions_filt[i] * g_params.action_scale + g_params.default_joint_angles[i];
+                                const float posRef = actions[i] * params.action_scale + params.default_joint_angles[i];
                                 RBQ_API::instance().joint.setPosRef   (i, posRef);
-                                RBQ_API::instance().joint.setGainKpRef(i, g_params.KP[i]);
-                                RBQ_API::instance().joint.setGainKdRef(i, g_params.KD[i]);
+                                RBQ_API::instance().joint.setGainKpRef(i, params.KP[i]);
+                                RBQ_API::instance().joint.setGainKdRef(i, params.KD[i]);
                                 RBQ_API::instance().joint.setTorqueRef(i, 0);
                             }
                             RBQ_API::instance().joint.setAllJointRef();
                         } else {
-                            std::cerr << "Policy error occurred: " << static_cast<int>(g_policy->error()) << std::endl;
+                            std::cerr << "Policy error occurred: " << static_cast<int>(policy.error()) << std::endl;
                         }
                     } else {
                         std::cerr << "Policy not loaded or has error.\n";
@@ -610,4 +530,3 @@ void goToMotionGround()
         g_jointController->moveJoint(i, g_jointTable.ground[i] * kD2R, motionTime, MoveCommandMode::Absolute);
     usleep((motionTime + 100) * 1000);
 }
-
