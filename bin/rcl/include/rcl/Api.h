@@ -3549,6 +3549,8 @@ public:
 
         double payloadMass();
 
+        double jointTorqueLimitWheel();
+
     private:
         RBQ_API* m_parent = nullptr;
         rbq::Parameters m_data;
@@ -3608,9 +3610,10 @@ public:
             //   001 = DRFT, 002 = BIAS, 003 = COMM
             // =========================================================
 
-            FATAL_IMU_DRFT_000 = 2002001000, ///< IMU drift error
-            FATAL_IMU_BIAS_000 = 2002002000, ///< IMU bias error
-            FATAL_IMU_COMM_000 = 2002003000, ///< IMU communication lost
+            FATAL_IMU_ACC_000 = 2002001000, ///< IMU acc bias error
+            FATAL_IMU_GYRO_000 = 2002002000, ///< IMU gyro bias error
+            FATAL_IMU_COMM_000 = 2002003000, ///< IMU communication lost during initialize
+            FATAL_IMU_COMM_001 = 2002003001, ///< IMU communication lost during operation
 
             // =========================================================
             // Subsystem 003 : Camera (CAM)
