@@ -2805,7 +2805,7 @@ public:
 
     struct Gamepad {
         /**
-         * @defgroup GamepadAPI Gamepad API
+         * @defgroup Gamepad Gamepad
          * @brief Access joystick, trigger, and button inputs from the gamepad.
          *
          * This group provides access to the current state of the connected gamepad,
@@ -2816,10 +2816,11 @@ public:
          *
          * This gamepad mapping is valid for Logitech F710 in 'X' mode
          */
+        Gamepad(RBQ_API* parent) : m_parent(parent) {}
 
         /**
          * @brief Enumeration of all button types on the gamepad.
-         * @ingroup GamepadAPI
+         * @ingroup Gamepad
          */
         enum class Button {
             A,          ///< Face buttons
@@ -2839,75 +2840,70 @@ public:
             AR_RIGHT,   ///< D-pad directions
         };
 
-        Gamepad(RBQ_API* parent) : m_parent(parent) {}
+        /**
+         * @brief Enumeration of all analog axes on the gamepad.
+         * @ingroup Gamepad
+         */
+        enum class Axis {
+            LJOG_X,     ///< Left joystick X-axis
+            LJOG_Y,     ///< Left joystick Y-axis
+            RJOG_X,     ///< Right joystick X-axis
+            RJOG_Y,     ///< Right joystick Y-axis
+            LT,         ///< Left trigger
+            RT,         ///< Right trigger
+        };
 
         /**
-         * @brief Gets the left joystick's X-axis input value.
-         * @param out_left_jog_x_ Reference to store value in range [-1.0, 1.0].
-         * @return 1 on success, 0 if shared memory is not accessible.
-         * @ingroup GamepadAPI
+         * @brief Gets the state of a digital gamepad button by ID.
+         * @param id The button ID to query. refer to Button enum.
+         * @return Button state (1: pressed, 0: not pressed).
+         * @ingroup Gamepad
          */
-        int getLeftJogX(float &out_left_jog_x_);
+        int getButtonState(const Button &id) {
+            int dummy;
+            return getButtonState(id, dummy);
+        }
 
         /**
-         * @brief Gets the left joystick's Y-axis input value.
-         * @param out_left_jog_y_ Reference to store value in range [-1.0, 1.0].
-         * @return 1 on success, 0 if shared memory is not accessible.
-         * @ingroup GamepadAPI
+         * @brief Gets the state of a digital gamepad button by ID.
+         * @param id The button ID to query. refer to Button enum.
+         * @param error Reference to store error code (0: no-error, ...).
+         * @return Button state (1: pressed, 0: not pressed).
+         * @ingroup Gamepad
          */
-        int getLeftJogY(float &out_left_jog_y_);
+        int getButtonState(const Button &id, int &error);
 
         /**
-         * @brief Gets the value of the left trigger.
-         * @param out_left_trigger_ Reference to store value in range [0.0, 1.0].
-         * @return 1 on success, 0 if shared memory is not accessible.
-         * @ingroup GamepadAPI
+         * @brief Gets the state of a gamepad analog axis by ID.
+         * @param id The axis ID to query. refer to Axis enum.
+         * @return Axis value (normalized float).
+         * @ingroup Gamepad
          */
-        int getLeftTrigger(float &out_left_trigger_);
+        float getAxisState(const Axis &id) {
+            int dummy;
+            return getAxisState(id, dummy);
+        }
 
         /**
-         * @brief Gets the right joystick's X-axis input value.
-         * @param out_right_jog_x_ Reference to store value in range [-1.0, 1.0].
-         * @return 1 on success, 0 if shared memory is not accessible.
-         * @ingroup GamepadAPI
+         * @brief Gets the state of a gamepad analog axis by ID.
+         * @param id The axis ID to query. refer to Axis enum.
+         * @param error Reference to store error code (0: no-error, ...).
+         * @return Axis value (normalized float).
+         * @ingroup Gamepad
          */
-        int getRightJogX(float &out_right_jog_x_);
+        float getAxisState(const Axis &id, int &error);
 
         /**
-         * @brief Gets the right joystick's Y-axis input value.
-         * @param out_right_jog_y_ Reference to store value in range [-1.0, 1.0].
-         * @return 1 on success, 0 if shared memory is not accessible.
-         * @ingroup GamepadAPI
+         * @brief Sets the gamepad command inputs using axis and button vectors.
+         * @param axis Vector of axis values (size should match number of axes).
+         * @param buttons Vector of button states (size should match number of buttons).
+         * @return error code (0: no-error, ...).
+         * @ingroup Gamepad
          */
-        int getRightJogY(float &out_right_jog_y_);
-
-        /**
-         * @brief Gets the value of the right trigger.
-         * @param out_right_trigger_ Reference to store value in range [0.0, 1.0].
-         * @return 1 on success, 0 if shared memory is not accessible.
-         * @ingroup GamepadAPI
-         */
-        int getRightTrigger(float &out_right_trigger_);
-
-        /**
-         * @brief Gets the state of a digital gamepad button.
-         * @param _ButtonID The button ID to query.
-         * @param out_state_ Reference to store button state (true if pressed).
-         * @return 1 on success, 0 if shared memory is not accessible, -1 for invalid Button ID.
-         * @ingroup GamepadAPI
-         */
-        int getButtonState(const Button _ButtonID, bool &out_state_);
-
-        int setGamePad(const float &_left_jog_x, const float &_left_jog_y,
-                       const float &_right_jog_x, const float &_right_jog_y,
-                       const float &_left_trigger, const float &_right_trigger, const bool _btn[16]);
+        int setCommand(const std::vector<float> &axis, const std::vector<bool> &buttons);
 
     private:
-        RBQ_API* m_parent = nullptr;  // RBQ_API class pointer
-
-#if defined(PRIVATE)
-        JOY_INFO m_joy;
-#endif
+        RBQ_API* m_parent = nullptr;
     };
     Gamepad gamepad{this};
 

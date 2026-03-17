@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['rb_201',['RB',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441ac8ee22e1fc2165dfd3d2b04aef93b2f2',1,'RBQ_API::Gamepad']]],
-  ['rbq_20error_20code_20api_202',['RBQ Error Code API',['../group__ErrorCodeAPI.html',1,'']]],
-  ['rbq_5fapi_203',['RBQ_API',['../classRBQ__API.html',1,'']]],
-  ['rjog_204',['RJOG',['../group__GamepadAPI.html#ggaf9ae8cd9844d42867754b07d52f5a441a45a9b0d570dd700f33314c0f85d1af0d',1,'RBQ_API::Gamepad']]],
+  ['rb_199',['RB',['../group__Gamepad.html#ggaf9ae8cd9844d42867754b07d52f5a441ac8ee22e1fc2165dfd3d2b04aef93b2f2',1,'RBQ_API::Gamepad']]],
+  ['rbq_20error_20code_20api_200',['RBQ Error Code API',['../group__ErrorCodeAPI.html',1,'']]],
+  ['rbq_5fapi_201',['RBQ_API',['../classRBQ__API.html',1,'']]],
+  ['rjog_202',['RJOG',['../group__Gamepad.html#ggaf9ae8cd9844d42867754b07d52f5a441a45a9b0d570dd700f33314c0f85d1af0d',1,'RBQ_API::Gamepad']]],
+  ['rjog_5fx_203',['RJOG_X',['../group__Gamepad.html#gga500561407decfacdd03605b43a5fe6c2a198ca9ecc743a907a53b8be54cee5c6a',1,'RBQ_API::Gamepad']]],
+  ['rjog_5fy_204',['RJOG_Y',['../group__Gamepad.html#gga500561407decfacdd03605b43a5fe6c2a64318a2d54c1c36f7fb094e0775ae88b',1,'RBQ_API::Gamepad']]],
   ['rl_5f3leg_5ffl_205',['RL_3LEG_FL',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2ae5aa844132e1dc56cc377248554b9bba',1,'RBQ_API::Status']]],
   ['rl_5f3leg_5ffr_206',['RL_3LEG_FR',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2a359bbbbed67c967fb2b54cb8532600da',1,'RBQ_API::Status']]],
   ['rl_5f3leg_5fhl_207',['RL_3LEG_HL',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2afdb5ca05d82b219d39c611338889a37d',1,'RBQ_API::Status']]],
@@ -18,6 +20,7 @@ var searchData=
   ['rl_5fright_5fwalk_216',['RL_RIGHT_WALK',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2a089633f1c3a52f787257eb6c25f177f0',1,'RBQ_API::Status']]],
   ['rl_5ftrot_217',['RL_TROT',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2af311dc0f38c4bc1374e7125eac896482',1,'RBQ_API::Status']]],
   ['rl_5ftrot_5fvision_218',['RL_TROT_VISION',['../group__StatusAPI.html#gga5d47a24243dcbd049f98339c06ef1aa2a5bbc60bdfb0bec9015de72d541d40016',1,'RBQ_API::Status']]],
-  ['run_219',['run',['../group__MotionAPI.html#gae2fd231314a6c345db725bc25255c1fd',1,'RBQ_API::Motion']]],
-  ['run_220',['RUN',['../structRBQ__API_1_1Joint.html#a00f1fd0fd1733ed3acc2d1aed0fdcd3ca855520d2a5b0b1a64b939e7e30889e2a',1,'RBQ_API::Joint']]]
+  ['rt_219',['RT',['../group__Gamepad.html#gga500561407decfacdd03605b43a5fe6c2a705610ed3e5ec724f5cb0d76a5fd3aa1',1,'RBQ_API::Gamepad']]],
+  ['run_220',['run',['../group__MotionAPI.html#gae2fd231314a6c345db725bc25255c1fd',1,'RBQ_API::Motion']]],
+  ['run_221',['RUN',['../structRBQ__API_1_1Joint.html#a00f1fd0fd1733ed3acc2d1aed0fdcd3ca855520d2a5b0b1a64b939e7e30889e2a',1,'RBQ_API::Joint']]]
 ];

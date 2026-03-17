@@ -46,6 +46,11 @@ public:
         auto timestamp = std::chrono::duration_cast<std::chrono::nanoseconds>(t.time_since_epoch()).count();
         return (timestamp*1.0e-9);
     }
+    static double GetTimeSince(const double &past) {
+        std::chrono::time_point<std::chrono::system_clock> t = std::chrono::system_clock::now();
+        auto timestamp = std::chrono::duration_cast<std::chrono::nanoseconds>(t.time_since_epoch()).count();
+        return (timestamp*1.0e-9 - past);
+    }
 private:
     typedef std::chrono::high_resolution_clock clock_;
     typedef std::chrono::duration<double, std::ratio<1> > second_;
