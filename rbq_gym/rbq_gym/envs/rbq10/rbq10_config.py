@@ -157,7 +157,6 @@ class RBQ10Cfg(BaseConfig):
         base_height_target = 0.48 
         max_contact_force = 400 # forces above this value are penalized
         class scales:
-
             tracking_lin_vel = 1.0
             tracking_ang_vel = 0.7
             lin_vel_z = -2.0

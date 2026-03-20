@@ -198,7 +198,8 @@ int main(int argc, char* argv[])
         g_jointController->syncReferenceToRobot();
         if (path.empty()) {
             std::filesystem::path exe_path = std::filesystem::canonical("/proc/self/exe").parent_path();
-            path = (exe_path.lexically_normal().string() + "/../../rbq_gym/policy/rbq10");
+            // path = (exe_path.lexically_normal().string() + "/../../rbq_gym/policy/rbq10");
+            path = (exe_path.lexically_normal().string() + "/../../rbq_lab/policy/rbq10");
         }
         g_policyPath = path;
         std::cout << "Loading policy from: " << g_policyPath << std::endl;
