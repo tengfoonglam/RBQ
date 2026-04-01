@@ -3,6 +3,7 @@
 APP_NAME="Vision"
 APP_PATH="bin"
 CMD_ARGS=()
+SUDO_MODE=false
 
 print_help() {
     echo "Usage: bash scripts/start_vision.bash [OPTIONS]"
@@ -14,7 +15,7 @@ print_help() {
 while [[ $# -gt 0 ]]; do
     case $1 in
         --help) print_help; exit 0 ;;
-        --sim) CMD_ARGS+=("--sim"); shift ;;
+        --sim) SUDO_MODE=true; CMD_ARGS+=("--sim"); shift ;;
         *) echo "Unknown argument: $1"; print_help; exit 1 ;;
     esac
 done
@@ -39,7 +40,11 @@ cd $APP_PATH
 while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then
-        ./"$APP_NAME" "${CMD_ARGS[@]}"
+        if [ "$SUDO_MODE" = true ]; then
+            sudo ./"$APP_NAME" "${CMD_ARGS[@]}"
+        else
+            ./"$APP_NAME" "${CMD_ARGS[@]}"
+        fi
     fi
     sleep 2
 done
