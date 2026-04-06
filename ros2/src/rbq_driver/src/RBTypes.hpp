@@ -288,7 +288,7 @@ public:
         bool    att02Connected  = 0;    // att2
         bool    att03Connected  = 0;    // cctv
         bool    att04Connected  = 0;    // thermal
-        bool    att05Connected  = 0;    //
+        bool    att05Connected  = 0;    // ptz
         bool    att06Connected  = 0;
         bool    att07Connected  = 0;
 
