@@ -1,0 +1,19 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct JointInfo_ {
+        float pos;     // rad
+        float vel;     // rad/s
+        float acc;     // rad/s^2
+        float torque;  // N·m
+        float kp;
+        float kd;
+        int8  owner;
+      };
+
+    };
+  };
+};
+

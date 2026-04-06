@@ -1,0 +1,40 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct JointStatus_ {
+        std_msgs::msg::dds_::Header_ header;
+        sequence<boolean> connected;
+        sequence<int8> temperature;
+        sequence<int8> motor_temp;
+        sequence<boolean> status_fet;
+        sequence<boolean> status_run;
+        sequence<boolean> status_init;
+        sequence<boolean> status_mod;
+        sequence<boolean> status_non_ctr;
+        sequence<boolean> status_bat;
+        sequence<boolean> status_calib;
+        sequence<boolean> status_mt_err;
+        sequence<boolean> status_jam;
+        sequence<boolean> status_cur;
+        sequence<boolean> status_big;
+        sequence<boolean> status_inp;
+        sequence<boolean> status_flt;
+        sequence<boolean> status_tmp;
+        sequence<boolean> status_ps1;
+        sequence<boolean> status_ps2;
+        sequence<boolean> status_rsvd;
+        sequence<float> position_ref;
+        sequence<float> position_enc;
+        sequence<float> velocity;
+        sequence<float> torque_ref;
+        sequence<float> current;
+        sequence<float> kp;
+        sequence<float> kd;
+        sequence<int32> owner;
+      };
+    };
+  };
+};

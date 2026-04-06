@@ -1,0 +1,18 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct BatteryState_ {
+        std_msgs::msg::dds_::Header_ header;
+        string identifier;
+        float charge_percentage;
+        float current;
+        float voltage;
+        float temperatures[2];
+        uint8 status;
+      };
+    };
+  };
+};

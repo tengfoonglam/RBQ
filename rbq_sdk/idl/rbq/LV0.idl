@@ -1,0 +1,271 @@
+module rbq {
+  const long MAX_LEG_JOINT      = 12;
+  const long MAX_WHL_JOINT      = 4;
+  const long MAX_ARM_JOINT      = 8;
+  const long MAX_LEG_CONTACT    = 4;
+  const long MAX_GAMEPAD_BTN    = 16;
+
+  @extensibility(APPENDABLE)
+  struct JOINT_OWN_CMD {
+    boolean LEG_JOINT[MAX_LEG_JOINT];
+    boolean WHL_JOINT[MAX_WHL_JOINT];
+    boolean ARM_JOINT[MAX_ARM_JOINT];
+  };
+
+  @extensibility(APPENDABLE)
+  struct IMU_INFO {
+    float quat[4];
+    float rpy[3];
+    float gyro[3];
+    float acc[3];
+  };
+
+  @extensibility(APPENDABLE)
+  struct JOINT_INFO {
+    float pos;
+    float vel;
+    float acc;
+    float torque;
+    float kp;
+    float kd;
+    int8  owner;
+  };
+
+  @extensibility(APPENDABLE)
+  struct LEG_JOINT_INFO {
+    JOINT_INFO JOINT[MAX_LEG_JOINT];
+  };
+
+  @extensibility(APPENDABLE)
+  struct WHL_JOINT_INFO {
+    JOINT_INFO JOINT[MAX_WHL_JOINT];
+  };
+
+  @extensibility(APPENDABLE)
+  struct ARM_JOINT_INFO {
+    JOINT_INFO JOINT[MAX_ARM_JOINT];
+  };
+
+  @extensibility(APPENDABLE)
+  struct JOINT_REF {
+    float pos;
+    float torque;
+    float kp;
+    float kd;
+  };
+
+  @extensibility(APPENDABLE)
+  struct TASK_INFO {
+    float pos[3];
+    float vel[3];
+    float acc[3];
+    float force[3];
+    float quat[4];
+    float rot[9];        // row-major 3x3
+    float rpy[3];
+    float omega[3];
+    float Jacobian[9];   // row-major 3x3
+    float kp[3];
+    float kd[3];
+  };
+
+  @extensibility(APPENDABLE)
+  struct CONTACT_INFO {
+    float   force[3];
+    float   torque[3];
+    boolean status;
+  };
+
+  @extensibility(APPENDABLE)
+  struct SIM_INFO {
+    IMU_INFO    IMU;
+    JOINT_INFO  LEG_JOINT[MAX_LEG_JOINT];
+    JOINT_INFO  ARM_JOINT[MAX_ARM_JOINT];
+    JOINT_INFO  WHL_JOINT[MAX_WHL_JOINT];
+
+    TASK_INFO       BODY_TASK;
+    CONTACT_INFO    LEG_CONTACT[MAX_LEG_CONTACT];
+  };
+
+  @extensibility(APPENDABLE)
+  struct MOTION_REF {
+    double time;
+    JOINT_REF       LEG_JOINT[MAX_LEG_JOINT];
+    JOINT_REF       ARM_JOINT[MAX_ARM_JOINT];
+    JOINT_REF       WHL_JOINT[MAX_WHL_JOINT];
+  };
+
+  @extensibility(APPENDABLE)
+  struct JOY_INFO {
+    double time;
+    float L_UD;
+    float L_RL;
+    float R_UD;
+    float R_RL;
+    float LT;
+    float RT;
+    boolean BTN[MAX_GAMEPAD_BTN];
+    int8 owner;
+  };
+
+  @extensibility(APPENDABLE)
+  struct DOCK_INFO {
+    float voltage;
+    float current;
+  };
+
+  struct PDU_INFO {
+    octet         pdu_id;
+    unsigned long pdu_version;
+    unsigned long pdu_date;
+
+    boolean REBOOT_CHA;       // reboot_CHA
+    boolean REBOOT_CHB;       // reboot_CHB
+    boolean REBOOT_CHC;       // reboot_CHC
+
+    boolean IMU_CONNECTED;    // IMU
+    boolean L2C_CONNECTED;    // LAN2CAN CONNECTED
+    boolean COMM_CONNECTED;   // COMM CONNECTED
+
+    boolean S_5V_CAM;         // USB Hub (Front,Rear board)[RGBD Cam]
+    boolean S_5V_AUDIO;       // USB Hub (Mainboard)[Audio driver,Side cam]
+    boolean S_12V_VPC;        // Vision PC (Internal)
+    boolean S_12V_COMM;       // Communication Port (Top)
+    boolean S_12V_LD;         // Lidar Port (Top)
+    boolean S_12V_SC;         // CCTV Port (Top)
+    boolean S_12V_TC;         // Thermal Cam Port (Top)
+    boolean S_12V_IR;         // IR Port (Front,Rear)
+    boolean S_12V_AMP;        // Audio AMP
+
+    boolean S_BAT_R;          // Right Battery Connection Detect
+    boolean S_BAT_L;          // Left Battery Connection Detect
+
+    boolean S_CHG_E;          // Manual Charger Connection Detect
+    boolean S_CHG_S;          // Station Charger Connection Detect
+
+    boolean S_EMO_A;          // ?
+    boolean S_EMO_B;          // ?
+    boolean S_BUZZER;         // ?
+
+    boolean S_LED_0;          // LED_LIGHT_0
+    boolean S_LED_1;          // LED_LIGHT_1
+    boolean S_LED_2;          // LED_LIGHT_2
+    boolean S_LED_3;          // LED_LIGHT_3
+
+    boolean S_FET_CHA;        // Leg Ports FET
+    boolean S_FET_CHB;        // Add Port FET
+    boolean S_FET_CHC;        // Ext Port FET
+    boolean S_FET_CHG_S;      // DOCK FET
+
+    boolean S_SOFT_CHA;
+    boolean S_SOFT_CHB;
+    boolean S_SOFT_CHC;
+
+    octet   TEMPERATURE_PDU;    // pdu main board
+    octet   TEMPERATURE_PS;     // power-switching board
+    octet   BATTERY_PERCENT_L;  // left battery percentage
+    octet   BATTERY_PERCENT_R;  // right battery percentage
+
+    float   BAT_VOL;            // Load 'out current'
+    float   BAT_CUR;            // Voltage 'battery voltage'
+    float   CHA_VOL;            // Leg voltage
+    float   CHB_VOL;            // add voltage
+    float   CHC_VOL;            // ext voltage
+    float   CHA_CUR;            // Leg current
+    float   CHB_CUR;            // add current
+    float   CHC_CUR;            // ext current
+    float   BAT_CHG_VOL;        // charging voltage;
+    float   BAT_CHG_CUR;        // charging current;
+  };
+
+  struct MotorStatus {
+    boolean FET;        // bit0
+    boolean RUN;        // bit1
+    boolean INIT;       // bit2
+    boolean MOD;        // bit3
+    boolean NON_CTR;    // bit4
+    boolean INIT_ENC;   // bit5
+    boolean CALIB;      // bit6
+    boolean MT_ERR;     // bit7
+
+    boolean JAM;        // JAM Error
+    boolean CUR;        // Over Current Error
+    boolean BIG;        // Big Position Error
+    boolean INP;        // Big Input Error
+    boolean FLT;        // FET Driver Fault Error
+    boolean TMP;        // Temperature Error
+    boolean PS1;        // Position Limit Error (Lower)
+    boolean PS2;        // Position Limit Error (Upper)
+
+    unsigned short KP;  // 16-bit
+    unsigned short KD;  // 16-bit
+  };
+
+  struct MOTOR_INFO {
+    float pos;
+    float vel;
+    float acc;
+    float cur;
+    octet board_temp;
+    octet motor_temp;
+    boolean connect;
+    boolean comm_stat;
+    boolean dq_check;
+    MotorStatus status;
+  };
+
+  @extensibility(FINAL)
+  struct Parameters {
+    float bd2imu[3];
+    float bd2hip[3];
+    float roll2pitch;
+    float thigh_length;
+    float calf_length;
+
+    float total_mass;
+    float body_mass;
+    float hip_mass;
+    float thigh_mass;
+    float calf_mass;
+
+    float body_com[3];
+    float hip_com[3];
+    float thigh_com[3];
+    float calf_com[3];
+
+    float body_Ixx;
+    float body_Iyy;
+    float body_Izz;
+    float body_Ixy;
+    float body_Iyz;
+    float body_Izx;
+
+    float hip_Ixx;
+    float hip_Iyy;
+    float hip_Izz;
+    float hip_Ixy;
+    float hip_Iyz;
+    float hip_Izx;
+
+    float thigh_Ixx;
+    float thigh_Iyy;
+    float thigh_Izz;
+    float thigh_Ixy;
+    float thigh_Iyz;
+    float thigh_Izx;
+
+    float calf_Ixx;
+    float calf_Iyy;
+    float calf_Izz;
+    float calf_Ixy;
+    float calf_Iyz;
+    float calf_Izx;
+
+    float init_angle;
+    float I_rotor;
+    float I_rotor_knee;
+    float gear_ratio[3];
+  };
+
+};
+

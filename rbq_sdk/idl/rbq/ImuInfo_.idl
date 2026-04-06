@@ -1,0 +1,23 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct ImuInfo_ {
+        // Quaternion (w, x, y, z), body frame
+        float quat[4];
+
+        // Roll / pitch / yaw, rad, body frame
+        float rpy[3];
+
+        // Angular velocity, rad/s, body frame
+        float gyro[3];
+
+        // Linear acceleration, m/s^2, body frame
+        float acc[3];
+      };
+
+    };
+  };
+};
+

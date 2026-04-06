@@ -1,0 +1,15 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct UserCommand_ {
+        int32 COMMAND_TARGET;
+        int32 USER_COMMAND;
+        sequence<int8> USER_PARA_CHAR;
+        sequence<int32> USER_PARA_INT;
+        sequence<float> USER_PARA_FLOAT;
+        sequence<double> USER_PARA_DOUBLE;
+      };
+    };
+  };
+};

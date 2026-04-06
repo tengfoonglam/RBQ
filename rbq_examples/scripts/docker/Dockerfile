@@ -20,14 +20,6 @@ RUN dpkg-reconfigure locales
 # Configure
 COPY rbq_examples/scripts/configure.bash $SCRIPTS_DIR/configure.bash
 
-# cmake
-COPY rbq_examples/scripts/install/cmake.bash $SCRIPTS_DIR/cmake.bash
-RUN bash $SCRIPTS_DIR/cmake.bash
-
-# ONNX
-COPY rbq_examples/scripts/install/onnx.bash $SCRIPTS_DIR/onnx.bash
-RUN bash $SCRIPTS_DIR/onnx.bash
-
 # JSON
 COPY rbq_examples/scripts/install/json.bash $SCRIPTS_DIR/json.bash
 RUN bash $SCRIPTS_DIR/json.bash

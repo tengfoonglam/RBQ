@@ -1,0 +1,16 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct JointRef_ {
+        float pos;    // rad
+        float torque; // N·m
+        float kp;
+        float kd;
+      };
+
+    };
+  };
+};
+

@@ -1,0 +1,29 @@
+#include "RbqConstants_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct JoyInfo_ {
+        // Time in seconds
+        double time;
+
+        // Sticks and triggers normalized to [-1, 1]
+        float left_up_down;
+        float left_right_left;
+        float right_up_down;
+        float right_right_left;
+        float left_trigger;
+        float right_trigger;
+
+        boolean button[MAX_GAMEPAD_BTN];
+
+        // Ownership / source ID of this joystick stream
+        int8 owner;
+      };
+
+    };
+  };
+};
+

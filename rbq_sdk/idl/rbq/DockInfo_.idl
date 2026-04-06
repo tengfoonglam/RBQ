@@ -1,0 +1,15 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct DockInfo_ {
+        // Voltage (V) and current (A)
+        float voltage;
+        float current;
+      };
+
+    };
+  };
+};
+
