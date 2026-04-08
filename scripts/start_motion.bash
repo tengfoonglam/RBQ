@@ -28,10 +28,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Exit if executed with sudo
-if [ "$EUID" -eq 0 ]; then
-    echo "Do not run this script with sudo. Exiting..."
-    exit 1
-fi
+# if [ "$EUID" -eq 0 ]; then
+#     echo "Do not run this script with sudo. Exiting..."
+#     exit 1
+# fi
 
 # Check if already running
 if pgrep -x "$APP_NAME" > /dev/null; then

@@ -6,10 +6,10 @@ APP_PATH="resources/mediamtx"
 
 echo -ne "\033]0;$APP_NAME\007"
 
-if [ "$EUID" -eq 0 ]; then
-    echo "Do not run this script with sudo. Exiting..."
-    exit 1
-fi
+# if [ "$EUID" -eq 0 ]; then
+#     echo "Do not run this script with sudo. Exiting..."
+#     exit 1
+# fi
 
 if pgrep -x "$APP_NAME" > /dev/null; then
     echo "$APP_NAME is already running. Please close it before starting a new instance."

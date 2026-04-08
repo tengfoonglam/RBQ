@@ -27,10 +27,10 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ "$EUID" -eq 0 ]; then
-    echo "Do not run this script with sudo. Exiting..."
-    exit 1
-fi
+# if [ "$EUID" -eq 0 ]; then
+#     echo "Do not run this script with sudo. Exiting..."
+#     exit 1
+# fi
 
 gnome-terminal --tab --title="Motion"   -- bash -i -c "bash scripts/start_motion.bash --sim ${ROBOT_ARGS[@]}"
 sleep 1

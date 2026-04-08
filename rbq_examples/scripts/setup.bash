@@ -6,5 +6,4 @@ if [ "$EUID" -eq 0 ]; then
     exit 1
 fi
 
-sudo bash scripts/install/apt.bash
-bash scripts/install/json.bash
+sudo bash scripts/debian-dep.bash

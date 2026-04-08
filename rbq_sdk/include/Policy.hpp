@@ -6,8 +6,9 @@
 #include <filesystem>
 #include <fstream>
 
-#include <nlohmann/json.hpp>
 #include <onnxruntime_cxx_api.h>
+
+#include "nlohmann/json.hpp"
 
 namespace rbq_sdk {
 

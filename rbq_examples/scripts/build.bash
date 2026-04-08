@@ -25,12 +25,6 @@ while [[ $# -gt 0 ]]; do
         *) echo "Unknown argument: $1"; print_help; exit 1 ;;
     esac
 done
-if [ -f scripts/configure.bash ]; then
-    source scripts/configure.bash
-else
-    echo "[ERROR] scripts/configure.bash not exist!"
-    exit 1
-fi
 if ! $USE_CACHE; then
     echo "[INFO] Cache bypassed. Cleaning build and bin directories..."
     rm -rf "$BUILD_DIR" "$BIN_DIR"
@@ -45,7 +39,6 @@ if ! $USE_CACHE || [ ! -f "$BUILD_DIR/CMakeCache.txt" ]; then
     CMAKE_OPTIONS=()
     CMAKE_OPTIONS+=("-D CMAKE_BUILD_TYPE=Release")
     CMAKE_OPTIONS+=("-D CMAKE_INSTALL_PREFIX=$BIN_DIR/..")
-    CMAKE_PREFIX_PATH_STRING+=";$JSON_DIR"
 
     CMAKE_OPTIONS+=("-DCMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH_STRING")
 

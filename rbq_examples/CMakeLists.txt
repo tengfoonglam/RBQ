@@ -12,7 +12,6 @@ set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,--gc-sections -s")
 find_package(Eigen3 REQUIRED)
 find_package(CycloneDDS REQUIRED)
 find_package(CycloneDDS-CXX REQUIRED)
-find_package(nlohmann_json REQUIRED)
 find_package(onnxruntime REQUIRED)
 find_package(rbq_sdk REQUIRED)
 
@@ -63,7 +62,6 @@ target_link_libraries(rbq_example_level_0
     pthread
     rt
     Eigen3::Eigen
-    nlohmann_json::nlohmann_json
     onnxruntime::onnxruntime
     rbq_sdk::rbq_sdk
 )
@@ -74,22 +72,22 @@ install(TARGETS rbq_example_level_0
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# add_executable(rbq_example_level_1 src/rbq_example_level_1.cpp)
-# set_target_properties(rbq_example_level_1 PROPERTIES
-#     BUILD_WITH_INSTALL_RPATH TRUE
-#     INSTALL_RPATH "$ORIGIN"
-#     SKIP_BUILD_RPATH FALSE
-#     BUILD_RPATH "$ORIGIN"
-# )
-# target_link_libraries(rbq_example_level_1
-#     pthread
-#     rt
-#     Eigen3::Eigen
-#     rbq_sdk::rbq_sdk
-# )
-# target_compile_definitions(rbq_example_level_1 PRIVATE
-#     APP_NAME=\"rbq_example_level_1\"
-# )
-# install(TARGETS rbq_example_level_1
-#     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-# )
+add_executable(rbq_example_level_1 src/rbq_example_level_1.cpp)
+set_target_properties(rbq_example_level_1 PROPERTIES
+    BUILD_WITH_INSTALL_RPATH TRUE
+    INSTALL_RPATH "$ORIGIN"
+    SKIP_BUILD_RPATH FALSE
+    BUILD_RPATH "$ORIGIN"
+)
+target_link_libraries(rbq_example_level_1
+    pthread
+    rt
+    Eigen3::Eigen
+    rbq_sdk::rbq_sdk
+)
+target_compile_definitions(rbq_example_level_1 PRIVATE
+    APP_NAME=\"rbq_example_level_1\"
+)
+install(TARGETS rbq_example_level_1
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

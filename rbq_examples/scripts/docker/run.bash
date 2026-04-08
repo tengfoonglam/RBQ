@@ -48,7 +48,54 @@ if [[ "$NO_CACHE" == "true" ]]; then
     sudo rm -rf "$DOCKER_DIR"
 fi
 if [[ "$NO_CHECK" == "false" ]]; then
-    sudo snap install docker
+    # --- Remove conflicting Docker packages ---
+    NEED_RESTART=false
+    if snap list docker &>/dev/null 2>&1; then
+        echo "Removing snap Docker to avoid conflicts..."
+        sudo snap remove --purge docker
+        NEED_RESTART=true
+    fi
+    for pkg in docker.io docker-doc docker-compose podman-docker; do
+        if dpkg -s "$pkg" &>/dev/null 2>&1; then
+            echo "Removing conflicting package: $pkg"
+            sudo apt-get remove -y "$pkg"
+            NEED_RESTART=true
+        fi
+    done
+
+    # --- Docker CE install ---
+    if ! dpkg -s docker-ce &>/dev/null 2>&1; then
+        echo "Docker CE not found. Installing..."
+        sudo apt-get update
+        sudo apt-get install -y ca-certificates curl gnupg
+        sudo install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+            | sudo gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
+        sudo chmod a+r /etc/apt/keyrings/docker.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
+        NEED_RESTART=true
+    fi
+
+    # --- Ensure Docker daemon is running ---
+    if [[ "$NEED_RESTART" == "true" ]] || ! sudo docker info &>/dev/null 2>&1; then
+        sudo systemctl enable docker &>/dev/null
+        sudo systemctl stop docker docker.socket &>/dev/null
+        sudo systemctl start docker.socket
+        sudo systemctl start docker
+    fi
+    for i in $(seq 1 10); do
+        sudo docker info &>/dev/null && break
+        sleep 1
+    done
+    if ! sudo docker info &>/dev/null; then
+        echo "ERROR: Docker daemon failed to start."
+        exit 1
+    fi
+
     echo "Docker container build starting..."
     sudo docker build --file scripts/docker/Dockerfile --network host -t $IMAGE_NAME ..
 fi
