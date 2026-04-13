@@ -80,6 +80,8 @@ public:
 
     void motionRLSilent();
 
+    void motionRLStairs();
+
     void motionParametersUpdate();
 
     // approach mode selection

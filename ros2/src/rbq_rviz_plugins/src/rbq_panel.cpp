@@ -1037,6 +1037,9 @@ void RbqPanel::updateGaitButtonColors(int currentGaitId)
         case 46: // RL_SILENT
             bt_rlSilent->setStyleSheet(activeStyle);
             break;
+        case 47: // RL_STAIRS
+            bt_stairs->setStyleSheet(activeStyle);
+            break;
         default:
             // 알 수 없는 gait_id인 경우 모든 버튼을 기본 색상으로 유지
             break;

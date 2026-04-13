@@ -428,6 +428,12 @@ private:
         }
     }
 
+    rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr m_sub_rl_stairs;
+    void callback_rl_stairs(const std_msgs::msg::Bool::SharedPtr _confirm) const {
+        if(_confirm.get()->data) {
+            m_robotApiHandler->motionRLStairs();
+        }
+    }
     std::shared_ptr<RobotApiHandler> m_robotApiHandler = nullptr;
 
 

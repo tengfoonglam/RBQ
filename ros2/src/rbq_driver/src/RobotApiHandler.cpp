@@ -444,7 +444,16 @@ void RobotApiHandler::motionRLRightWalk()
     setWalking(true);
 }
 
-
+void RobotApiHandler::motionRLStairs()
+{
+    qDebug() << "RobotApiHandler::motionRLStairs()";
+    USER_COMMAND cmd;
+    cmd.COMMAND_TARGET = FindProgramNumberByName("QuadWalk");
+    cmd.USER_COMMAND = QuadWalk_POLICY_CHANGE;
+    cmd.USER_PARA_CHAR[0] = RL_STAIRS;
+    setUserCommand(cmd);
+    setWalking(true);
+}
 
 void RobotApiHandler::motionParametersUpdate()
 {
@@ -619,6 +628,9 @@ void RobotApiHandler::switchGait(const int &gait_id)
             break;
         case Gait::STATE_RL_SILENT:
             motionRLSilent();
+            break;
+        case Gait::STATE_RL_STAIRS:
+            motionRLStairs();
             break;
         default:
             qDebug() << "Unknown gait_id:" << gait_id;

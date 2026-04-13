@@ -39,6 +39,7 @@ int8 STATE_RL_3LEG_FL          = 41    # RL 3Leg FL - Reinforcement Learning 3-L
 int8 STATE_RL_TROT_VISION      = 42    # RL Trot Vision - Reinforcement Learning Trot with Vision
 int8 STATE_RL_TROT_RUN         = 45    # RL Trot Run - Reinforcement Learning Trot Run gait
 int8 STATE_RL_SILENT           = 46    # RL Silent - Reinforcement Learning Silent gait
+int8 STATE_RL_STAIRS           = 47    # RL Stairs - Reinforcement Learning Stair gait
 
 
 std_msgs/Header header

@@ -264,6 +264,7 @@ enum GAIT_STATE : int8_t {
     RL_WHEEL_TROT_VISION= 44,
     RL_TROT_RUN         = 45,
     RL_SILENT           = 46,
+    RL_STAIRS           = 47,
     RL_END              = 50,
 };
 
