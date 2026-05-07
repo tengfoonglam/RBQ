@@ -9,8 +9,8 @@
 #include <rbq_sdk/idl/rbq/MotionRef_.hpp>
 #include <rbq_sdk/idl/rbq/JointOwnershipCmd_.hpp>
 #include <rbq_sdk/idl/rbq/UserCommand_.hpp>
-#include <rbq_sdk/idl/rbq/ImuInfo_.hpp>
 #include <rbq_sdk/idl/rbq/LegJointInfo_.hpp>
+#include <rbq_sdk/idl/ros2/Imu_.hpp>
 #include <rbq_sdk/idl/ros2/Joy_.hpp>
 
 #include <rbq_sdk/JointControl.hpp>
@@ -163,19 +163,19 @@ void* controlLoop(void*)
     bool reset = true;
 
     sensor_msgs::msg::dds_::Joy_ msgJoy;
-    rbq_sdk::Subscriber<sensor_msgs::msg::dds_::Joy_> subJoy(&msgJoy, "rt/rbq/cmd/joy/final", "lo");
+    rbq_sdk::Subscriber<sensor_msgs::msg::dds_::Joy_> subJoy(&msgJoy, "rt/rbq/cmd/joy/final");
 
-    rbq_msgs::msg::dds_::ImuInfo_ msgImuInfo;
-    rbq_sdk::Subscriber<rbq_msgs::msg::dds_::ImuInfo_> subImuInfo(&msgImuInfo, "rt/rbq/info/imu", "lo");
+    sensor_msgs::msg::dds_::Imu_ msgImuInfo;
+    rbq_sdk::Subscriber<sensor_msgs::msg::dds_::Imu_> subImuInfo(&msgImuInfo, "rt/rbq/info/imu");
 
     rbq_msgs::msg::dds_::LegJointInfo_ msgLegJointInfo;
-    rbq_sdk::Subscriber<rbq_msgs::msg::dds_::LegJointInfo_> subLegJointInfo(&msgLegJointInfo, "rt/rbq/info/leg_joint", "lo");
+    rbq_sdk::Subscriber<rbq_msgs::msg::dds_::LegJointInfo_> subLegJointInfo(&msgLegJointInfo, "rt/rbq/info/leg_joint");
 
-    rbq_sdk::Subscriber<rbq_msgs::msg::dds_::MotionRef_> subLegRefFinal(&msgMotionRefFinal, "rt/rbq/ref/leg_joint/final", "lo");
+    rbq_sdk::Subscriber<rbq_msgs::msg::dds_::MotionRef_> subLegRefFinal(&msgMotionRefFinal, "rt/rbq/ref/leg_joint/final");
 
-    rbq_sdk::Publisher<rbq_msgs::msg::dds_::MotionRef_> pubMotionRef("rt/rbq/ref/leg_joint/owner_20", "lo");
+    rbq_sdk::Publisher<rbq_msgs::msg::dds_::MotionRef_> pubMotionRef("rt/rbq/ref/leg_joint/owner_20");
 
-    rbq_sdk::Publisher<rbq_msgs::msg::dds_::JointOwnershipCmd_> pubJointOwnershipCmd("rt/rbq/cmd/motion/joint_owner/20", "lo");
+    rbq_sdk::Publisher<rbq_msgs::msg::dds_::JointOwnershipCmd_> pubJointOwnershipCmd("rt/rbq/cmd/motion/joint_owner/20");
 
     while (g_isWorking) {
         static TaskState lastTask = TaskState::Idle;
@@ -237,14 +237,14 @@ void* controlLoop(void*)
                             params.error() == rbq_sdk::PolicyParams::ERROR_NONE && params.loaded()) {
                         const int jointSize = 12;
                         Eigen::Vector3f gyro;
-                        gyro.x() = msgImuInfo.gyro().at(0);
-                        gyro.y() = msgImuInfo.gyro().at(1);
-                        gyro.z() = msgImuInfo.gyro().at(2);
+                        gyro.x() = msgImuInfo.angular_velocity().x();
+                        gyro.y() = msgImuInfo.angular_velocity().y();
+                        gyro.z() = msgImuInfo.angular_velocity().z();
                         Eigen::Quaternion<float> quat;
-                        quat.w() = msgImuInfo.quat().at(0);
-                        quat.x() = msgImuInfo.quat().at(1);
-                        quat.y() = msgImuInfo.quat().at(2);
-                        quat.z() = msgImuInfo.quat().at(3);
+                        quat.w() = msgImuInfo.orientation().w();
+                        quat.x() = msgImuInfo.orientation().x();
+                        quat.y() = msgImuInfo.orientation().y();
+                        quat.z() = msgImuInfo.orientation().z();
                         Eigen::VectorXf pos = Eigen::VectorXf::Zero(jointSize);
                         Eigen::VectorXf vel = Eigen::VectorXf::Zero(jointSize);
                         for (int i=0; i<jointSize; i++) {

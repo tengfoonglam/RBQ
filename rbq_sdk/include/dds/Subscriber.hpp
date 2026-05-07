@@ -1,12 +1,13 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
-#include <functional>
-#include <fstream>
+#include <utility>
 
 #include <dds/dds.hpp>
 
+#include "ChannelFactory.hpp"
 #include "Settings.hpp"
 
 namespace rbq_sdk {
@@ -45,58 +46,57 @@ class Subscriber {
     };
 
 public:
-    Subscriber() {}
-    Subscriber(
-        T* target_ptr,
-        const std::string& topic_name,
-        const std::string& interface,
-        int dp_domain_id = 0,
-        dds::sub::qos::DataReaderQos reader_qos = default_reader_qos(),
-        std::function<void(const T&)> on_sample = {})
-    {
-        exportConfig(interface);
+    Subscriber() = default;
 
-        dp_ = std::make_shared<dds::domain::DomainParticipant>(dp_domain_id);
-        sub_ = std::make_shared<dds::sub::Subscriber>(*dp_);
-        topic_ = std::make_shared<dds::topic::Topic<T>>(*dp_, topic_name);
-        listener_ = std::make_shared<Listener>(target_ptr, std::move(on_sample));
-        reader_ = std::make_shared<dds::sub::DataReader<T>>(
-            *sub_, *topic_, reader_qos, listener_.get(),
-            dds::core::status::StatusMask::data_available());
+    Subscriber(T* target_ptr,
+               const std::string& topic_name,
+               dds::sub::qos::DataReaderQos reader_qos = default_reader_qos(),
+               std::function<void(const T&)> on_sample = {})
+    {
+        build(target_ptr, std::move(on_sample), topic_name, std::move(reader_qos));
     }
-    Subscriber(
-        std::function<void(const T&)> on_sample,
-        const std::string& topic_name,
-        const std::string& interface,
-        int dp_domain_id = 0,
-        dds::sub::qos::DataReaderQos reader_qos = default_reader_qos())
-    {
-        exportConfig(interface);
 
-        dp_ = std::make_shared<dds::domain::DomainParticipant>(dp_domain_id);
-        sub_ = std::make_shared<dds::sub::Subscriber>(*dp_);
-        topic_ = std::make_shared<dds::topic::Topic<T>>(*dp_, topic_name);
-        listener_ = std::make_shared<Listener>(nullptr, std::move(on_sample));
-        reader_ = std::make_shared<dds::sub::DataReader<T>>(
-            *sub_, *topic_, reader_qos, listener_.get(),
-            dds::core::status::StatusMask::data_available());
+    Subscriber(std::function<void(const T&)> on_sample,
+               const std::string& topic_name,
+               dds::sub::qos::DataReaderQos reader_qos = default_reader_qos())
+    {
+        build(nullptr, std::move(on_sample), topic_name, std::move(reader_qos));
     }
 
     ~Subscriber() = default;
 
-    void set_target(T* target_ptr) { listener_->target_ = target_ptr; }
+    void set_target(T* target_ptr) { if (listener_) listener_->target_ = target_ptr; }
 
-    dds::domain::DomainParticipant& participant() { return *dp_; }
-    dds::sub::Subscriber&           subscriber()  { return *sub_; }
-    dds::topic::Topic<T>&           topic()       { return *topic_; }
-    dds::sub::DataReader<T>&        reader()      { return *reader_; }
+    void close() {
+        reader_.reset();
+        listener_.reset();
+        topic_.reset();
+        sub_.reset();
+    }
+
+    dds::sub::Subscriber&    subscriber() { return *sub_; }
+    dds::topic::Topic<T>&    topic()      { return *topic_; }
+    dds::sub::DataReader<T>& reader()     { return *reader_; }
 
 private:
-    std::shared_ptr<dds::domain::DomainParticipant> dp_;
-    std::shared_ptr<dds::sub::Subscriber>           sub_;
-    std::shared_ptr<dds::topic::Topic<T>>           topic_;
-    std::shared_ptr<Listener>                       listener_;
-    std::shared_ptr<dds::sub::DataReader<T>>        reader_;
+    void build(T* target_ptr,
+               std::function<void(const T&)> on_sample,
+               const std::string& topic_name,
+               dds::sub::qos::DataReaderQos reader_qos)
+    {
+        auto& dp = ChannelFactory::Instance().participant();
+        sub_      = std::make_shared<dds::sub::Subscriber>(dp);
+        topic_    = std::make_shared<dds::topic::Topic<T>>(dp, topic_name);
+        listener_ = std::make_shared<Listener>(target_ptr, std::move(on_sample));
+        reader_   = std::make_shared<dds::sub::DataReader<T>>(
+            *sub_, *topic_, reader_qos, listener_.get(),
+            dds::core::status::StatusMask::data_available());
+    }
+
+    std::shared_ptr<dds::sub::Subscriber>    sub_;
+    std::shared_ptr<dds::topic::Topic<T>>    topic_;
+    std::shared_ptr<Listener>                listener_;
+    std::shared_ptr<dds::sub::DataReader<T>> reader_;
 };
 
 } // namespace rbq_sdk

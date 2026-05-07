@@ -79,7 +79,6 @@ file(MAKE_DIRECTORY ${IDL_FINAL_DIR}/rbq)
 set(IDL_FILES
     ${IDL_SOURCE_DIR}/rbq/RbqConstants_.idl
     ${IDL_SOURCE_DIR}/rbq/JointOwnershipCmd_.idl
-    ${IDL_SOURCE_DIR}/rbq/ImuInfo_.idl
     ${IDL_SOURCE_DIR}/rbq/JointInfo_.idl
     ${IDL_SOURCE_DIR}/rbq/LegJointInfo_.idl
     ${IDL_SOURCE_DIR}/rbq/WhlJointInfo_.idl

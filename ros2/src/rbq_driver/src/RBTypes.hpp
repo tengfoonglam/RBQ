@@ -728,10 +728,6 @@ enum RequestId_e {
     HAL_switchIRProjector               = 2000,
     HAL_lastRequest                     = 2999,
 
-    Aruca_detect                = 3001,
-    Aruca_chargerPose           = 3002,
-    Aruca_lastRequest           = 3999,
-
 
 
     REQ_ID_UNDEFINED                        = 0,

@@ -30,7 +30,6 @@ constexpr float kD2R = 0.0174532925f;
 //     ZMP_INITIALIZING    = 8,
 //     MANIPULATION        = 9,
 //     DOCKING             = 10,
-//     DOCKING_SITTING     = 11,
 //     RL_TROT             = 30,
 //     RL_FRONT_WALK       = 31,
 //     RL_HIND_WALK        = 32,
@@ -139,10 +138,10 @@ int main(int argc, char* argv[])
 
     // rbq_msgs::msg::dds_::RobotStatus_ msgRobotStatus;
     // rbq_sdk::Subscriber<rbq_msgs::msg::dds_::RobotStatus_>
-    //         pubRobotStatus(&msgRobotStatus, "/rt/rbq/info/robotStatus", "lo");
+    //         pubRobotStatus(&msgRobotStatus, "/rt/rbq/info/robotStatus");
 
     rbq_msgs::msg::dds_::HighLevelCommand_ msgHighLevelCommand;
-    rbq_sdk::Publisher<rbq_msgs::msg::dds_::HighLevelCommand_> pubHighLevelCmd("/rt/rbq/cmd/high_level", "lo");
+    rbq_sdk::Publisher<rbq_msgs::msg::dds_::HighLevelCommand_> pubHighLevelCmd("/rt/rbq/cmd/high_level");
 
     while (g_isWorking) {
         char key;

@@ -244,7 +244,6 @@ enum GAIT_STATE : int8_t {
     ZMP_INITIALIZING    = 8,
     MANIPULATION        = 9,
     DOCKING             = 10,
-    DOCKING_SITTING     = 11,
 
     //RL_STATE
     RL_TROT             = 30,

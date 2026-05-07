@@ -52,6 +52,10 @@
         </default>
     </default>
 
+    <equality>
+        <joint joint1="RB1_finger_upper_joint" joint2="RB1_finger_lower_joint" polycoef="0 1 0 0 0" active="true"/>
+    </equality>
+
     <asset>
         <material name="metal" rgba=".9 .95 .95 1"/>
         <material name="black" rgba="0 0 0 1"/>
@@ -76,6 +80,12 @@
         <mesh name="RB1_Elbow_Yaw"      file="../meshes/rb1/Link4.stl" scale="1 1 1"/>
         <mesh name="RB1_Wrist_Pitch"    file="../meshes/rb1/Link5.stl" scale="1 1 1"/>
         <mesh name="RB1_Wrist_Yaw"      file="../meshes/rb1/Link6.stl" scale="1 1 1"/>
+        
+        <!-- RB1 Gripper meshes -->
+        <mesh name="RB1_Palm"           file="../meshes/rb1/RB1_Palm.stl" scale="1 1 1"/>
+        <mesh name="RB1_finger_upper"   file="../meshes/rb1/RB1_finger_upper.stl" scale="1 1 1"/>
+        <mesh name="RB1_finger_lower"   file="../meshes/rb1/RB1_finger_lower.stl" scale="1 1 1"/>
+        <mesh name="RB1_Handcam" file="../meshes/rb1/RB1_Handcam.stl" scale="1 1 1"/>
     </asset>
 
     <worldbody>
@@ -129,6 +139,26 @@
                     resolution="640 360"
                     sensorsize="3896e-6 2140e-6"/>
                     <!--<site name="BT3_frame" type="frame" size="0.1" rgba="1 0 0 1"/>-->
+            </body>
+            <body name="FT0_body" pos="0.388031 -0.037500 0.037764" quat="0.5 0.5 -0.5 -0.5">
+                <camera name="FT0"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="384e-5 240e-5"/>
+                    <!--<site name="FT0_frame" type="frame" size="0.1" rgba="1 0 0 1"/>-->
+            </body>
+            <body name="RR0_body" pos="-0.388031 0.037500 0.037764" quat="-0.5 -0.5 -0.5 -0.5">
+                <camera name="RR0"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="384e-5 240e-5"/>
+                    <!--<site name="RR0_frame" type="frame" size="0.1" rgba="1 0 0 1"/>-->
             </body>
 
             <!-- RR 다리 -->
@@ -299,11 +329,37 @@
                                     
                                     <body name="RB1_Wrist_Yaw" pos="0.0 0.0 0.0">
                                         <inertial pos="-0.00001527 -0.00218935 0.01720698" mass="0.58000000" diaginertia="0.00081312 0.00080079 0.00049095"/>
-                                        <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Wrist_Yaw" type="mesh" class="visual"/>
-                                        <joint name="RB1_Wrist_Yaw_joint" type="hinge" axis="0 0 1" range="-6.108652 6.108652" damping="0.0" armature="0.0324" frictionloss="1.7"/>
-                                        <geom type="cylinder" size="0.035 0.155" pos="0.0 0 0.115" euler="0 0 0" class="collision"/>
+                                        <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_Palm" type="mesh" class="visual"/>
+                                        <joint name="RB1_Wrist_Yaw_joint" type="hinge" axis="0 0 1" range="-6.108652 6.108652" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                                        <geom type="cylinder" size="0.033 0.089" pos="0.0 0 0.042" euler="0 0 0" class="collision"/>
+                                        <site name="ee_site" pos="0 0 0.21" size="0.005" rgba="1 0 0 1"/>
+                                        <site name="handcam" pos="0 -0.02 0.11" size="0.006" rgba="0 1 0 1"/>
+                                        <!-- Hand camera: D405 nominal HFOV/VFOV; 640x360. euler xyz: Y −90° (view axis), Z +90° (roll). -->
+                                        <body name="HC0_body" pos="0 -0.02 0.11" euler="0 0 0">
+                                            <geom type="mesh" mesh="RB1_Handcam" class="visual" material="charcoal"/>
+                                            <!-- π about local X (wxyz): flip view away from palm / wrist interior -->
+                                            <camera name="HC0"
+                                                mode="fixed"
+                                                pos="0 -0.01 0.055"
+                                                quat="0 1 0 0"
+                                                focal="1.93e-3 1.93e-3"
+                                                resolution="640 360"
+                                                sensorsize="3801e-6 2138e-6"/>
+                                        </body>
+
+                                        <body name="RB1_finger_upper" pos="0.0 0.0 0.0">
+                                            <inertial pos="-0.00001527 -0.00218935 0.01720698" mass="0.58000000" diaginertia="0.00081312 0.00080079 0.00049095"/>
+                                            <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_finger_upper" type="mesh" class="visual"/>
+                                            <joint name="RB1_finger_upper_joint" type="slide" axis="-1 0 0" range="0.0 0.04" damping="15.0" armature="2.0" frictionloss="30.0"/>
+                                            <geom name="RB1_finger_upper_collision" type="box" size="0.011 0.02 0.0435" pos="-0.012 0 0.175" euler="0 0 0" class="collision"/>
+                                        </body>
                                         
-                                        <site name="ee_site" pos="0 0 0.24555" size="0.01" rgba="1 0 0 1"/>
+                                        <body name="RB1_finger_lower" pos="0.0 0.0 0.0">
+                                            <inertial pos="-0.00001527 -0.00218935 0.01720698" mass="0.58000000" diaginertia="0.00081312 0.00080079 0.00049095"/>
+                                            <geom size="0.02 0.02 0.02" material="darker_gray" mesh="RB1_finger_lower" type="mesh" class="visual"/>
+                                            <joint name="RB1_finger_lower_joint" type="slide" axis="1 0 0" range="0.0 0.04" damping="15.0" armature="2.0" frictionloss="30.0"/>
+                                            <geom name="RB1_finger_lower_collision" type="box" size="0.011 0.02 0.0435" pos="0.012 0 0.175" euler="0 0 0" class="collision"/>
+                                        </body>
                                     </body>
                                 </body>
                             </body>
@@ -311,6 +367,12 @@
                     </body>
                 </body>
             </body>
+        </body>
+        <!-- Small dynamic target cube (declared after robot to keep robot qpos/qvel ordering) -->
+        <body name="target_cube_green_body" pos="0.8 0.0 0.02">
+            <freejoint/>
+            <inertial pos="0 0 0" mass="0.15" diaginertia="4.0e-05 4.0e-05 4.0e-05"/>
+            <geom name="target_cube_green" type="box" size="0.02 0.02 0.02" rgba="0 1 0 1" friction="0.8 0.02 0.005"/>
         </body>
     </worldbody>
 
@@ -343,6 +405,9 @@
         <motor name="RB1_Elbow_Yaw" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Elbow_Yaw_joint"/>
         <motor name="RB1_Wrist_Pitch" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Wrist_Pitch_joint"/>
         <motor name="RB1_Wrist_Yaw" 		ctrllimited="true" ctrlrange="-100 100" joint="RB1_Wrist_Yaw_joint"/>
+        
+        <!-- RB1 Gripper 모터 (torque control for slide joint) -->
+        <motor name="RB1_finger_upper" ctrllimited="true" ctrlrange="-100 100" joint="RB1_finger_upper_joint"/>
     </actuator>
 
     <!-- 센서 정의 -->
@@ -397,6 +462,12 @@
         <!-- 프레임 센서 -->
         <framepos name="frame_pos" objtype="site" objname="imu"/>
         <framelinvel name="frame_vel" objtype="site" objname="imu"/>
+        
+        <!-- RB1 Gripper 센서 -->
+        <jointpos name="RB1_finger_upper_pos" joint="RB1_finger_upper_joint"/>
+        <jointpos name="RB1_finger_lower_pos" joint="RB1_finger_lower_joint"/>
+        <jointvel name="RB1_finger_upper_vel" joint="RB1_finger_upper_joint"/>
+        <jointvel name="RB1_finger_lower_vel" joint="RB1_finger_lower_joint"/>
     </sensor>
 
     <!-- 접촉 설정 -->

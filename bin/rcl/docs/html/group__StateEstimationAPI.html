@@ -90,54 +90,118 @@ Functions</h2></td></tr>
 <tr class="memitem:gac2d4b159c9ea2173eace680bce215890"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gac2d4b159c9ea2173eace680bce215890">RBQ_API::StateEstimation::stopEstimation</a> ()</td></tr>
 <tr class="memdesc:gac2d4b159c9ea2173eace680bce215890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the state estimation process.  <a href="group__StateEstimationAPI.html#gac2d4b159c9ea2173eace680bce215890">More...</a><br /></td></tr>
 <tr class="separator:gac2d4b159c9ea2173eace680bce215890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae211de18ae3ce008205b635f504e1940"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gae211de18ae3ce008205b635f504e1940">RBQ_API::StateEstimation::getEstimatorRunState</a> (bool &amp;run_or_not_)</td></tr>
-<tr class="memdesc:gae211de18ae3ce008205b635f504e1940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current run state of the estimator.  <a href="group__StateEstimationAPI.html#gae211de18ae3ce008205b635f504e1940">More...</a><br /></td></tr>
-<tr class="separator:gae211de18ae3ce008205b635f504e1940"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5696da0cd4571cfe5501c5d3aec2dd8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">RBQ_API::StateEstimation::getBodyPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, Eigen::Vector3f &amp;body_pos_)</td></tr>
-<tr class="memdesc:gaa5696da0cd4571cfe5501c5d3aec2dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the robot's body center.  <a href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">More...</a><br /></td></tr>
-<tr class="separator:gaa5696da0cd4571cfe5501c5d3aec2dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea229a4d9f5d3a16fc5d07585deeea3b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaea229a4d9f5d3a16fc5d07585deeea3b">RBQ_API::StateEstimation::getBodyVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, Eigen::Vector3f &amp;body_vel_)</td></tr>
-<tr class="memdesc:gaea229a4d9f5d3a16fc5d07585deeea3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the velocity of the robot's body center.  <a href="group__StateEstimationAPI.html#gaea229a4d9f5d3a16fc5d07585deeea3b">More...</a><br /></td></tr>
-<tr class="separator:gaea229a4d9f5d3a16fc5d07585deeea3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4be1267eac9b5d5a896f60ce780a07c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gac4be1267eac9b5d5a896f60ce780a07c">RBQ_API::StateEstimation::getBodyQuat</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, Eigen::Quaternion&lt; float &gt; &amp;body_quat_)</td></tr>
-<tr class="memdesc:gac4be1267eac9b5d5a896f60ce780a07c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the orientation of the robot's body center as a quaternion.  <a href="group__StateEstimationAPI.html#gac4be1267eac9b5d5a896f60ce780a07c">More...</a><br /></td></tr>
-<tr class="separator:gac4be1267eac9b5d5a896f60ce780a07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae058ff2107a323b7f7b5c3d8da7a474e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gae058ff2107a323b7f7b5c3d8da7a474e">RBQ_API::StateEstimation::getBodyRPY</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, Eigen::Vector3f &amp;body_rpy_)</td></tr>
-<tr class="memdesc:gae058ff2107a323b7f7b5c3d8da7a474e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the orientation of the robot's body center as roll, pitch, and yaw angles.  <a href="group__StateEstimationAPI.html#gae058ff2107a323b7f7b5c3d8da7a474e">More...</a><br /></td></tr>
-<tr class="separator:gae058ff2107a323b7f7b5c3d8da7a474e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f15f80810e6e6085bd16fce717bdc49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga1f15f80810e6e6085bd16fce717bdc49">RBQ_API::StateEstimation::getBodyRot</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, Eigen::Matrix3f &amp;body_rot_)</td></tr>
-<tr class="memdesc:ga1f15f80810e6e6085bd16fce717bdc49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the rotation matrix of the robot's body center.  <a href="group__StateEstimationAPI.html#ga1f15f80810e6e6085bd16fce717bdc49">More...</a><br /></td></tr>
-<tr class="separator:ga1f15f80810e6e6085bd16fce717bdc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45e858190f5b0270eba49c70bb190627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga45e858190f5b0270eba49c70bb190627">RBQ_API::StateEstimation::getFootPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, Eigen::Vector3f &amp;foot_pos_)</td></tr>
-<tr class="memdesc:ga45e858190f5b0270eba49c70bb190627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#ga45e858190f5b0270eba49c70bb190627">More...</a><br /></td></tr>
-<tr class="separator:ga45e858190f5b0270eba49c70bb190627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b092c0178eeaea5aef0e2292b337d9e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga7b092c0178eeaea5aef0e2292b337d9e">RBQ_API::StateEstimation::getFootPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> _legId, Eigen::Vector3f &amp;foot_pos_)</td></tr>
-<tr class="memdesc:ga7b092c0178eeaea5aef0e2292b337d9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga7b092c0178eeaea5aef0e2292b337d9e">More...</a><br /></td></tr>
-<tr class="separator:ga7b092c0178eeaea5aef0e2292b337d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b44e9d16dfebf587f10f51a374f0dd9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga4b44e9d16dfebf587f10f51a374f0dd9">RBQ_API::StateEstimation::getFootVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, Eigen::Vector3f &amp;foot_vel_)</td></tr>
-<tr class="memdesc:ga4b44e9d16dfebf587f10f51a374f0dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the velocity of a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#ga4b44e9d16dfebf587f10f51a374f0dd9">More...</a><br /></td></tr>
-<tr class="separator:ga4b44e9d16dfebf587f10f51a374f0dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga250d8d227a19f22c75c4c5b43b42c505"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga250d8d227a19f22c75c4c5b43b42c505">RBQ_API::StateEstimation::getFootVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, Eigen::Vector3f &amp;foot_vel_)</td></tr>
-<tr class="memdesc:ga250d8d227a19f22c75c4c5b43b42c505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga250d8d227a19f22c75c4c5b43b42c505">More...</a><br /></td></tr>
-<tr class="separator:ga250d8d227a19f22c75c4c5b43b42c505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacedf4ce0aa7b0576c8e462ea2e9efa35"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gacedf4ce0aa7b0576c8e462ea2e9efa35">RBQ_API::StateEstimation::getFootJacobian</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, Eigen::Matrix3f &amp;foot_jacobian_)</td></tr>
-<tr class="memdesc:gacedf4ce0aa7b0576c8e462ea2e9efa35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Jacobian matrix of a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#gacedf4ce0aa7b0576c8e462ea2e9efa35">More...</a><br /></td></tr>
-<tr class="separator:gacedf4ce0aa7b0576c8e462ea2e9efa35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c5a41a2c4343c361bf7fa58c5484e4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga0c5a41a2c4343c361bf7fa58c5484e4f">RBQ_API::StateEstimation::getFootJacobian</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, Eigen::Matrix3f &amp;foot_jacobian_)</td></tr>
-<tr class="memdesc:ga0c5a41a2c4343c361bf7fa58c5484e4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga0c5a41a2c4343c361bf7fa58c5484e4f">More...</a><br /></td></tr>
-<tr class="separator:ga0c5a41a2c4343c361bf7fa58c5484e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf47e0505ed06b1c6c66ddd8ead84147"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaaf47e0505ed06b1c6c66ddd8ead84147">RBQ_API::StateEstimation::getFootForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, Eigen::Vector3f &amp;foot_force_)</td></tr>
-<tr class="memdesc:gaaf47e0505ed06b1c6c66ddd8ead84147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the force applied by a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#gaaf47e0505ed06b1c6c66ddd8ead84147">More...</a><br /></td></tr>
-<tr class="separator:gaaf47e0505ed06b1c6c66ddd8ead84147"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab999dc604d097bac7d5784ba8cfe81c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaab999dc604d097bac7d5784ba8cfe81c">RBQ_API::StateEstimation::getFootForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, Eigen::Vector3f &amp;foot_force_)</td></tr>
-<tr class="memdesc:gaab999dc604d097bac7d5784ba8cfe81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#gaab999dc604d097bac7d5784ba8cfe81c">More...</a><br /></td></tr>
-<tr class="separator:gaab999dc604d097bac7d5784ba8cfe81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga296bd360b2030fa3ff4499de4825cda7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga296bd360b2030fa3ff4499de4825cda7">RBQ_API::StateEstimation::getFootExtForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, Eigen::Vector3f &amp;foot_contact_force_)</td></tr>
-<tr class="memdesc:ga296bd360b2030fa3ff4499de4825cda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the external force detected at a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#ga296bd360b2030fa3ff4499de4825cda7">More...</a><br /></td></tr>
-<tr class="separator:ga296bd360b2030fa3ff4499de4825cda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1c044584e16c42440be5c87cf865e7f4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga1c044584e16c42440be5c87cf865e7f4">RBQ_API::StateEstimation::getFootExtForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, Eigen::Vector3f &amp;foot_contact_force_)</td></tr>
-<tr class="memdesc:ga1c044584e16c42440be5c87cf865e7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga1c044584e16c42440be5c87cf865e7f4">More...</a><br /></td></tr>
-<tr class="separator:ga1c044584e16c42440be5c87cf865e7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e9079411be21608c78e17ffcab2c26f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga2e9079411be21608c78e17ffcab2c26f">RBQ_API::StateEstimation::getEstimatorRunState</a> (int &amp;result)</td></tr>
+<tr class="memdesc:ga2e9079411be21608c78e17ffcab2c26f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current run state of the estimator.  <a href="group__StateEstimationAPI.html#ga2e9079411be21608c78e17ffcab2c26f">More...</a><br /></td></tr>
+<tr class="separator:ga2e9079411be21608c78e17ffcab2c26f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a4e4e4b35cc1b51d5b898fcfe07a306"><td class="memItemLeft" align="right" valign="top"><a id="ga5a4e4e4b35cc1b51d5b898fcfe07a306"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga5a4e4e4b35cc1b51d5b898fcfe07a306">RBQ_API::StateEstimation::getEstimatorRunState</a> ()</td></tr>
+<tr class="memdesc:ga5a4e4e4b35cc1b51d5b898fcfe07a306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga2e9079411be21608c78e17ffcab2c26f" title="Returns the current run state of the estimator.">getEstimatorRunState(int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga5a4e4e4b35cc1b51d5b898fcfe07a306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae165fc2be0c33179cfbbd30eed9473e7"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gae165fc2be0c33179cfbbd30eed9473e7">RBQ_API::StateEstimation::getBodyPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, int &amp;result)</td></tr>
+<tr class="memdesc:gae165fc2be0c33179cfbbd30eed9473e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of the robot's body center.  <a href="group__StateEstimationAPI.html#gae165fc2be0c33179cfbbd30eed9473e7">More...</a><br /></td></tr>
+<tr class="separator:gae165fc2be0c33179cfbbd30eed9473e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03981a247dfa05c6756dd3a8b8a987ea"><td class="memItemLeft" align="right" valign="top"><a id="ga03981a247dfa05c6756dd3a8b8a987ea"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga03981a247dfa05c6756dd3a8b8a987ea">RBQ_API::StateEstimation::getBodyPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame)</td></tr>
+<tr class="memdesc:ga03981a247dfa05c6756dd3a8b8a987ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#gae165fc2be0c33179cfbbd30eed9473e7" title="Returns the position of the robot&#39;s body center.">getBodyPos(const Frame, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga03981a247dfa05c6756dd3a8b8a987ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b55e2bce0c25934a817b53f359c5de"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga98b55e2bce0c25934a817b53f359c5de">RBQ_API::StateEstimation::getBodyVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, int &amp;result)</td></tr>
+<tr class="memdesc:ga98b55e2bce0c25934a817b53f359c5de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the velocity of the robot's body center.  <a href="group__StateEstimationAPI.html#ga98b55e2bce0c25934a817b53f359c5de">More...</a><br /></td></tr>
+<tr class="separator:ga98b55e2bce0c25934a817b53f359c5de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9de3a55006f26f77b8539afe0abd31d5"><td class="memItemLeft" align="right" valign="top"><a id="ga9de3a55006f26f77b8539afe0abd31d5"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga9de3a55006f26f77b8539afe0abd31d5">RBQ_API::StateEstimation::getBodyVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame)</td></tr>
+<tr class="memdesc:ga9de3a55006f26f77b8539afe0abd31d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga98b55e2bce0c25934a817b53f359c5de" title="Returns the velocity of the robot&#39;s body center.">getBodyVel(const Frame, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga9de3a55006f26f77b8539afe0abd31d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga757b556b774deb11ed36ef4918a547d5"><td class="memItemLeft" align="right" valign="top">Eigen::Quaternion&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga757b556b774deb11ed36ef4918a547d5">RBQ_API::StateEstimation::getBodyQuat</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, int &amp;result)</td></tr>
+<tr class="memdesc:ga757b556b774deb11ed36ef4918a547d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the orientation of the robot's body center as a quaternion.  <a href="group__StateEstimationAPI.html#ga757b556b774deb11ed36ef4918a547d5">More...</a><br /></td></tr>
+<tr class="separator:ga757b556b774deb11ed36ef4918a547d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1e357d83ec53dc80bb2d429e521dc8f"><td class="memItemLeft" align="right" valign="top"><a id="gad1e357d83ec53dc80bb2d429e521dc8f"></a>
+Eigen::Quaternion&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gad1e357d83ec53dc80bb2d429e521dc8f">RBQ_API::StateEstimation::getBodyQuat</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame)</td></tr>
+<tr class="memdesc:gad1e357d83ec53dc80bb2d429e521dc8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga757b556b774deb11ed36ef4918a547d5" title="Returns the orientation of the robot&#39;s body center as a quaternion.">getBodyQuat(const Frame, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:gad1e357d83ec53dc80bb2d429e521dc8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga261cc8e6ecc503f786c13a7c7f3a1846"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga261cc8e6ecc503f786c13a7c7f3a1846">RBQ_API::StateEstimation::getBodyRPY</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, int &amp;result)</td></tr>
+<tr class="memdesc:ga261cc8e6ecc503f786c13a7c7f3a1846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the orientation of the robot's body center as roll, pitch, and yaw angles.  <a href="group__StateEstimationAPI.html#ga261cc8e6ecc503f786c13a7c7f3a1846">More...</a><br /></td></tr>
+<tr class="separator:ga261cc8e6ecc503f786c13a7c7f3a1846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d4528af6c9ed52abefd7107f88d8045"><td class="memItemLeft" align="right" valign="top"><a id="ga1d4528af6c9ed52abefd7107f88d8045"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga1d4528af6c9ed52abefd7107f88d8045">RBQ_API::StateEstimation::getBodyRPY</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame)</td></tr>
+<tr class="memdesc:ga1d4528af6c9ed52abefd7107f88d8045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga261cc8e6ecc503f786c13a7c7f3a1846" title="Returns the orientation of the robot&#39;s body center as roll, pitch, and yaw angles.">getBodyRPY(const Frame, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga1d4528af6c9ed52abefd7107f88d8045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29229b676b8cf521a9f149be7b4a554c"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga29229b676b8cf521a9f149be7b4a554c">RBQ_API::StateEstimation::getBodyRot</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, int &amp;result)</td></tr>
+<tr class="memdesc:ga29229b676b8cf521a9f149be7b4a554c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the rotation matrix of the robot's body center.  <a href="group__StateEstimationAPI.html#ga29229b676b8cf521a9f149be7b4a554c">More...</a><br /></td></tr>
+<tr class="separator:ga29229b676b8cf521a9f149be7b4a554c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad31f8c07caf9ba28366d50ade1e0db24"><td class="memItemLeft" align="right" valign="top"><a id="gad31f8c07caf9ba28366d50ade1e0db24"></a>
+Eigen::Matrix3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gad31f8c07caf9ba28366d50ade1e0db24">RBQ_API::StateEstimation::getBodyRot</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame)</td></tr>
+<tr class="memdesc:gad31f8c07caf9ba28366d50ade1e0db24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga29229b676b8cf521a9f149be7b4a554c" title="Returns the rotation matrix of the robot&#39;s body center.">getBodyRot(const Frame, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:gad31f8c07caf9ba28366d50ade1e0db24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae256930be3404bc763691b9162e71a1f"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gae256930be3404bc763691b9162e71a1f">RBQ_API::StateEstimation::getFootPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:gae256930be3404bc763691b9162e71a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position of a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#gae256930be3404bc763691b9162e71a1f">More...</a><br /></td></tr>
+<tr class="separator:gae256930be3404bc763691b9162e71a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff2fe9723eb23d3e294371f0bc4e190d"><td class="memItemLeft" align="right" valign="top"><a id="gaff2fe9723eb23d3e294371f0bc4e190d"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaff2fe9723eb23d3e294371f0bc4e190d">RBQ_API::StateEstimation::getFootPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId)</td></tr>
+<tr class="memdesc:gaff2fe9723eb23d3e294371f0bc4e190d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#gae256930be3404bc763691b9162e71a1f" title="Returns the position of a specific foot in the specified coordinate frame.">getFootPos(const Frame, const int&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:gaff2fe9723eb23d3e294371f0bc4e190d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa65abd78a8cb7e95bab54d8810b6e67b"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaa65abd78a8cb7e95bab54d8810b6e67b">RBQ_API::StateEstimation::getFootPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> _legId, int &amp;result)</td></tr>
+<tr class="memdesc:gaa65abd78a8cb7e95bab54d8810b6e67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#gaa65abd78a8cb7e95bab54d8810b6e67b">More...</a><br /></td></tr>
+<tr class="separator:gaa65abd78a8cb7e95bab54d8810b6e67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad980dc38633f9c3cf064593b1622e5af"><td class="memItemLeft" align="right" valign="top"><a id="gad980dc38633f9c3cf064593b1622e5af"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gad980dc38633f9c3cf064593b1622e5af">RBQ_API::StateEstimation::getFootPos</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> _legId)</td></tr>
+<tr class="memdesc:gad980dc38633f9c3cf064593b1622e5af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload using LegID. Use <a class="el" href="group__StateEstimationAPI.html#gaa65abd78a8cb7e95bab54d8810b6e67b" title="Overload using LegID.">getFootPos(const Frame, const LegID, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:gad980dc38633f9c3cf064593b1622e5af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacd378f66f23990d61fe0830ced06bef"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaacd378f66f23990d61fe0830ced06bef">RBQ_API::StateEstimation::getFootVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:gaacd378f66f23990d61fe0830ced06bef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the velocity of a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#gaacd378f66f23990d61fe0830ced06bef">More...</a><br /></td></tr>
+<tr class="separator:gaacd378f66f23990d61fe0830ced06bef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f0f16a067cc6cbe17dd64a7f20c5b85"><td class="memItemLeft" align="right" valign="top"><a id="ga9f0f16a067cc6cbe17dd64a7f20c5b85"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga9f0f16a067cc6cbe17dd64a7f20c5b85">RBQ_API::StateEstimation::getFootVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId)</td></tr>
+<tr class="memdesc:ga9f0f16a067cc6cbe17dd64a7f20c5b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#gaacd378f66f23990d61fe0830ced06bef" title="Returns the velocity of a specific foot in the specified coordinate frame.">getFootVel(const Frame, const int&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga9f0f16a067cc6cbe17dd64a7f20c5b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27a223eb06588618c62b85e2f90f856a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga27a223eb06588618c62b85e2f90f856a">RBQ_API::StateEstimation::getFootVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga27a223eb06588618c62b85e2f90f856a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga27a223eb06588618c62b85e2f90f856a">More...</a><br /></td></tr>
+<tr class="separator:ga27a223eb06588618c62b85e2f90f856a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0daa5ca043d3c1024bc2d1d0d3f6e76d"><td class="memItemLeft" align="right" valign="top"><a id="ga0daa5ca043d3c1024bc2d1d0d3f6e76d"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga0daa5ca043d3c1024bc2d1d0d3f6e76d">RBQ_API::StateEstimation::getFootVel</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId)</td></tr>
+<tr class="memdesc:ga0daa5ca043d3c1024bc2d1d0d3f6e76d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload using LegID. Use <a class="el" href="group__StateEstimationAPI.html#ga27a223eb06588618c62b85e2f90f856a" title="Overload using LegID.">getFootVel(const Frame, const LegID&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga0daa5ca043d3c1024bc2d1d0d3f6e76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e928e07fc18728514f5ed45748d99a0"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga7e928e07fc18728514f5ed45748d99a0">RBQ_API::StateEstimation::getFootJacobian</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga7e928e07fc18728514f5ed45748d99a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the Jacobian matrix of a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#ga7e928e07fc18728514f5ed45748d99a0">More...</a><br /></td></tr>
+<tr class="separator:ga7e928e07fc18728514f5ed45748d99a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b1de20515eb1bac84098acaa2731abe"><td class="memItemLeft" align="right" valign="top"><a id="ga9b1de20515eb1bac84098acaa2731abe"></a>
+Eigen::Matrix3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga9b1de20515eb1bac84098acaa2731abe">RBQ_API::StateEstimation::getFootJacobian</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId)</td></tr>
+<tr class="memdesc:ga9b1de20515eb1bac84098acaa2731abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga7e928e07fc18728514f5ed45748d99a0" title="Returns the Jacobian matrix of a specific foot in the specified coordinate frame.">getFootJacobian(const Frame, const int&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga9b1de20515eb1bac84098acaa2731abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b03b8582bbb4468647fb2eb6270043f"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga4b03b8582bbb4468647fb2eb6270043f">RBQ_API::StateEstimation::getFootJacobian</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga4b03b8582bbb4468647fb2eb6270043f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga4b03b8582bbb4468647fb2eb6270043f">More...</a><br /></td></tr>
+<tr class="separator:ga4b03b8582bbb4468647fb2eb6270043f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga963d214c2bdc1af1fe1fd4b04d897caa"><td class="memItemLeft" align="right" valign="top"><a id="ga963d214c2bdc1af1fe1fd4b04d897caa"></a>
+Eigen::Matrix3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga963d214c2bdc1af1fe1fd4b04d897caa">RBQ_API::StateEstimation::getFootJacobian</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId)</td></tr>
+<tr class="memdesc:ga963d214c2bdc1af1fe1fd4b04d897caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload using LegID. Use <a class="el" href="group__StateEstimationAPI.html#ga4b03b8582bbb4468647fb2eb6270043f" title="Overload using LegID.">getFootJacobian(const Frame, const LegID&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga963d214c2bdc1af1fe1fd4b04d897caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d473c9bb69ae5e6eb700fff2437c40d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga5d473c9bb69ae5e6eb700fff2437c40d">RBQ_API::StateEstimation::getFootForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga5d473c9bb69ae5e6eb700fff2437c40d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the force applied by a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#ga5d473c9bb69ae5e6eb700fff2437c40d">More...</a><br /></td></tr>
+<tr class="separator:ga5d473c9bb69ae5e6eb700fff2437c40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fd997c98ec224cd45db82095b6c5c08"><td class="memItemLeft" align="right" valign="top"><a id="ga7fd997c98ec224cd45db82095b6c5c08"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga7fd997c98ec224cd45db82095b6c5c08">RBQ_API::StateEstimation::getFootForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId)</td></tr>
+<tr class="memdesc:ga7fd997c98ec224cd45db82095b6c5c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga5d473c9bb69ae5e6eb700fff2437c40d" title="Returns the force applied by a specific foot in the specified coordinate frame.">getFootForce(const Frame, const int&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga7fd997c98ec224cd45db82095b6c5c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b606b599b5ca52c4415d118194192b8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga4b606b599b5ca52c4415d118194192b8">RBQ_API::StateEstimation::getFootForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga4b606b599b5ca52c4415d118194192b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga4b606b599b5ca52c4415d118194192b8">More...</a><br /></td></tr>
+<tr class="separator:ga4b606b599b5ca52c4415d118194192b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga523a2edecbf31018880089836ec0374c"><td class="memItemLeft" align="right" valign="top"><a id="ga523a2edecbf31018880089836ec0374c"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga523a2edecbf31018880089836ec0374c">RBQ_API::StateEstimation::getFootForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId)</td></tr>
+<tr class="memdesc:ga523a2edecbf31018880089836ec0374c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload using LegID. Use <a class="el" href="group__StateEstimationAPI.html#ga4b606b599b5ca52c4415d118194192b8" title="Overload using LegID.">getFootForce(const Frame, const LegID&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga523a2edecbf31018880089836ec0374c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23b707dd64ac64cafe6c4605045fff14"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga23b707dd64ac64cafe6c4605045fff14">RBQ_API::StateEstimation::getFootExtForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga23b707dd64ac64cafe6c4605045fff14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the external force detected at a specific foot in the specified coordinate frame.  <a href="group__StateEstimationAPI.html#ga23b707dd64ac64cafe6c4605045fff14">More...</a><br /></td></tr>
+<tr class="separator:ga23b707dd64ac64cafe6c4605045fff14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c2344fc3e476a11b0192c8c4898a210"><td class="memItemLeft" align="right" valign="top"><a id="ga4c2344fc3e476a11b0192c8c4898a210"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga4c2344fc3e476a11b0192c8c4898a210">RBQ_API::StateEstimation::getFootExtForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const int &amp;_legId)</td></tr>
+<tr class="memdesc:ga4c2344fc3e476a11b0192c8c4898a210"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload. Use <a class="el" href="group__StateEstimationAPI.html#ga23b707dd64ac64cafe6c4605045fff14" title="Returns the external force detected at a specific foot in the specified coordinate frame.">getFootExtForce(const Frame, const int&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:ga4c2344fc3e476a11b0192c8c4898a210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga076f04cdb7fadeb527710997b35b350a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#ga076f04cdb7fadeb527710997b35b350a">RBQ_API::StateEstimation::getFootExtForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId, int &amp;result)</td></tr>
+<tr class="memdesc:ga076f04cdb7fadeb527710997b35b350a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload using LegID.  <a href="group__StateEstimationAPI.html#ga076f04cdb7fadeb527710997b35b350a">More...</a><br /></td></tr>
+<tr class="separator:ga076f04cdb7fadeb527710997b35b350a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef348877ebc29a6dfea7c17c85c92b7b"><td class="memItemLeft" align="right" valign="top"><a id="gaef348877ebc29a6dfea7c17c85c92b7b"></a>
+Eigen::Vector3f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__StateEstimationAPI.html#gaef348877ebc29a6dfea7c17c85c92b7b">RBQ_API::StateEstimation::getFootExtForce</a> (const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a> _frame, const <a class="el" href="structRBQ__API_1_1StateEstimation.html#a98bc858ccf3ac7cadab3448b17aaa01e">LegID</a> &amp;_legId)</td></tr>
+<tr class="memdesc:gaef348877ebc29a6dfea7c17c85c92b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience overload using LegID. Use <a class="el" href="group__StateEstimationAPI.html#ga076f04cdb7fadeb527710997b35b350a" title="Overload using LegID.">getFootExtForce(const Frame, const LegID&amp;, int&amp;)</a> to check the result code. <br /></td></tr>
+<tr class="separator:gaef348877ebc29a6dfea7c17c85c92b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>API for estimating and retrieving the robot's dynamic state information. </p>
@@ -166,9 +230,9 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Get body position in world frame</span></div>
 <div class="line">Eigen::Vector3f body_pos;</div>
-<div class="line">RBQ_API::instance().stateEstimation.<a class="code" href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">getBodyPos</a>(<a class="code" href="group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6">RBQ_API::StateEstimation::Frame::World</a>, body_pos);</div>
+<div class="line">RBQ_API::instance().stateEstimation.<a class="code" href="group__StateEstimationAPI.html#gae165fc2be0c33179cfbbd30eed9473e7">getBodyPos</a>(<a class="code" href="group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6">RBQ_API::StateEstimation::Frame::World</a>, body_pos);</div>
 <div class="ttc" id="agroup__StateEstimationAPI_html_ga9cb4e66e8a2dd69e8e6b92b821af27d1"><div class="ttname"><a href="group__StateEstimationAPI.html#ga9cb4e66e8a2dd69e8e6b92b821af27d1">RBQ_API::StateEstimation::startEstimation</a></div><div class="ttdeci">int startEstimation()</div><div class="ttdoc">Starts the state estimation process.</div></div>
-<div class="ttc" id="agroup__StateEstimationAPI_html_gaa5696da0cd4571cfe5501c5d3aec2dd8"><div class="ttname"><a href="group__StateEstimationAPI.html#gaa5696da0cd4571cfe5501c5d3aec2dd8">RBQ_API::StateEstimation::getBodyPos</a></div><div class="ttdeci">int getBodyPos(const Frame _frame, Eigen::Vector3f &amp;body_pos_)</div><div class="ttdoc">Returns the position of the robot's body center.</div></div>
+<div class="ttc" id="agroup__StateEstimationAPI_html_gae165fc2be0c33179cfbbd30eed9473e7"><div class="ttname"><a href="group__StateEstimationAPI.html#gae165fc2be0c33179cfbbd30eed9473e7">RBQ_API::StateEstimation::getBodyPos</a></div><div class="ttdeci">Eigen::Vector3f getBodyPos(const Frame _frame, int &amp;result)</div><div class="ttdoc">Returns the position of the robot's body center.</div></div>
 <div class="ttc" id="agroup__StateEstimationAPI_html_gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6"><div class="ttname"><a href="group__StateEstimationAPI.html#gga535e056b1024010f03813b713169f1cfaf5a7924e621e84c9280a9a27e1bcb7f6">RBQ_API::StateEstimation::Frame::World</a></div><div class="ttdeci">@ World</div></div>
 </div><!-- fragment --> <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga535e056b1024010f03813b713169f1cf"></a>
@@ -206,14 +270,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gaa5696da0cd4571cfe5501c5d3aec2dd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa5696da0cd4571cfe5501c5d3aec2dd8">&#9670;&nbsp;</a></span>getBodyPos()</h2>
+<a id="gae165fc2be0c33179cfbbd30eed9473e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae165fc2be0c33179cfbbd30eed9473e7">&#9670;&nbsp;</a></span>getBodyPos()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getBodyPos </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getBodyPos </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -221,8 +285,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>body_pos_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -233,26 +297,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the position of the robot's body center. </p>
-<p>Retrieves the body center position in the specified coordinate frame and stores it in <code>body_pos_</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output position. </td></tr>
-    <tr><td class="paramname">body_pos_</td><td>Reference to store the body center position (in meters). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Body center position in meters. Returns zero vector if not running. </dd></dl>
 
 </div>
 </div>
-<a id="gac4be1267eac9b5d5a896f60ce780a07c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac4be1267eac9b5d5a896f60ce780a07c">&#9670;&nbsp;</a></span>getBodyQuat()</h2>
+<a id="ga757b556b774deb11ed36ef4918a547d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga757b556b774deb11ed36ef4918a547d5">&#9670;&nbsp;</a></span>getBodyQuat()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getBodyQuat </td>
+          <td class="memname">Eigen::Quaternion&lt;float&gt; RBQ_API::StateEstimation::getBodyQuat </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -260,8 +323,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Quaternion&lt; float &gt; &amp;&#160;</td>
-          <td class="paramname"><em>body_quat_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -272,26 +335,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the orientation of the robot's body center as a quaternion. </p>
-<p>Retrieves the body orientation in the specified coordinate frame and stores it in <code>body_quat_</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output orientation. </td></tr>
-    <tr><td class="paramname">body_quat_</td><td>Reference to store the body orientation as a quaternion (w, x, y, z). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Body orientation as quaternion (w, x, y, z). Returns identity if not running. </dd></dl>
 
 </div>
 </div>
-<a id="ga1f15f80810e6e6085bd16fce717bdc49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f15f80810e6e6085bd16fce717bdc49">&#9670;&nbsp;</a></span>getBodyRot()</h2>
+<a id="ga29229b676b8cf521a9f149be7b4a554c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga29229b676b8cf521a9f149be7b4a554c">&#9670;&nbsp;</a></span>getBodyRot()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getBodyRot </td>
+          <td class="memname">Eigen::Matrix3f RBQ_API::StateEstimation::getBodyRot </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -299,8 +361,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Matrix3f &amp;&#160;</td>
-          <td class="paramname"><em>body_rot_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -311,26 +373,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the rotation matrix of the robot's body center. </p>
-<p>Retrieves the body orientation in the specified coordinate frame and stores it in <code>body_rot_</code>. The rotation matrix is a 3x3 matrix representing the orientation of the body center.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output orientation. </td></tr>
-    <tr><td class="paramname">body_rot_</td><td>Reference to store the body rotation matrix (3x3). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Body rotation matrix (3x3). Returns identity if not running. </dd></dl>
 
 </div>
 </div>
-<a id="gae058ff2107a323b7f7b5c3d8da7a474e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae058ff2107a323b7f7b5c3d8da7a474e">&#9670;&nbsp;</a></span>getBodyRPY()</h2>
+<a id="ga261cc8e6ecc503f786c13a7c7f3a1846"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga261cc8e6ecc503f786c13a7c7f3a1846">&#9670;&nbsp;</a></span>getBodyRPY()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getBodyRPY </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getBodyRPY </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -338,8 +399,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>body_rpy_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -350,26 +411,26 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the orientation of the robot's body center as roll, pitch, and yaw angles. </p>
-<p>Retrieves the body orientation in the specified coordinate frame and stores it in <code>body_rpy_</code>. The angles are defined by the Euler ZYX convention: yaw → pitch → roll.</p>
+<p>The angles are defined by the Euler ZYX convention: yaw → pitch → roll.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output orientation. </td></tr>
-    <tr><td class="paramname">body_rpy_</td><td>Reference to store (roll, pitch, yaw) angles in radians. </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(roll, pitch, yaw) in radians. Returns zero vector if not running. </dd></dl>
 
 </div>
 </div>
-<a id="gaea229a4d9f5d3a16fc5d07585deeea3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaea229a4d9f5d3a16fc5d07585deeea3b">&#9670;&nbsp;</a></span>getBodyVel()</h2>
+<a id="ga98b55e2bce0c25934a817b53f359c5de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98b55e2bce0c25934a817b53f359c5de">&#9670;&nbsp;</a></span>getBodyVel()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getBodyVel </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getBodyVel </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -377,8 +438,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>body_vel_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -389,57 +450,52 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the velocity of the robot's body center. </p>
-<p>Retrieves the body center velocity in the specified coordinate frame and stores it in <code>body_vel_</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output velocity. </td></tr>
-    <tr><td class="paramname">body_vel_</td><td>Reference to store the body center velocity (in meters per second). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Body center velocity in m/s. Returns zero vector if not running. </dd></dl>
 
 </div>
 </div>
-<a id="gae211de18ae3ce008205b635f504e1940"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae211de18ae3ce008205b635f504e1940">&#9670;&nbsp;</a></span>getEstimatorRunState()</h2>
+<a id="ga2e9079411be21608c78e17ffcab2c26f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2e9079411be21608c78e17ffcab2c26f">&#9670;&nbsp;</a></span>getEstimatorRunState()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getEstimatorRunState </td>
+          <td class="memname">bool RBQ_API::StateEstimation::getEstimatorRunState </td>
           <td>(</td>
-          <td class="paramtype">bool &amp;&#160;</td>
-          <td class="paramname"><em>run_or_not_</em></td><td>)</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Returns the current run state of the estimator. </p>
-<p>Sets <code>run_or_not_</code> to indicate the estimator status:</p><ul>
-<li>0: Estimator is stopped</li>
-<li>Non-zero: Estimator is running</li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">run_or_not_</td><td>Reference to receive the estimator run state. </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (always 1). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the estimator is running, false if stopped. </dd></dl>
 
 </div>
 </div>
-<a id="ga296bd360b2030fa3ff4499de4825cda7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga296bd360b2030fa3ff4499de4825cda7">&#9670;&nbsp;</a></span>getFootExtForce() <span class="overload">[1/2]</span></h2>
+<a id="ga23b707dd64ac64cafe6c4605045fff14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga23b707dd64ac64cafe6c4605045fff14">&#9670;&nbsp;</a></span>getFootExtForce() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootExtForce </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootExtForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -453,8 +509,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_contact_force_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -465,21 +521,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the external force detected at a specific foot in the specified coordinate frame. </p>
-<p>Retrieves the external force applied to the foot in the specified coordinate frame and stores it in <code>foot_contact_force_</code>. This force is used for contact detection and is expressed in Newtons (N).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output external force. </td></tr>
     <tr><td class="paramname">_legId</td><td>The leg ID (valid range: 0 to 3). </td></tr>
-    <tr><td class="paramname">foot_contact_force_</td><td>Reference to store the external force (in Newtons). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running, -1 if invalid legId). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>External foot force in Newtons. Returns zero vector if not running or invalid legId. </dd></dl>
 
 </div>
 </div>
-<a id="ga1c044584e16c42440be5c87cf865e7f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1c044584e16c42440be5c87cf865e7f4">&#9670;&nbsp;</a></span>getFootExtForce() <span class="overload">[2/2]</span></h2>
+<a id="ga076f04cdb7fadeb527710997b35b350a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga076f04cdb7fadeb527710997b35b350a">&#9670;&nbsp;</a></span>getFootExtForce() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -488,7 +543,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootExtForce </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootExtForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -502,8 +557,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_contact_force_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -519,18 +574,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Overload using LegID. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#ga296bd360b2030fa3ff4499de4825cda7" title="Returns the external force detected at a specific foot in the specified coordinate frame.">getFootExtForce(const Frame, const int&amp;, Eigen::Vector3f&amp;)</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#ga23b707dd64ac64cafe6c4605045fff14" title="Returns the external force detected at a specific foot in the specified coordinate frame.">getFootExtForce(const Frame, const int&amp;, int&amp;)</a> </dd></dl>
 
 </div>
 </div>
-<a id="gaaf47e0505ed06b1c6c66ddd8ead84147"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaf47e0505ed06b1c6c66ddd8ead84147">&#9670;&nbsp;</a></span>getFootForce() <span class="overload">[1/2]</span></h2>
+<a id="ga5d473c9bb69ae5e6eb700fff2437c40d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d473c9bb69ae5e6eb700fff2437c40d">&#9670;&nbsp;</a></span>getFootForce() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootForce </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -544,8 +599,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_force_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -556,21 +611,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the force applied by a specific foot in the specified coordinate frame. </p>
-<p>Retrieves the foot force in the specified coordinate frame and stores it in <code>foot_force_</code>. The force is expressed in Newtons (N).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output force. </td></tr>
     <tr><td class="paramname">_legId</td><td>The leg ID (valid range: 0 to 3). </td></tr>
-    <tr><td class="paramname">foot_force_</td><td>Reference to store the foot force (in Newtons). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running, -1 if invalid legId). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Foot force in Newtons. Returns zero vector if not running or invalid legId. </dd></dl>
 
 </div>
 </div>
-<a id="gaab999dc604d097bac7d5784ba8cfe81c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaab999dc604d097bac7d5784ba8cfe81c">&#9670;&nbsp;</a></span>getFootForce() <span class="overload">[2/2]</span></h2>
+<a id="ga4b606b599b5ca52c4415d118194192b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b606b599b5ca52c4415d118194192b8">&#9670;&nbsp;</a></span>getFootForce() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -579,7 +633,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootForce </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -593,8 +647,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_force_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -610,18 +664,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Overload using LegID. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#gaaf47e0505ed06b1c6c66ddd8ead84147" title="Returns the force applied by a specific foot in the specified coordinate frame.">getFootForce(const Frame, const int&amp;, Eigen::Vector3f&amp;)</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#ga5d473c9bb69ae5e6eb700fff2437c40d" title="Returns the force applied by a specific foot in the specified coordinate frame.">getFootForce(const Frame, const int&amp;, int&amp;)</a> </dd></dl>
 
 </div>
 </div>
-<a id="gacedf4ce0aa7b0576c8e462ea2e9efa35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacedf4ce0aa7b0576c8e462ea2e9efa35">&#9670;&nbsp;</a></span>getFootJacobian() <span class="overload">[1/2]</span></h2>
+<a id="ga7e928e07fc18728514f5ed45748d99a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7e928e07fc18728514f5ed45748d99a0">&#9670;&nbsp;</a></span>getFootJacobian() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootJacobian </td>
+          <td class="memname">Eigen::Matrix3f RBQ_API::StateEstimation::getFootJacobian </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -635,8 +689,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Matrix3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_jacobian_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -647,21 +701,21 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the Jacobian matrix of a specific foot in the specified coordinate frame. </p>
-<p>Retrieves the foot Jacobian in the specified coordinate frame and stores it in <code>foot_jacobian_</code>. The Jacobian is a 3x3 matrix representing the relationship between joint velocities and foot velocities.</p>
+<p>The Jacobian is a 3x3 matrix representing the relationship between joint velocities and foot velocities.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output Jacobian. </td></tr>
     <tr><td class="paramname">_legId</td><td>The leg ID (valid range: 0 to 3). </td></tr>
-    <tr><td class="paramname">foot_jacobian_</td><td>Reference to store the foot Jacobian (3x3 matrix). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running, -1 if invalid legId). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Foot Jacobian (3x3). Returns zero matrix if not running or invalid legId. </dd></dl>
 
 </div>
 </div>
-<a id="ga0c5a41a2c4343c361bf7fa58c5484e4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0c5a41a2c4343c361bf7fa58c5484e4f">&#9670;&nbsp;</a></span>getFootJacobian() <span class="overload">[2/2]</span></h2>
+<a id="ga4b03b8582bbb4468647fb2eb6270043f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b03b8582bbb4468647fb2eb6270043f">&#9670;&nbsp;</a></span>getFootJacobian() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -670,7 +724,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootJacobian </td>
+          <td class="memname">Eigen::Matrix3f RBQ_API::StateEstimation::getFootJacobian </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -684,8 +738,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Matrix3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_jacobian_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -701,18 +755,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Overload using LegID. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#gacedf4ce0aa7b0576c8e462ea2e9efa35" title="Returns the Jacobian matrix of a specific foot in the specified coordinate frame.">getFootJacobian(const Frame, const int&amp;, Eigen::Matrix3f&amp;)</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#ga7e928e07fc18728514f5ed45748d99a0" title="Returns the Jacobian matrix of a specific foot in the specified coordinate frame.">getFootJacobian(const Frame, const int&amp;, int&amp;)</a> </dd></dl>
 
 </div>
 </div>
-<a id="ga45e858190f5b0270eba49c70bb190627"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga45e858190f5b0270eba49c70bb190627">&#9670;&nbsp;</a></span>getFootPos() <span class="overload">[1/2]</span></h2>
+<a id="gae256930be3404bc763691b9162e71a1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae256930be3404bc763691b9162e71a1f">&#9670;&nbsp;</a></span>getFootPos() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootPos </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootPos </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -726,8 +780,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_pos_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -738,21 +792,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the position of a specific foot in the specified coordinate frame. </p>
-<p>Retrieves the foot position in the specified coordinate frame and stores it in <code>foot_pos_</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output position. </td></tr>
     <tr><td class="paramname">_legId</td><td>The leg ID (valid range: 0 to 3). </td></tr>
-    <tr><td class="paramname">foot_pos_</td><td>Reference to store the foot position (in meters). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running, -1 if invalid legId). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Foot position in meters. Returns zero vector if not running or invalid legId. </dd></dl>
 
 </div>
 </div>
-<a id="ga7b092c0178eeaea5aef0e2292b337d9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7b092c0178eeaea5aef0e2292b337d9e">&#9670;&nbsp;</a></span>getFootPos() <span class="overload">[2/2]</span></h2>
+<a id="gaa65abd78a8cb7e95bab54d8810b6e67b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa65abd78a8cb7e95bab54d8810b6e67b">&#9670;&nbsp;</a></span>getFootPos() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -761,7 +814,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootPos </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootPos </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -775,8 +828,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_pos_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -792,18 +845,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Overload using LegID. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#ga45e858190f5b0270eba49c70bb190627" title="Returns the position of a specific foot in the specified coordinate frame.">getFootPos(const Frame, const int&amp;, Eigen::Vector3f&amp;)</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#gae256930be3404bc763691b9162e71a1f" title="Returns the position of a specific foot in the specified coordinate frame.">getFootPos(const Frame, const int&amp;, int&amp;)</a> </dd></dl>
 
 </div>
 </div>
-<a id="ga4b44e9d16dfebf587f10f51a374f0dd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4b44e9d16dfebf587f10f51a374f0dd9">&#9670;&nbsp;</a></span>getFootVel() <span class="overload">[1/2]</span></h2>
+<a id="gaacd378f66f23990d61fe0830ced06bef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaacd378f66f23990d61fe0830ced06bef">&#9670;&nbsp;</a></span>getFootVel() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootVel </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootVel </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -817,8 +870,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_vel_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -829,21 +882,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the velocity of a specific foot in the specified coordinate frame. </p>
-<p>Retrieves the foot velocity in the specified coordinate frame and stores it in <code>foot_vel_</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_frame</td><td>The coordinate frame for the output velocity. </td></tr>
     <tr><td class="paramname">_legId</td><td>The leg ID (valid range: 0 to 3). </td></tr>
-    <tr><td class="paramname">foot_vel_</td><td>Reference to store the foot velocity (in meters per second). </td></tr>
+    <tr><td class="paramname">result</td><td>Reference to receive the operation result (1 on success, 0 if not running, -1 if invalid legId). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Foot velocity in m/s. Returns zero vector if not running or invalid legId. </dd></dl>
 
 </div>
 </div>
-<a id="ga250d8d227a19f22c75c4c5b43b42c505"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga250d8d227a19f22c75c4c5b43b42c505">&#9670;&nbsp;</a></span>getFootVel() <span class="overload">[2/2]</span></h2>
+<a id="ga27a223eb06588618c62b85e2f90f856a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga27a223eb06588618c62b85e2f90f856a">&#9670;&nbsp;</a></span>getFootVel() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -852,7 +904,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int RBQ_API::StateEstimation::getFootVel </td>
+          <td class="memname">Eigen::Vector3f RBQ_API::StateEstimation::getFootVel </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__StateEstimationAPI.html#ga535e056b1024010f03813b713169f1cf">Frame</a>&#160;</td>
           <td class="paramname"><em>_frame</em>, </td>
@@ -866,8 +918,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Eigen::Vector3f &amp;&#160;</td>
-          <td class="paramname"><em>foot_vel_</em>&#160;</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -883,7 +935,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Overload using LegID. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#ga4b44e9d16dfebf587f10f51a374f0dd9" title="Returns the velocity of a specific foot in the specified coordinate frame.">getFootVel(const Frame, const int&amp;, Eigen::Vector3f&amp;)</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__StateEstimationAPI.html#gaacd378f66f23990d61fe0830ced06bef" title="Returns the velocity of a specific foot in the specified coordinate frame.">getFootVel(const Frame, const int&amp;, int&amp;)</a> </dd></dl>
 
 </div>
 </div>

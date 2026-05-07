@@ -9,11 +9,12 @@ echo -ne "\033]0;$APP_NAME\007"
 print_help() {
     echo "Usage: bash scripts/start_motion.bash [OPTIONS]"
     echo "Options:"
-    echo "  --help      Display this help message and exit."
-    echo "  --sim       Run in simulator mode."
-    echo "  --rb1       RB1 Arm enabled. DEFAULT false"
-    echo "  --lims_ex   LIMS_EX enabled. DEFAULT false"
-    echo "  --wheel     RBQ WHEEL enabled. DEFAULT false"
+    echo "  --help                    Display this help message and exit."
+    echo "  --sim                     Run in simulator mode."
+    echo "  --rb1                     RB1 Arm enabled. DEFAULT false"
+    echo "  --lims_ex                 LIMS_EX enabled. DEFAULT false"
+    echo "  --wheel                   RBQ WHEEL enabled. DEFAULT false"
+    echo "  -i, --interface <name>    CycloneDDS network interface (forwarded to Network). DEFAULT lo"
 }
 
 while [[ $# -gt 0 ]]; do
@@ -23,6 +24,7 @@ while [[ $# -gt 0 ]]; do
         --rb1) CMD_ARGS+=("--arm"); shift ;;
         --lims_ex) CMD_ARGS+=("--arm"); shift ;;
         --wheel) CMD_ARGS+=("--wheel"); shift ;;
+        -i|--interface) CMD_ARGS+=("--interface" "$2"); shift 2 ;;
         *) echo "Unknown argument: $1"; print_help; exit 1 ;;
     esac
 done
