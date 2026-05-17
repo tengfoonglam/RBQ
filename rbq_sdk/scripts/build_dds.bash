@@ -6,7 +6,7 @@ set -e
 
 # system temporary directory
 export TMP_DIR=$(mktemp -d)
-export DDS_VERSION="0.10.5"
+export DDS_VERSION="0.10.2"
 
 download() {
     local url="$1"

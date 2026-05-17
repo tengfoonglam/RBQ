@@ -36,6 +36,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
     "msg/FootStates.msg"
     "msg/RobotStatus.msg"
     "msg/JointStatus.msg"
+    "msg/PowerControl.msg"
     DEPENDENCIES
         builtin_interfaces
         common_interfaces

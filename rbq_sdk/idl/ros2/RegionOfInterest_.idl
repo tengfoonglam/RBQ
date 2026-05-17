@@ -1,0 +1,14 @@
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(APPENDABLE)
+      struct RegionOfInterest_ {
+        unsigned long x_offset;
+        unsigned long y_offset;
+        unsigned long height;
+        unsigned long width;
+        boolean do_rectify;
+      };
+    };
+  };
+};

@@ -1,0 +1,23 @@
+#include "Header_.idl"
+#include "RegionOfInterest_.idl"
+
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(APPENDABLE)
+      struct CameraInfo_ {
+        std_msgs::msg::dds_::Header_ header;
+        unsigned long height;
+        unsigned long width;
+        string distortion_model;
+        sequence<double> d;
+        double k[9];
+        double r[9];
+        double p[12];
+        unsigned long binning_x;
+        unsigned long binning_y;
+        sensor_msgs::msg::dds_::RegionOfInterest_ roi;
+      };
+    };
+  };
+};

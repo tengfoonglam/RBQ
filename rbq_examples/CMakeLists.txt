@@ -91,3 +91,23 @@ target_compile_definitions(rbq_example_level_1 PRIVATE
 install(TARGETS rbq_example_level_1
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+add_executable(rbq_example_sport_client_joy src/rbq_example_sport_client_joy.cpp)
+set_target_properties(rbq_example_sport_client_joy PROPERTIES
+    BUILD_WITH_INSTALL_RPATH TRUE
+    INSTALL_RPATH "$ORIGIN"
+    SKIP_BUILD_RPATH FALSE
+    BUILD_RPATH "$ORIGIN"
+)
+target_link_libraries(rbq_example_sport_client_joy
+    pthread
+    rt
+    Eigen3::Eigen
+    rbq_sdk::rbq_sdk
+)
+target_compile_definitions(rbq_example_sport_client_joy PRIVATE
+    APP_NAME=\"rbq_example_sport_client_joy\"
+)
+install(TARGETS rbq_example_sport_client_joy
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

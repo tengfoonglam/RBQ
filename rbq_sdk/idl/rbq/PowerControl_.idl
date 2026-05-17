@@ -1,0 +1,11 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct PowerControl_ {
+        octet port_id;
+        boolean state;
+      };
+    };
+  };
+};

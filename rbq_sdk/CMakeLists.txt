@@ -49,6 +49,9 @@ set(ROS2_IDL_FILES
     ${IDL_SOURCE_DIR}/ros2/JointState_.idl
     ${IDL_SOURCE_DIR}/ros2/PointField_.idl
     ${IDL_SOURCE_DIR}/ros2/PointCloud2_.idl
+    ${IDL_SOURCE_DIR}/ros2/RegionOfInterest_.idl
+    ${IDL_SOURCE_DIR}/ros2/CameraInfo_.idl
+    ${IDL_SOURCE_DIR}/ros2/CompressedImage_.idl
     # nav_msgs
     ${IDL_SOURCE_DIR}/ros2/Odometry_.idl
     ${IDL_SOURCE_DIR}/ros2/MapMetaData_.idl
@@ -68,6 +71,39 @@ foreach(idl_file ${ROS2_IDL_FILES})
         OUTPUT ${gen_file}
         COMMAND ${CMAKE_COMMAND} -E env ${IDLC_ENV} ${IDLPP_EXECUTABLE} -l cxx -I ${IDL_SOURCE_DIR}/ros2 -x final ${idl_file}
         WORKING_DIRECTORY ${IDL_FINAL_DIR}/ros2
+        DEPENDS ${idl_file} ${hash_file}
+        COMMENT "Generating C++ from ${idl_file}"
+        VERBATIM
+    )
+    list(APPEND SOURCES ${gen_file})
+endforeach()
+
+set(IDL_DIR api)
+file(MAKE_DIRECTORY ${IDL_FINAL_DIR}/${IDL_DIR})
+set(IDL_FILES
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/RequestLease_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/RequestPolicy_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/RequestIdentity_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/RequestHeader_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/Request_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/ResponseStatus_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/ResponseHeader_.idl
+    ${IDL_SOURCE_DIR}/${IDL_DIR}/Response_.idl
+)
+foreach(idl_file ${IDL_FILES})
+    get_filename_component(idl_name ${idl_file} NAME_WE)
+    file(SHA256 ${idl_file} idl_hash)
+    set(hash_file ${IDL_FINAL_DIR}/${IDL_DIR}/${idl_name}.idl.hash)
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/idl_template.hash.in
+        ${hash_file}
+        @ONLY
+    )
+    set(gen_file ${IDL_FINAL_DIR}/${IDL_DIR}/${idl_name}.hpp ${IDL_FINAL_DIR}/${IDL_DIR}/${idl_name}.cpp)
+    add_custom_command(
+        OUTPUT ${gen_file}
+        COMMAND ${CMAKE_COMMAND} -E env ${IDLC_ENV} ${IDLPP_EXECUTABLE} -l cxx -I ${IDL_SOURCE_DIR}/${IDL_DIR} -x final ${idl_file}
+        WORKING_DIRECTORY ${IDL_FINAL_DIR}/${IDL_DIR}
         DEPENDS ${idl_file} ${hash_file}
         COMMENT "Generating C++ from ${idl_file}"
         VERBATIM
@@ -101,6 +137,7 @@ set(IDL_FILES
     ${IDL_SOURCE_DIR}/rbq/LV0.idl
     ${IDL_SOURCE_DIR}/rbq/RobotStatus_.idl
     ${IDL_SOURCE_DIR}/rbq/UserCommand_.idl
+    ${IDL_SOURCE_DIR}/rbq/PowerControl_.idl
 )
 foreach(idl_file ${IDL_FILES})
     get_filename_component(idl_name ${idl_file} NAME_WE)
@@ -174,7 +211,21 @@ foreach(idl_file ${IDL_FILES})
 endforeach()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-add_library("${PROJECT_NAME}" SHARED ${SOURCES})
+add_library("${PROJECT_NAME}" SHARED ${SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/rbq_sdk.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Filter.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/JointControl.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Joystick.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Policy.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Thread.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dds/ChannelFactory.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dds/Publisher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dds/Settings.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dds/SportClient.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dds/Subscriber.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/dds/TopicNames.hpp
+)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     CycloneDDS-CXX::ddscxx
