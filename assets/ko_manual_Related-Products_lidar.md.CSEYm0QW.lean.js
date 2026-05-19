@@ -1,0 +1,13 @@
+import{_ as l,a as r}from"./chunks/s_3.BR3GWHJq.js";import{c as i,Q as n,j as o,m as t,g as a}from"./chunks/framework.DjobWxAB.js";const g=JSON.parse('{"title":"라이다","description":"","frontmatter":{"layout":"doc","outline":"deep"},"headers":[],"relativePath":"ko/manual/Related-Products/lidar.md","filePath":"ko/manual/Related-Products/lidar.md","lastUpdated":1779182288000}'),d={name:"ko/manual/Related-Products/lidar.md"};function s(u,e,c,h,_,m){return n(),o("div",null,[...e[0]||(e[0]=[t("",6),a("table",{border:"0",cellspacing:"0",cellpadding:"5"},[a("tr",null,[a("th"),a("th",null,"Base to LiDAR TF")]),a("tr",null,[a("td",null,[a("b",null,"LiDAR-Front")]),a("td",null,[a("pre",null,`[  0.81920   0.00000   0.57358   0.37282 ]
+[  0.00000   1.00000   0.00000   0.00000 ]
+[ -0.57358   0.00000   0.81915   0.12777 ]
+[  0.0000    0.00000   0.00000   1.00000 ]
+    `)])]),a("tr",null,[a("td",null,[a("b",null,"LiDAR-Rear")]),a("td",null,[a("pre",null,`[ 0.81920   0.00000   -0.57358  -0.34100 ]
+[ 0.00000   1.00000    0.00000   0.00000 ]
+[ 0.57358   0.00000    0.81915   0.16963 ]
+[ 0.00000   0.00000    0.00000   1.00000 ]
+    `)])])],-1),t("",5),a("table",{border:"0",cellspacing:"0",cellpadding:"5"},[a("tr",null,[a("th"),a("th",null,"Base to LiDAR TF")]),a("tr",null,[a("td",null,[a("b",null,"LiDAR")]),a("td",null,[a("pre",null,`[ 0.000000   0.000000   0.000000  -0.312600 ]
+[ 0.000000   1.000000   0.000000  -0.000033 ]
+[ 0.000000   0.000000   1.000000  -0.136850 ]
+[ 0.000000   0.000000   0.000000   1.000000 ]
+    `)])])],-1)])])}const b=i(d,[["render",s]]);export{g as __pageData,b as default};
