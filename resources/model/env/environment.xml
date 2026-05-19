@@ -30,6 +30,9 @@
         <material name="bottom_aruco_material" texture="bottom_aruco" texuniform="false" texrepeat="1 1" reflectance="0.1"/>
         <material name="rear_aruco_material" texture="rear_aruco" texuniform="false" texrepeat="1 1" reflectance="0.1"/>
 
+        <!-- Grating stair mesh -->
+        <mesh name="grating" file="../meshes/env/Grating.stl" scale="0.01 0.03 0.01"/>
+
     </asset>
 
     <!-- Default class definitions -->
@@ -63,9 +66,40 @@
         <!--docking station -->
         <body name="docking_station" pos="-1.5 -6 0.005" quat="0 1 0 0">
             <geom name="docking_station_visual" type="mesh" mesh="docking_station" rgba="0.7 0.7 0.7 1" contype="0" conaffinity="0"/>
-            <geom name="bottom_id" pos="-0.1 -0.08 -0.035" euler="-3.141592 0 1.5708"type="box" size="0.05 0.05 0.001" material="bottom_aruco_material"/>
+            <geom name="bottom_id" pos="-0.1 -0.08 -0.035" euler="-3.141592 0 1.5708" type="box" size="0.05 0.05 0.001" material="bottom_aruco_material"/>
             <geom name="rear_id" pos="-0.4 -0.08 -0.50" euler="-1.5708 1.5708 0" type="box" size="0.05 0.05 0.001" material="rear_aruco_material"/>
             <!-- <geom type="box" size="0.001 0.001 0.001" pos="0 0 -0" class="collision"/> -->
+        </body>
+
+        <!--Grating stair -->
+        <body name="grating_stair" pos="-4 -9 0" quat="1 0 0 0">
+
+            <geom name="grating1_visual" class="visual" pos="-0.25 0.75 0.15" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating1" class="collision" pos="0 0 0.15" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
+
+            <geom name="grating2_visual" class="visual" pos="0.15 0.75 0.3" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating2" class="collision" pos="0.4 0 0.3" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
+
+            <geom name="grating3_visual" class="visual" pos="0.55 0.75 0.45" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating3" class="collision" pos="0.8 0 0.45" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
+
+            <geom name="grating4_visual" class="visual" pos="0.95 0.75 0.6" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating4" class="collision" pos="1.2 0 0.6" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
+
+            <geom name="grating5_visual" class="visual" pos="1.35 0.75 0.75" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating5" class="collision" pos="1.6 0 0.75" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1" friction="0.8 0.8 0.8" priority="2" />
+
+            <geom name="grating6_visual" class="visual" pos="1.75 0.75 0.6" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating6" class="collision" pos="2.0 0 0.6" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
+
+            <geom name="grating7_visual" class="visual" pos="2.15 0.75 0.45" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating7" class="collision" pos="2.4 0 0.45" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
+
+            <geom name="grating8_visual" class="visual" pos="2.55 0.75 0.3" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating8" class="collision" pos="2.8 0 0.3" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1" friction="0.8 0.8 0.8" priority="2" />
+
+            <geom name="grating9_visual" class="visual" pos="2.95 0.75 0.15" type="mesh" mesh="grating" rgba="0.7 0.7 1 1"/>
+            <geom name="grating9" class="collision" pos="3.2 0 0.15" size="0.25 0.75 0.03" type="box" contype="1" conaffinity="1"  friction="0.8 0.8 0.8" priority="2"/>
         </body>
 
 
@@ -83,7 +117,7 @@
         <geom name="obstacle11" class="obstacle" pos="-3.0 -4 0"     size="0.1 0.75 0.2"  quat="1.0 0 0 0"    rgba="0.4 0.4 0.8 1" />
         <geom name="obstacle12" class="obstacle" pos="-3.4 -4 0"     size="0.1 0.75 0.2"  quat="1.0 0 0 0"    rgba="0.4 0.4 0.8 1" />
 
-	<!-- 20 degree slope terrain -->
+	    <!-- 20 degree slope terrain -->
         <geom name="slope20_1" class="obstacle" pos="3.3 -3.5 0.05" size="1.5 1.5 0.025" quat="0.9848 0 -0.1736 0" rgba="0.8 0.8 0.8 1"/>
         <geom name="slope20_2" class="obstacle" pos="5.52 -3.5 0.56" size="0.84 1.5 0.025" quat="1 0 0 0" rgba="0.8 0.8 0.8 1"/>
         <geom name="slope20_3" class="obstacle" pos="7.747 -3.5 0.05" size="1.5 1.5 0.025" quat="0.9848 0 0.1736 0" rgba="0.8 0.8 0.8 1"/>
@@ -242,31 +276,6 @@
         <pair geom1="FR" geom2="stair6"/>
         <pair geom1="FL" geom2="stair6"/>
 
-        <!-- <pair geom1="RR" geom2="stair11"/>
-        <pair geom1="RL" geom2="stair11"/>
-        <pair geom1="FR" geom2="stair11"/>
-        <pair geom1="FL" geom2="stair11"/>
-        <pair geom1="RR" geom2="stair12"/>
-        <pair geom1="RL" geom2="stair12"/>
-        <pair geom1="FR" geom2="stair12"/>
-        <pair geom1="FL" geom2="stair12"/>
-        <pair geom1="RR" geom2="stair13"/>
-        <pair geom1="RL" geom2="stair13"/>
-        <pair geom1="FR" geom2="stair13"/>
-        <pair geom1="FL" geom2="stair13"/>
-        <pair geom1="RR" geom2="stair14"/>
-        <pair geom1="RL" geom2="stair14"/>
-        <pair geom1="FR" geom2="stair14"/>
-        <pair geom1="FL" geom2="stair14"/>
-        <pair geom1="RR" geom2="stair15"/>
-        <pair geom1="RL" geom2="stair15"/>
-        <pair geom1="FR" geom2="stair15"/>
-        <pair geom1="FL" geom2="stair15"/>
-        <pair geom1="RR" geom2="stair16"/>
-        <pair geom1="RL" geom2="stair16"/>
-        <pair geom1="FR" geom2="stair16"/>
-        <pair geom1="FL" geom2="stair16"/> -->
-
         <!-- Slope contacts -->
         <pair geom1="RR" geom2="slope20_1"/>
         <pair geom1="RL" geom2="slope20_1"/>
@@ -300,6 +309,46 @@
         <pair geom1="RL" geom2="slope20_2_1"/>
         <pair geom1="FR" geom2="slope20_2_1"/>
         <pair geom1="FL" geom2="slope20_2_1"/>
+
+
+        <!-- Grating contacts -->
+        <pair geom1="RR" geom2="grating1"/>
+        <pair geom1="RL" geom2="grating1"/>
+        <pair geom1="FR" geom2="grating1"/>
+        <pair geom1="FL" geom2="grating1"/>
+        <pair geom1="RR" geom2="grating2"/>
+        <pair geom1="RL" geom2="grating2"/>
+        <pair geom1="FR" geom2="grating2"/>
+        <pair geom1="FL" geom2="grating2"/>
+        <pair geom1="RR" geom2="grating3"/>
+        <pair geom1="RL" geom2="grating3"/>
+        <pair geom1="FR" geom2="grating3"/>
+        <pair geom1="FL" geom2="grating3"/>
+        <pair geom1="RR" geom2="grating4"/>
+        <pair geom1="RL" geom2="grating4"/>
+        <pair geom1="FR" geom2="grating4"/>
+        <pair geom1="FL" geom2="grating4"/>
+        <pair geom1="RR" geom2="grating5"/>
+        <pair geom1="RL" geom2="grating5"/>
+        <pair geom1="FR" geom2="grating5"/>
+        <pair geom1="FL" geom2="grating5"/>
+        <pair geom1="RR" geom2="grating6"/>
+        <pair geom1="RL" geom2="grating6"/>
+        <pair geom1="FR" geom2="grating6"/>
+        <pair geom1="FL" geom2="grating6"/>
+        <pair geom1="RR" geom2="grating7"/>
+        <pair geom1="RL" geom2="grating7"/>
+        <pair geom1="FR" geom2="grating7"/>
+        <pair geom1="FL" geom2="grating7"/>
+        <pair geom1="RR" geom2="grating8"/>
+        <pair geom1="RL" geom2="grating8"/>
+        <pair geom1="FR" geom2="grating8"/>
+        <pair geom1="FL" geom2="grating8"/>
+        <pair geom1="RR" geom2="grating9"/>
+        <pair geom1="RL" geom2="grating9"/>
+        <pair geom1="FR" geom2="grating9"/>
+        <pair geom1="FL" geom2="grating9"/>
+        
     </contact>
 
 </mujoco>

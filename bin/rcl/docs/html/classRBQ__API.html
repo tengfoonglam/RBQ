@@ -119,9 +119,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeaa63d1bf6470617b6537a29612942a9"><td class="memItemLeft" align="right" valign="top"><a id="aeaa63d1bf6470617b6537a29612942a9"></a>
 <a class="el" href="classRBQ__API.html">RBQ_API</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classRBQ__API.html">RBQ_API</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:aeaa63d1bf6470617b6537a29612942a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a765d22d0f2d1413f131df1a673cb20c4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRBQ__API.html#a765d22d0f2d1413f131df1a673cb20c4">initialize</a> (const bool _local, const int &amp;_processId=-1)</td></tr>
-<tr class="memdesc:a765d22d0f2d1413f131df1a673cb20c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an <a class="el" href="classRBQ__API.html">RBQ_API</a> instance with a specific process ID.  <a href="classRBQ__API.html#a765d22d0f2d1413f131df1a673cb20c4">More...</a><br /></td></tr>
-<tr class="separator:a765d22d0f2d1413f131df1a673cb20c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25fc5f8f6a9c02b6b65bfc2a96f3d0eb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRBQ__API.html#a25fc5f8f6a9c02b6b65bfc2a96f3d0eb">initialize</a> (const bool _local, const int &amp;_processId=-1, const bool _shmOnly=false)</td></tr>
+<tr class="memdesc:a25fc5f8f6a9c02b6b65bfc2a96f3d0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an <a class="el" href="classRBQ__API.html">RBQ_API</a> instance with a specific process ID.  <a href="classRBQ__API.html#a25fc5f8f6a9c02b6b65bfc2a96f3d0eb">More...</a><br /></td></tr>
+<tr class="separator:a25fc5f8f6a9c02b6b65bfc2a96f3d0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a679aefcc1fe19834877f788dc6126380"><td class="memItemLeft" align="right" valign="top"><a id="a679aefcc1fe19834877f788dc6126380"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isInitialized</b> ()</td></tr>
 <tr class="separator:a679aefcc1fe19834877f788dc6126380"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,6 +137,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setCommand</b> (const
 <tr class="memitem:ad65542f9955e8561ee2506191f428c8f"><td class="memItemLeft" align="right" valign="top"><a id="ad65542f9955e8561ee2506191f428c8f"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>setCommand</b> (const RBQ_SDK::GeneralRequest_t &amp;cmd)</td></tr>
 <tr class="separator:ad65542f9955e8561ee2506191f428c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28b517d8dfca6645eb731601970320e2"><td class="memItemLeft" align="right" valign="top"><a id="a28b517d8dfca6645eb731601970320e2"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>shmOpened</b> () const</td></tr>
+<tr class="separator:a28b517d8dfca6645eb731601970320e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -187,8 +190,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>StateEstimator</b></
 <tr class="separator:a5c21682fc6fd8e4c835e18f0ef894b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a765d22d0f2d1413f131df1a673cb20c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a765d22d0f2d1413f131df1a673cb20c4">&#9670;&nbsp;</a></span>initialize()</h2>
+<a id="a25fc5f8f6a9c02b6b65bfc2a96f3d0eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25fc5f8f6a9c02b6b65bfc2a96f3d0eb">&#9670;&nbsp;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +206,13 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>StateEstimator</b></
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const int &amp;&#160;</td>
-          <td class="paramname"><em>_processId</em> = <code>-1</code>&#160;</td>
+          <td class="paramname"><em>_processId</em> = <code>-1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>_shmOnly</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

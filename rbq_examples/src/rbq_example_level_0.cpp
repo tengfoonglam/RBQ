@@ -175,7 +175,7 @@ void* controlLoop(void*)
 
     rbq_sdk::Publisher<rbq_msgs::msg::dds_::MotionRef_> pubMotionRef("rt/rbq/ref/leg_joint/owner_20");
 
-    rbq_sdk::Publisher<rbq_msgs::msg::dds_::JointOwnershipCmd_> pubJointOwnershipCmd("rt/rbq/cmd/motion/joint_owner/20");
+    rbq_sdk::Publisher<rbq_msgs::msg::dds_::JointOwnershipCmd_> pubJointOwnershipCmd("rt/rbq/cmd/motion/joint_owner/_20");
 
     while (g_isWorking) {
         static TaskState lastTask = TaskState::Idle;
