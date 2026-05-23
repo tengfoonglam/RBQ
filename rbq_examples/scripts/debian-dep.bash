@@ -13,7 +13,7 @@ DEBIAN_FRONTEND=noninteractive apt -y --quiet --no-install-recommends install  \
     libcanberra-gtk3-module sudo iputils-ping \
     locales ca-certificates apt-transport-https \
     cmake build-essential pkg-config ninja-build \
-    git curl wget sshpass libssl-dev libcurl4-openssl-dev \
+    git curl wget ssh sshpass libssl-dev libcurl4-openssl-dev \
     python3 python3-dev python3-pip \
     libeigen3-dev libasio-dev locales mesa-common-dev \
     libglu1-mesa-dev libglfw3-dev libglew-dev libgl1-mesa-dev \
@@ -24,7 +24,7 @@ DEBIAN_FRONTEND=noninteractive apt -y --quiet --no-install-recommends install  \
     libxcursor-dev libxfixes-dev ca-certificates libsdl2-dev libspdlog-dev \
     apt-transport-https fuse3 v4l-utils libusb-1.0-0-dev lsb-release \
     meson flex bison yasm doxygen libopencv-dev libopencv-contrib-dev \
-    ffmpeg libwebp-dev tmux pre-commit clang-format ssh
+    ffmpeg libwebp-dev tmux pre-commit clang-format
 
 echo "✅ apt installed."
 

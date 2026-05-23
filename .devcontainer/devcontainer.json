@@ -22,7 +22,9 @@
 			"extensions": [
 				"mhutchie.git-graph",
 				"yzhang.markdown-all-in-one",
-				"shd101wyy.markdown-preview-enhanced"
+				"shd101wyy.markdown-preview-enhanced",
+				"ms-vscode.cpptools",
+				"xaver.clang-format"
 			]
 		}
 	},
