@@ -1,19 +1,33 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+
+.common_settings: &common_settings
+    files: ^rbq_examples/
+
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
     -   id: trailing-whitespace
+        <<: *common_settings
     -   id: end-of-file-fixer
+        <<: *common_settings
     -   id: check-yaml
+        <<: *common_settings
     -   id: check-added-large-files
+        <<: *common_settings
     -   id: check-case-conflict
+        <<: *common_settings
     -   id: check-merge-conflict
+        <<: *common_settings
     -   id: check-symlinks
+        <<: *common_settings
     -   id: debug-statements
+        <<: *common_settings
     -   id: mixed-line-ending
+        <<: *common_settings
 -  repo: https://github.com/pre-commit/mirrors-clang-format
    rev: v13.0.0
    hooks:
    -    id: clang-format
+        <<: *common_settings
