@@ -91,9 +91,9 @@ cd rbq_examples/
 ./scripts/build.bash
 ```
 
-Run the example
+Run the example (in `rbq_examples` folder)
 ```bash
-./rbq_examples/bin/rbq_example_level_0 -p /workspace/rbq_lab/policy/rbq10
+./bin/rbq_example_level_0 -p /workspace/rbq_lab/policy/rbq10
 ```
 
 Example notes:
