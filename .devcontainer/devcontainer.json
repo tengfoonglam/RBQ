@@ -1,0 +1,33 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "rbq_example",
+	"image": "rbq-examples-main",
+	"runArgs": ["--cap-add", "SYS_ADMIN",
+                "--device", "/dev/fuse",
+                "--security-opt", "apparmor:unconfined",
+                "--privileged",
+                "--network=host",
+	            "--gpus", "all",
+				"--runtime", "nvidia",
+				"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+                "-v", "${localWorkspaceFolder}:/workspace",
+			    "--name", "rbq_example"
+			],
+	"containerEnv": { "DISPLAY": "${localEnv:DISPLAY}",
+	                  "NVIDIA_VISIBLE_DEVICES": "all",
+					  "NVIDIA_DRIVER_CAPABILITIES": "all"},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"mhutchie.git-graph",
+				"yzhang.markdown-all-in-one",
+				"shd101wyy.markdown-preview-enhanced"
+			]
+		}
+	},
+	"mounts": [
+	// Comment out line below if there is internet access available to download vscode server
+	"source=${localEnv:HOME}/vscode-server-devcontainer,target=/home/engineer/.vscode-server,type=bind,consistency=cached"
+	]
+}

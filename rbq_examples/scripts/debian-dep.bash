@@ -9,34 +9,22 @@ apt upgrade -y --quiet
 dpkg --configure -a
 
 DEBIAN_FRONTEND=noninteractive apt -y --quiet --no-install-recommends install  \
-    gnome-terminal dbus-x11 dconf-cli libcanberra-gtk-module libcanberra-gtk3-module sudo iputils-ping \
+    gnome-terminal dbus-x11 dconf-cli libcanberra-gtk-module \
+    libcanberra-gtk3-module sudo iputils-ping \
     locales ca-certificates apt-transport-https \
     cmake build-essential pkg-config ninja-build \
     git curl wget sshpass libssl-dev libcurl4-openssl-dev \
     python3 python3-dev python3-pip \
-    libeigen3-dev \
-    libasio-dev \
-    locales \
-    mesa-common-dev \
-    libglu1-mesa-dev libglfw3-dev libglew-dev libgl1-mesa-dev libsoup2.4-dev libglib2.0-dev \
-    libpng-dev libflatbuffers-dev libtins-dev libpcap-dev libsuitesparse-dev libgtk-3-dev \
-    '^libxcb.*-dev' libx11-xcb-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb1-dev libx11-dev libxext-dev libxcb-* \
-    libxrandr-dev libxinerama-dev libxcursor-dev libxfixes-dev \
-    ca-certificates \
-    libsdl2-dev \
-    libspdlog-dev \
-    apt-transport-https \
-    fuse3 \
-    v4l-utils libusb-1.0-0-dev \
-    lsb-release \
-    meson flex bison \
-    yasm \
-    doxygen \
-    libopencv-dev \
-    libopencv-contrib-dev \
-    ffmpeg \
-    libwebp-dev \
-    tmux
+    libeigen3-dev libasio-dev locales mesa-common-dev \
+    libglu1-mesa-dev libglfw3-dev libglew-dev libgl1-mesa-dev \
+    libsoup2.4-dev libglib2.0-dev libpng-dev libflatbuffers-dev libtins-dev \
+    libpcap-dev libsuitesparse-dev libgtk-3-dev '^libxcb.*-dev' libx11-xcb-dev \
+    libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb1-dev \
+    libx11-dev libxext-dev libxcb-* libxrandr-dev libxinerama-dev \
+    libxcursor-dev libxfixes-dev ca-certificates libsdl2-dev libspdlog-dev \
+    apt-transport-https fuse3 v4l-utils libusb-1.0-0-dev lsb-release \
+    meson flex bison yasm doxygen libopencv-dev libopencv-contrib-dev \
+    ffmpeg libwebp-dev tmux pre-commit clang-format
 
 echo "✅ apt installed."
 

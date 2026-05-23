@@ -22,3 +22,9 @@ RUN bash scripts/build_dds.bash
 # RBQ SDK
 COPY rbq_sdk/ /workspace/rbq_sdk/
 RUN cd /workspace/rbq_sdk && bash scripts/build.bash --no-cache
+
+# Setup pre-commit hooks
+COPY ./.pre-commit-config.yaml .
+RUN git init . && pre-commit install --install-hooks && rm -rf .git
+
+
