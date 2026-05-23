@@ -24,7 +24,7 @@ DEBIAN_FRONTEND=noninteractive apt -y --quiet --no-install-recommends install  \
     libxcursor-dev libxfixes-dev ca-certificates libsdl2-dev libspdlog-dev \
     apt-transport-https fuse3 v4l-utils libusb-1.0-0-dev lsb-release \
     meson flex bison yasm doxygen libopencv-dev libopencv-contrib-dev \
-    ffmpeg libwebp-dev tmux pre-commit clang-format
+    ffmpeg libwebp-dev tmux pre-commit clang-format ssh
 
 echo "✅ apt installed."
 
