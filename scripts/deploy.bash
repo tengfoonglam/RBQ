@@ -70,14 +70,14 @@ if [ ${#SELECTED_BINARIES[@]} -eq 0 ]; then
             echo -e "\e[33mWarning: $SCRIPT not found in $SCRIPTS_DIR, skipping.\e[0m"
         fi
     done
-    
+
     if [ -d "$ROS2_SRC_DIR" ]; then
         ROS2_SRC_TO_DEPLOY+=("$ROS2_SRC_DIR")
         echo "  - Added ros2/src for deployment"
     else
         echo -e "\e[33mWarning: $ROS2_SRC_DIR directory not found, skipping.\e[0m"
     fi
-    
+
     RESOURCES_TO_DEPLOY+=("$RESOURCES_MEDIAMTX_DIR")
 
     if [ ${#BINARIES_TO_DEPLOY[@]} -eq 0 ] && [ ${#SCRIPTS_TO_DEPLOY[@]} -eq 0 ] && [ ${#RESOURCES_TO_DEPLOY[@]} -eq 0 ] && [ ${#ROS2_SRC_TO_DEPLOY[@]} -eq 0 ]; then
@@ -113,12 +113,12 @@ if [ "$LOCAL_MODE" = true ]; then
             REAL_HOME=$(eval echo ~$SUDO_USER)
         fi
     fi
-    
+
     # If still empty, use current HOME as fallback
     if [ -z "$REAL_HOME" ]; then
         REAL_HOME="$HOME"
     fi
-    
+
     LOCAL_HOME_DIR="$REAL_HOME/rbq_ws"
     LOCAL_BIN_DIR="$LOCAL_HOME_DIR/bin"
     LOCAL_SCRIPTS_DIR="$LOCAL_HOME_DIR/scripts"
@@ -126,7 +126,7 @@ if [ "$LOCAL_MODE" = true ]; then
     LOCAL_ROS2_SRC_DIR="$LOCAL_HOME_DIR/ros2/src"
     LOCAL_CONFIGS_DIR="$LOCAL_HOME_DIR/configs"
     echo "Local deployment mode: deploying to $LOCAL_HOME_DIR"
-    
+
     # Create local directories if they don't exist
     mkdir -p "$LOCAL_BIN_DIR"
     mkdir -p "$LOCAL_SCRIPTS_DIR"

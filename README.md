@@ -88,7 +88,7 @@ In a separate terminal
 Build the example
 ```bash
 cd rbq_examples/
-./scripts/build.bash 
+./scripts/build.bash
 ```
 
 Run the example
@@ -102,5 +102,5 @@ Example notes:
  - Use the joystick in the GUI to control the robot when locomotion policy is loaded
 
 #### Other notes
-- Some applications with have the following warning: `selected interface "lo" is not multicast-capable: disabling multicast` 
+- Some applications with have the following warning: `selected interface "lo" is not multicast-capable: disabling multicast`
   - To solve this, on a host terminal, run `sudo ip link set lo multicast on`

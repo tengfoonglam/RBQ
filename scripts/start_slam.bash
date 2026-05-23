@@ -60,4 +60,3 @@ while true; do
     fi
     sleep 2
 done
-

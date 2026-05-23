@@ -93,4 +93,3 @@ fi
 
 # === Step 7: Wait (keep terminal alive) ===
 wait "$PTP4L_PID" "$PHC2SYS_PID"
-
