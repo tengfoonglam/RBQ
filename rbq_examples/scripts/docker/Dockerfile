@@ -26,3 +26,6 @@ RUN cd /workspace/rbq_sdk && bash scripts/build.bash --no-cache
 # Setup pre-commit hooks
 COPY ./.pre-commit-config.yaml .
 RUN git init . && pre-commit install --install-hooks && rm -rf .git
+
+# Source custom bashrc on launch
+RUN touch /root/.bashrc && echo "source /workspace/scripts/.custom_bashrc" >> /root/.bashrc
